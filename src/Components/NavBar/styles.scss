@@ -1,0 +1,86 @@
+@import '../../Styles/variables';
+
+header {
+    width: 100%;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .header__logo {
+            h1 {
+                margin: 0;
+            }
+        }
+
+        .header__menu {
+            nav {
+                ul {
+                    li {
+                        display: inline-block;
+                        margin: 0 15px;
+                        position: relative;
+
+                        a {
+                            text-decoration: none;
+                            color: #222;
+                            font-size: 18px;
+                            padding: 5px 0;
+                            display: block;
+                        }
+
+                        &.menu__destaque {
+                            background-color: $red;
+                            border-radius: 25px;
+
+                            a {
+                                padding: 10px 40px;
+                                color: #fff;
+                            }
+
+                            &:hover {
+                                background-color: lighten($red, 10%);
+
+                                &::before {
+                                    content: none;
+                                }
+                            }
+                        }
+
+                        &:hover {
+                            &::before {
+                                content: '';
+                                position: absolute;
+                                top: 120%;
+                                left: 0;
+                                right: 0;
+                                background-color: $red;
+                                height: 3px;
+                                animation: hoverMenu .2s linear;
+                            }
+                        }
+
+                        @keyframes hoverMenu {
+                            0% {
+                                width: 20%;
+                            }
+
+                            50% {
+                                width: 50%;
+                            }
+
+                            100% {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

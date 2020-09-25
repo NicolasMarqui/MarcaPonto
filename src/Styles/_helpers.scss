@@ -1,0 +1,43 @@
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1370px;
+    }
+}
+
+.bt {
+    background-color: $red;
+    border-radius: 25px;
+    padding: 10px 40px;
+    width: 60%;
+    text-align: center;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin: 20px auto;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: lighten($red, 10%);
+    }
+}
