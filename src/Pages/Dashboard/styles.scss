@@ -1,4 +1,5 @@
 @import '../../Styles/variables';
+@import '../../Styles/responsive';
 
 .dashboard__wrapper {
     height: 100vh;
@@ -9,21 +10,101 @@
         position: relative;
 
         .content__sidebar {
-            width: 300px;
+            width: 70px;
             background-color: $black;
             position: fixed;
             top: 0;
             left: 0;
             bottom: 0;
+            display: flex;
+            flex-direction: column;
+            transition: width .2s linear;
+
+            .sidebar__logo {
+                flex: 1;
+                margin-top: 20px;
+
+                img {
+                    display: block;
+                    margin: 0 auto;
+                    width: 250px;
+
+                    &.img__smaller {
+                        width: 70px;
+                    }
+                }
+            }
+
+            .sidebar__menu {
+                flex: 3;
+
+                ul {
+                    li {
+                        margin: 10px 0;
+
+                        &>a {
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+
+            @include max-xxs {
+                width: 50px;
+
+                .sidebar__logo {
+                    img {
+                        &.img__smaller {
+                            width: 50px;
+                        }
+                    }
+                }
+            }
+
+            @include sm {
+                width: 250px;
+            }
+
+            @include md {
+                width: 300px;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    right: 0;
+                    width: 20px;
+                    background-color: #fff;
+                    border-radius: 25px 0 0 25px;
+                }
+            }
         }
 
         .content__main {
             overflow-x: auto;
-            margin-left: 300px;
+            margin-left: 70px;
             background-color: #fff;
             height: 100vh;
-            width: calc(100% - 300px);
+            width: calc(100% - 70px);
             position: relative;
+            padding: 30px 40px;
+
+            @include max-xxs {
+                padding: 30px 10px;
+                margin-left: 50px;
+                width: calc(100% - 50px);
+            }
+
+            @include sm {
+                margin-left: 250px;
+                width: calc(100% - 250px);
+            }
+
+            @include md {
+                margin-left: 300px;
+                width: calc(100% - 300px);
+            }
         }
     }
 }

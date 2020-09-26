@@ -1,0 +1,63 @@
+@import '../../Styles/variables';
+@import '../../Styles/responsive';
+
+.link__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    position: relative;
+
+    &.active {
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 4px;
+            background-color: $red;
+        }
+    }
+
+    &:hover {
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 4px;
+            background-color: $red;
+        }
+
+        .link__icon {
+            svg {
+                transform: scale(1.02);
+            }
+        }
+    }
+
+    .link__text {
+        p {
+            text-decoration: none;
+            color: #fff;
+            display: none;
+        }
+    }
+
+    @include sm {
+        padding: 10px 10px 10px 40px;
+        justify-content: flex-start;
+
+        .link__text {
+            p {
+                display: block;
+            }
+        }
+
+        .link__icon {
+            margin-right: 10px;
+        }
+    }
+}

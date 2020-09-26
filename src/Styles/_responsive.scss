@@ -1,0 +1,57 @@
+// Screen size variables
+$screen-xxs-min: 425px;
+$screen-xs-min: 768px;
+$screen-sm-min: 992px;
+$screen-md-min: 1024px;
+$screen-lg-min: 1300px;
+$screen-xl-min: 1700px;
+$screen-xxl-min: 2000px;
+
+// Mixins
+@mixin max-xxs {
+    @media (max-width: #{$screen-xxs-min}) {
+        @content;
+    }
+}
+
+@mixin xxs {
+    @media (min-width: #{$screen-xxs-min}) {
+        @content;
+    }
+}
+
+@mixin xs {
+    @media (min-width: #{$screen-xs-min}) {
+        @content;
+    }
+}
+
+@mixin sm {
+    @media (min-width: #{$screen-sm-min}) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (min-width: #{$screen-md-min}) {
+        @content;
+    }
+}
+
+@mixin lg {
+    @media (min-width: #{$screen-lg-min}) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (min-width: #{$screen-xl-min}) {
+        @content;
+    }
+}
+
+@mixin xxl {
+    @media (min-width: #{$screen-xxl-min}) {
+        @content;
+    }
+}

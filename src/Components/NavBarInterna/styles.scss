@@ -1,23 +1,31 @@
 @import '../../Styles/helpers';
+@import '../../Styles/responsive';
 
-header {
+header.header__nav-interna {
     width: 100%;
     position: relative;
     top: 0;
-    margin-top: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 
     .nav__interna {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-direction: row;
-        padding: 0 40px;
+        flex-direction: column;
+        // padding: 0 10px;
 
         .nav__bemvindo {
             h2 {
+                text-align: center;
+
                 span {
                     font-weight: 700;
                 }
+            }
+
+            p {
+                text-align: center;
             }
         }
 
@@ -27,6 +35,8 @@ header {
             align-items: center;
 
             .opcoes__avatar {
+                display: none;
+
                 img {
                     width: 50px;
                     border-radius: 50%;
@@ -34,11 +44,48 @@ header {
             }
 
             .opcoes__logout {
-                margin-left: 8px;
-
                 .bt {
-                    text-align: center;
-                    display: inline;
+                    display: block;
+                    width: auto;
+                }
+            }
+        }
+
+        @include max-xxs {
+            .nav__bemvindo {
+                h2 {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        @include sm {
+            flex-direction: row;
+
+            .nav__bemvindo {
+                h2 {
+                    text-align: left;
+                }
+
+                p {
+                    text-align: left;
+                }
+            }
+
+            .nav__opcoes {
+                flex-direction: row;
+
+                .opcoes__avatar {
+                    display: block;
+                }
+
+                .opcoes__logout {
+                    margin-left: 8px;
+
+                    .bt {
+                        display: inline;
+                        width: 60%;
+                    }
                 }
             }
         }

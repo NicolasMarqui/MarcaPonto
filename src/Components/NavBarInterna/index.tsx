@@ -7,7 +7,7 @@ interface NavBarInternaProps {}
 
 const NavBarInterna: React.FC<NavBarInternaProps> = ({}) => {
     return (
-        <header>
+        <header className="header__nav-interna">
             <div className="nav__interna">
                 <div className="nav__bemvindo">
                     <h2 className="tt-title">
