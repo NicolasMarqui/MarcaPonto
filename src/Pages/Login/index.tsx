@@ -27,9 +27,11 @@ const Login: React.FC = () => {
                         }}
                         validate={(values) => {
                             const errors: any = {};
-                            if (!values.cpf) {
+                            const { cpf } = values;
+
+                            if (!cpf) {
                                 errors.cpf = "Digite seu CPF";
-                            } else if (values.cpf.length < 14) {
+                            } else if (cpf.length < 14) {
                                 errors.cpf = "Digite seu CPF completo";
                             }
                             return errors;

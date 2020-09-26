@@ -1,0 +1,29 @@
+@import '../../Styles/variables';
+
+.dashboard__wrapper {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+
+    .dashboard__content {
+        position: relative;
+
+        .content__sidebar {
+            width: 300px;
+            background-color: $black;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+        }
+
+        .content__main {
+            overflow-x: auto;
+            margin-left: 300px;
+            background-color: #fff;
+            height: 100vh;
+            width: calc(100% - 300px);
+            position: relative;
+        }
+    }
+}

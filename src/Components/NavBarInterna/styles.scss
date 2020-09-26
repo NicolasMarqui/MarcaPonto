@@ -1,0 +1,46 @@
+@import '../../Styles/helpers';
+
+header {
+    width: 100%;
+    position: relative;
+    top: 0;
+    margin-top: 30px;
+
+    .nav__interna {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        padding: 0 40px;
+
+        .nav__bemvindo {
+            h2 {
+                span {
+                    font-weight: 700;
+                }
+            }
+        }
+
+        .nav__opcoes {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .opcoes__avatar {
+                img {
+                    width: 50px;
+                    border-radius: 50%;
+                }
+            }
+
+            .opcoes__logout {
+                margin-left: 8px;
+
+                .bt {
+                    text-align: center;
+                    display: inline;
+                }
+            }
+        }
+    }
+}
