@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.scss";
 import NavBarInterna from "../../Components/NavBarInterna";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
@@ -21,7 +21,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
     const { width } = useWindowDimensions();
     let { path } = useRouteMatch();
 
-    console.log(width);
+    useEffect(() => {
+        document.title = "Marca Ponto - Dashboard";
+    }, []);
 
     // TODO -> Criar logo em versão white
 

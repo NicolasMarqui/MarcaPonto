@@ -20,19 +20,23 @@ const Login: React.FC = () => {
 
                 <div className="form__inputs">
                     <Formik
-                        initialValues={{ cpf: "", password: "" }}
+                        initialValues={{ emailOrUsername: "", password: "" }}
                         onSubmit={(values) => {
-                            const { cpf, password } = values;
-                            console.log(cpf, password);
+                            const { emailOrUsername, password } = values;
+                            console.log(emailOrUsername, password);
                         }}
                         validate={(values) => {
                             const errors: any = {};
-                            const { cpf } = values;
+                            const { emailOrUsername, password } = values;
 
-                            if (!cpf) {
-                                errors.cpf = "Digite seu CPF";
-                            } else if (cpf.length < 14) {
-                                errors.cpf = "Digite seu CPF completo";
+                            if (!emailOrUsername) {
+                                errors.emailOrUsername =
+                                    "Esse campo não pode ser vazio :(";
+                            }
+
+                            if (!password) {
+                                errors.password =
+                                    "Esse campo não pode ser vazio :(";
                             }
                             return errors;
                         }}
@@ -40,34 +44,22 @@ const Login: React.FC = () => {
                         {({ values, handleChange, handleSubmit, errors }) => (
                             <form onSubmit={handleSubmit}>
                                 <div className="form__group">
-                                    <label htmlFor="">CPF</label>
-                                    <MaskedInput
-                                        mask={[
-                                            /\d/,
-                                            /\d/,
-                                            /\d/,
-                                            ".",
-                                            /\d/,
-                                            /\d/,
-                                            /\d/,
-                                            ".",
-                                            /\d/,
-                                            /\d/,
-                                            /\d/,
-                                            "-",
-                                            /\d/,
-                                            /\d/,
-                                        ]}
-                                        value={values.cpf}
+                                    <label htmlFor="">Usuário</label>
+                                    <input
+                                        type="text"
+                                        value={values.emailOrUsername}
                                         className={`${
-                                            errors.cpf ? "hasError" : ""
+                                            errors.emailOrUsername
+                                                ? "hasError"
+                                                : ""
                                         }`}
-                                        placeholder="___.___.___-__"
-                                        onChange={handleChange("cpf")}
+                                        onChange={handleChange(
+                                            "emailOrUsername"
+                                        )}
                                     />
-                                    {errors.cpf ? (
+                                    {errors.emailOrUsername ? (
                                         <div className="form__error">
-                                            <p>{errors.cpf}</p>
+                                            <p>{errors.emailOrUsername}</p>
                                         </div>
                                     ) : (
                                         ""
@@ -78,8 +70,18 @@ const Login: React.FC = () => {
                                     <input
                                         type="password"
                                         value={values.password}
+                                        className={`${
+                                            errors.password ? "hasError" : ""
+                                        }`}
                                         onChange={handleChange("password")}
                                     />
+                                    {errors.password ? (
+                                        <div className="form__error">
+                                            <p>{errors.password}</p>
+                                        </div>
+                                    ) : (
+                                        ""
+                                    )}
                                 </div>
                                 <div className="form__group">
                                     <button
