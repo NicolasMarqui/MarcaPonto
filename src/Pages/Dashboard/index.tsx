@@ -3,11 +3,13 @@ import "./styles.scss";
 import NavBarInterna from "../../Components/NavBarInterna";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { FaHome, FaCog } from "react-icons/fa";
+import { ImBook } from "react-icons/im";
 import useWindowDimensions from "../../Hooks/useWindowDimensions";
 
 import Settings from "./Settings";
 import Home from "./Home";
 import MenuLink from "../../Components/MenuLink";
+import Espelho from "./Espelho";
 
 const tipo = "comum";
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
@@ -17,7 +19,7 @@ interface DashboardProps {
     match: any;
 }
 
-const Dashboard: React.FC<DashboardProps> = () => {
+const Dashboard: React.FC<DashboardProps> = ({ match }) => {
     const { width } = useWindowDimensions();
     let { path } = useRouteMatch();
 
@@ -54,6 +56,16 @@ const Dashboard: React.FC<DashboardProps> = () => {
                                 </li>
                                 <li>
                                     <MenuLink
+                                        icon={
+                                            <ImBook color="white" size={24} />
+                                        }
+                                        text="Espelho"
+                                        from="dashboard"
+                                        link="/espelho"
+                                    />
+                                </li>
+                                <li>
+                                    <MenuLink
                                         icon={<FaCog color="white" size={24} />}
                                         text="Configurações"
                                         from="dashboard"
@@ -71,6 +83,11 @@ const Dashboard: React.FC<DashboardProps> = () => {
                         <Route
                             path={`${path}/settings`}
                             component={Settings}
+                            exact
+                        />
+                        <Route
+                            path={`${path}/espelho`}
+                            component={Espelho}
                             exact
                         />
                     </div>

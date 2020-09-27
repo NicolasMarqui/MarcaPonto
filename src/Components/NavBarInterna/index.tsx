@@ -5,7 +5,7 @@ import "./styles.scss";
 
 interface NavBarInternaProps {}
 
-const NavBarInterna: React.FC<NavBarInternaProps> = ({}) => {
+const NavBarInterna: React.FC<NavBarInternaProps> = () => {
     return (
         <header className="header__nav-interna">
             <div className="nav__interna">

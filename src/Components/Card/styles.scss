@@ -1,6 +1,44 @@
-@import '../../Styles/variables';
+@import "../../Styles/variables";
 
 .card__wrapper {
     padding: 40px;
     background-color: $grey;
+    margin: 10px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    &.size1 {
+        flex: 1 1 20%;
+    }
+
+    &.size2 {
+        flex: 1 1 50%;
+    }
+
+    &.size3 {
+        flex: 1 1 70%;
+    }
+
+    &.height-auto {
+        min-height: 242px;
+    }
+
+    &.height-full {
+        height: 70vh;
+    }
+
+    &.height-100p {
+        min-height: 100%;
+    }
+
+    &>a {
+        text-decoration: none;
+    }
 }

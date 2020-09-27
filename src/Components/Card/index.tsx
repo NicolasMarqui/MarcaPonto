@@ -2,11 +2,16 @@ import React from "react";
 import "./styles.scss";
 
 interface CardProps {
-    children: React.FC;
-    size: Number;
+    children: any;
+    size?: Number;
+    height?: String;
 }
 
-const Card: React.FC<CardProps> = ({ children }) => {
-    return <div className="card__wrapper">{children}</div>;
+const Card: React.FC<CardProps> = ({ children, size = 1, height = "auto" }) => {
+    return (
+        <div className={`card__wrapper size${size} height-${height}`}>
+            {children}
+        </div>
+    );
 };
 export default Card;

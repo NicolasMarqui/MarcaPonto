@@ -1,7 +1,6 @@
 import React from "react";
 import "./styles.scss";
 import { Formik } from "formik";
-import MaskedInput from "react-text-mask";
 
 import NavBar from "../../Components/NavBar";
 
