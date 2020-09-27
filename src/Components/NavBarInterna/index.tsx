@@ -1,11 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState } from "react";
 import "./styles.scss";
+import { Link } from "react-router-dom";
+import { BiBell } from "react-icons/bi";
+import { getTodayInfo } from "../../Functions";
 
 interface NavBarInternaProps {}
 
 const NavBarInterna: React.FC<NavBarInternaProps> = () => {
+    const [dropdownNotificationOpen, setdropdownNotificationOpen] = useState(
+        false
+    );
+
     return (
         <header className="header__nav-interna">
             <div className="nav__interna">
@@ -13,9 +18,7 @@ const NavBarInterna: React.FC<NavBarInternaProps> = () => {
                     <h2 className="tt-title">
                         Bem vindo <span>Nicolas</span>
                     </h2>
-                    <p className="nav__curentDate">
-                        Quarta Feira, 23 de Setembro de 2020
-                    </p>
+                    <p className="nav__curentDate">{getTodayInfo()}</p>
                 </div>
 
                 <div className="nav__opcoes">
@@ -26,6 +29,29 @@ const NavBarInterna: React.FC<NavBarInternaProps> = () => {
                                 alt=""
                             />
                         </Link>
+                    </div>
+
+                    <div
+                        className="opcoes__notifications"
+                        onClick={() =>
+                            setdropdownNotificationOpen(
+                                !dropdownNotificationOpen
+                            )
+                        }
+                    >
+                        <BiBell size={30} />
+
+                        <div className="notifications__hasNot">
+                            <span>1</span>
+                        </div>
+
+                        <div
+                            className={`notifications__dropdown ${
+                                dropdownNotificationOpen ? "show" : ""
+                            }`}
+                        >
+                            <p>Nenhuma notificação ainda</p>
+                        </div>
                     </div>
 
                     <div className="opcoes__logout">

@@ -1806,6 +1806,11 @@
     "@types/testing-library__dom" "*"
     pretty-format "^25.1.0"
 
+"@types/use-position@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@types/use-position/-/use-position-0.0.0.tgz#d9e11b04201a67ff2b7f1ba1051a0b9bab39d9d2"
+  integrity sha512-mhpUxCnmEtsH6y+FY5um4O0kpTnoeNQd5BXboBBRiBs5a1B3UF4lgci94iNmqdxudzO2T2C8HHdiZZymxjZB7w==
+
 "@types/yargs-parser@*":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-15.0.0.tgz#cb3f9f741869e20cce330ffbeb9271590483882d"
@@ -11301,6 +11306,11 @@ use-memo-one@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/use-memo-one/-/use-memo-one-1.1.1.tgz#39e6f08fe27e422a7d7b234b5f9056af313bd22c"
   integrity sha512-oFfsyun+bP7RX8X2AskHNTxu+R3QdE/RC5IefMbqptmACAA/gfol1KDD5KRzPsGMa62sWxGZw+Ui43u6x4ddoQ==
+
+use-position@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/use-position/-/use-position-0.0.7.tgz#4f6111e77feb961c8f4265e29749f8ba3814c3cb"
+  integrity sha512-DACckeHV9PY0MBEmD8vuYROJviDxN+zk4O13X4qbqHa0dZ4QAmYNH0rkYHvM6MnoJ/o2ZWBph9v476coGa6UFg==
 
 use@^3.1.0:
   version "3.1.1"

@@ -1,5 +1,6 @@
 @import '../../Styles/helpers';
 @import '../../Styles/responsive';
+@import '../../Styles/variables';
 
 header.header__nav-interna {
     width: 100%;
@@ -43,6 +44,73 @@ header.header__nav-interna {
                 }
             }
 
+            .opcoes__notifications {
+                margin: 0 20px;
+                cursor: pointer;
+                position: relative;
+
+                .notifications__hasNot {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    background-color: red;
+                    width: 15px;
+                    height: 15px;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    span {
+                        color: #fff;
+                        font-size: 10px;
+                    }
+                }
+
+                .notifications__dropdown {
+                    position: absolute;
+                    top: 130%;
+                    right: -10px;
+                    width: 200px;
+                    background-color: #fff;
+                    z-index: 2;
+                    border-radius: 20px;
+                    box-shadow: -2px 0px 12px #eeee;
+                    padding: 20px 10px;
+                    height: 300px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: auto;
+                    visibility: hidden;
+                    overflow: auto;
+                    transition: all .2s linear;
+                    animation: goDown .2s linear;
+
+                    @keyframes goDown {
+                        0% {
+                            height: 0px;
+                        }
+
+                        20% {
+                            height: 100px;
+                        }
+
+                        100% {
+                            height: 300px;
+                        }
+                    }
+
+                    &.show {
+                        visibility: visible;
+                    }
+
+                    p {
+                        text-align: center;
+                    }
+                }
+            }
+
             .opcoes__logout {
                 .bt {
                     display: block;
@@ -80,7 +148,7 @@ header.header__nav-interna {
                 }
 
                 .opcoes__logout {
-                    margin-left: 8px;
+                    // margin-left: 8px;
 
                     .bt {
                         display: inline;

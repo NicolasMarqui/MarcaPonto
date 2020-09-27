@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import "./styles.scss";
 import Clock from "../../Hooks/useClock";
-import { showToast } from "../../Functions";
+import { getTodayDate, getTodayInfo, showToast } from "../../Functions";
 
 const LOGO_VERTICAL = require("../../Assets/images/logo_vertical.png");
 
@@ -10,7 +10,10 @@ interface MarcarPontoProps {}
 const MarcarPonto: React.FC<MarcarPontoProps> = ({}) => {
     const handlePonto = () => {
         const datePonto = new Date().toLocaleTimeString();
-        showToast("SUCCESS", `Ponto batido com sucesso ás ${datePonto}`);
+        showToast(
+            "SUCCESS",
+            `Ponto batido com sucesso ás ${datePonto} do dia ${getTodayDate()}`
+        );
     };
 
     return (
@@ -23,7 +26,7 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({}) => {
                 />
             </div>
             <Clock />
-            <p>Quarta Feira, 23 de Setembro de 2020</p>
+            <p>{getTodayInfo()}</p>
 
             <a href="#marcar" className="bt" onClick={handlePonto}>
                 Marcar Ponto
