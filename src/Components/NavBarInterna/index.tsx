@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
 import { BiBell } from "react-icons/bi";
 import { getTodayInfo } from "../../Functions";
+import MainContext from "../../Contexts/MainContext";
 
 interface NavBarInternaProps {}
 
 const NavBarInterna: React.FC<NavBarInternaProps> = () => {
+    const { removeToken } = useContext(MainContext);
     const [dropdownNotificationOpen, setdropdownNotificationOpen] = useState(
         false
     );
+
+    const handleLogout = () => {};
 
     return (
         <header className="header__nav-interna">
@@ -55,7 +59,11 @@ const NavBarInterna: React.FC<NavBarInternaProps> = () => {
                     </div>
 
                     <div className="opcoes__logout">
-                        <a href="#logout" className="bt">
+                        <a
+                            href="#logout"
+                            className="bt"
+                            onClick={() => removeToken("token")}
+                        >
                             Sair
                         </a>
                     </div>

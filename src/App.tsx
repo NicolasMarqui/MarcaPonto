@@ -1,9 +1,14 @@
 import React from "react";
-import Routes from "./routes";
 import "./Styles/main.scss";
+import Routes from "./routes";
+import MainProvider from "./Contexts/MainProvider";
 
 function App() {
-    return <Routes />;
+    return (
+        <MainProvider>
+            <Routes />
+        </MainProvider>
+    );
 }
 
 export default App;

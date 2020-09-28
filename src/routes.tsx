@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import NotFound from "./Pages/404";
 import Dashboard from "./Pages/Dashboard";
 import Login from "./Pages/Login";
+import PrivateRoute from "./Services/PrivateRoute";
 
 const Routes = () => (
     <BrowserRouter>
@@ -18,7 +19,7 @@ const Routes = () => (
         />
         <Switch>
             <Route path="/" exact component={Login} />
-            <Route path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
             <Route path="*" exact component={NotFound} />
         </Switch>
     </BrowserRouter>
