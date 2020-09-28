@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CustomTable from "../../../Components/CustomTable";
 import {
     LatestPointsColums,
@@ -8,6 +8,10 @@ import {
 interface EspelhoProps {}
 
 const Espelho: React.FC<EspelhoProps> = ({}) => {
+    useEffect(() => {
+        document.title = "Marca Ponto - Espelho";
+    }, []);
+
     return (
         <div className="espelho__wrapper">
             {/* <CustomTable
