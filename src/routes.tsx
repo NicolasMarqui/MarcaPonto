@@ -13,6 +13,7 @@ const Routes = () => (
             position="top-right"
             autoClose={5000}
             hideProgressBar={false}
+            pauseOnHover={false}
             newestOnTop={false}
             closeOnClick
             rtl={false}
@@ -20,7 +21,7 @@ const Routes = () => (
         <Switch>
             <Route path="/" exact component={Login} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
-            <Route path="*" exact component={NotFound} />
+            <Route component={NotFound} />
         </Switch>
     </BrowserRouter>
 );

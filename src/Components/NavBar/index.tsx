@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./styles.scss";
+import MainContext from "../../Contexts/MainContext";
 
 import { Link } from "react-router-dom";
 
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
 
 const NavBar: React.FC = () => {
+    const { token } = useContext(MainContext);
+
     return (
         <header>
             <div className="container">
@@ -25,9 +28,17 @@ const NavBar: React.FC = () => {
                                 <li>
                                     <Link to="/dashboard">Ponto</Link>
                                 </li>
-                                <li className="menu__destaque">
-                                    <Link to="/">Login</Link>
-                                </li>
+                                {token ? (
+                                    <li className="menu__destaque">
+                                        <Link to="/dashboard/settings">
+                                            Minha Conta
+                                        </Link>
+                                    </li>
+                                ) : (
+                                    <li className="menu__destaque">
+                                        <Link to="/">Login</Link>
+                                    </li>
+                                )}
                             </ul>
                         </nav>
                     </div>

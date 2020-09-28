@@ -57,3 +57,13 @@ export const getTodayDate = () => {
         now.getMonth() < 10 ? "0" + (now.getMonth() + 1) : now.getMonth() + 1
     }/${now.getFullYear()}`;
 };
+
+export const handleUndefined = (item: any) => {
+    return item === undefined || item === null || !item
+        ? "-"
+        : CapitalizeString(item);
+};
+
+export const CapitalizeString = (s: string) => {
+    return s.toString().charAt(0).toUpperCase() + s.slice(1);
+};

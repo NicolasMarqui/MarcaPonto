@@ -1,31 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./styles.scss";
 import NavBarInterna from "../../Components/NavBarInterna";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
-import { FaHome, FaCog } from "react-icons/fa";
-import { ImBook } from "react-icons/im";
 import useWindowDimensions from "../../Hooks/useWindowDimensions";
-
+import MainContext from "../../Contexts/MainContext";
+import Lottie from "react-lottie";
 import Settings from "./Settings";
 import Home from "./Home";
-import MenuLink from "../../Components/MenuLink";
 import Espelho from "./Espelho";
+import SideBar from "../../Components/SideBar";
+import api from "../../Services/api";
+import { USER_INFO } from "../../Services/Endpoints";
 
-const tipo = "comum";
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
 const JUST_LOGO = require("../../Assets/images/just_logo.png");
+
+const LOADING_CLOCK = require("../../Assets/animations/loading-clock.json");
 
 interface DashboardProps {
     match: any;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ match }) => {
+    const { token } = useContext(MainContext);
+    const [loggedUserInfo, setLoggedUserInfo] = useState({});
+    const [isLoadingInfo, setIsLoadingInfo] = useState(true);
+
     const { width } = useWindowDimensions();
     let { path } = useRouteMatch();
 
     useEffect(() => {
         document.title = "Marca Ponto - Dashboard";
+        getLoggedUserInfo();
     }, []);
+
+    const getLoggedUserInfo = async () => {
+        await api
+            .get(USER_INFO, { headers: { Authorization: token } })
+            .then((response) => {
+                const { username, colaboradorId, perfis } = response.data;
+                console.log(username, colaboradorId, perfis);
+                setLoggedUserInfo({ username, colaboradorId, perfis });
+                setIsLoadingInfo(false);
+            });
+    };
 
     // TODO -> Criar logo em versão white
 
@@ -43,53 +61,48 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                         </div>
 
                         <div className="sidebar__menu">
-                            <ul>
-                                <li>
-                                    <MenuLink
-                                        icon={
-                                            <FaHome color="white" size={24} />
-                                        }
-                                        text="Home"
-                                        from="dashboard"
-                                        link="/"
-                                    />
-                                </li>
-                                <li>
-                                    <MenuLink
-                                        icon={
-                                            <ImBook color="white" size={24} />
-                                        }
-                                        text="Espelho"
-                                        from="dashboard"
-                                        link="/espelho"
-                                    />
-                                </li>
-                                <li>
-                                    <MenuLink
-                                        icon={<FaCog color="white" size={24} />}
-                                        text="Configurações"
-                                        from="dashboard"
-                                        link="/settings"
-                                    />
-                                </li>
-                            </ul>
+                            {isLoadingInfo ? (
+                                <Lottie
+                                    options={{
+                                        loop: true,
+                                        animationData: LOADING_CLOCK,
+                                    }}
+                                    height={150}
+                                    width={150}
+                                />
+                            ) : (
+                                <SideBar type="USER" />
+                            )}
                         </div>
                     </div>
 
                     <div className="content__main">
-                        <NavBarInterna />
+                        <NavBarInterna data={loggedUserInfo} />
 
-                        <Route path={path} component={Home} exact />
-                        <Route
-                            path={`${path}/settings`}
-                            component={Settings}
-                            exact
-                        />
-                        <Route
-                            path={`${path}/espelho`}
-                            component={Espelho}
-                            exact
-                        />
+                        {isLoadingInfo ? (
+                            <Lottie
+                                options={{
+                                    loop: true,
+                                    animationData: LOADING_CLOCK,
+                                }}
+                                height={150}
+                                width={150}
+                            />
+                        ) : (
+                            <>
+                                <Route path={path} component={Home} exact />
+                                <Route
+                                    path={`${path}/settings`}
+                                    component={Settings}
+                                    exact
+                                />
+                                <Route
+                                    path={`${path}/espelho`}
+                                    component={Espelho}
+                                    exact
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

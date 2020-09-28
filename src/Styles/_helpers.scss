@@ -49,3 +49,9 @@
     font-weight: 400;
     line-height: 45px;
 }
+
+.skel__margin {
+    &+span {
+        margin: 10px 0;
+    }
+}

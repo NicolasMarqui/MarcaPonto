@@ -2,25 +2,30 @@ import React, { useState, useContext } from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
 import { BiBell } from "react-icons/bi";
-import { getTodayInfo } from "../../Functions";
+import { getTodayInfo, handleUndefined, showToast } from "../../Functions";
 import MainContext from "../../Contexts/MainContext";
 
-interface NavBarInternaProps {}
+interface NavBarInternaProps {
+    data: any;
+}
 
-const NavBarInterna: React.FC<NavBarInternaProps> = () => {
+const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
     const { removeToken } = useContext(MainContext);
     const [dropdownNotificationOpen, setdropdownNotificationOpen] = useState(
         false
     );
 
-    const handleLogout = () => {};
+    const handleLogout = () => {
+        showToast("SUCCESS", "Você foi deslogado com sucesso");
+        removeToken("token");
+    };
 
     return (
         <header className="header__nav-interna">
             <div className="nav__interna">
                 <div className="nav__bemvindo">
                     <h2 className="tt-title">
-                        Bem vindo <span>Nicolas</span>
+                        Bem vindo <span>{handleUndefined(data.username)}</span>
                     </h2>
                     <p className="nav__curentDate">{getTodayInfo()}</p>
                 </div>
@@ -59,11 +64,7 @@ const NavBarInterna: React.FC<NavBarInternaProps> = () => {
                     </div>
 
                     <div className="opcoes__logout">
-                        <a
-                            href="#logout"
-                            className="bt"
-                            onClick={() => removeToken("token")}
-                        >
+                        <a href="#logout" className="bt" onClick={handleLogout}>
                             Sair
                         </a>
                     </div>
