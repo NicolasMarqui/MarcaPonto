@@ -22,7 +22,8 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ match }) => {
-    const { token } = useContext(MainContext);
+    const { token, setCurrentLoggedUserId } = useContext(MainContext);
+
     const [loggedUserInfo, setLoggedUserInfo] = useState({});
     const [isLoadingInfo, setIsLoadingInfo] = useState(true);
 
@@ -39,7 +40,10 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
             .get(USER_INFO, { headers: { Authorization: token } })
             .then((response) => {
                 const { username, colaboradorId, perfis } = response.data;
-                console.log(username, colaboradorId, perfis);
+
+                //Save ID to localStorage
+                setCurrentLoggedUserId(colaboradorId);
+
                 setLoggedUserInfo({ username, colaboradorId, perfis });
                 setIsLoadingInfo(false);
             });

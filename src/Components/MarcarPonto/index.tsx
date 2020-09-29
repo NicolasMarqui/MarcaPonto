@@ -1,19 +1,60 @@
-import React, { useRef } from "react";
+import React, { useState, useContext } from "react";
 import "./styles.scss";
 import Clock from "../../Hooks/useClock";
 import { getTodayDate, getTodayInfo, showToast } from "../../Functions";
+import Lottie from "react-lottie";
+import api from "../../Services/api";
+import { MARCAR_PONTO } from "../../Services/Endpoints";
+import MainContext from "../../Contexts/MainContext";
 
+//Images
 const LOGO_VERTICAL = require("../../Assets/images/logo_vertical.png");
 
-interface MarcarPontoProps {}
+//Animations
+const LOADING = require("../../Assets/animations/loading.json");
 
-const MarcarPonto: React.FC<MarcarPontoProps> = ({}) => {
-    const handlePonto = () => {
-        const datePonto = new Date().toLocaleTimeString();
-        showToast(
-            "SUCCESS",
-            `Ponto batido com sucesso ás ${datePonto} do dia ${getTodayDate()}`
-        );
+interface MarcarPontoProps {
+    colaboradorId: Number | null;
+}
+
+const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
+    const { token } = useContext(MainContext);
+
+    const [isLoadingPonto, setIsLoadingPonto] = useState(false);
+
+    const handlePonto = async () => {
+        const datePonto = new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+
+        setIsLoadingPonto(true);
+
+        const newPontoData = {
+            colaboradorId,
+            data: getTodayDate().toString(),
+            horario: datePonto.toString(),
+        };
+
+        await api
+            .post(MARCAR_PONTO, newPontoData, {
+                headers: { Authorization: token },
+            })
+            .then((response) => {
+                console.log(response.data);
+                showToast(
+                    "SUCCESS",
+                    `Ponto batido com sucesso ás ${datePonto} do dia ${getTodayDate()}`
+                );
+
+                setIsLoadingPonto(false);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+                showToast("ERROR", `Ops 😐, algo deu errado`);
+
+                setIsLoadingPonto(false);
+            });
     };
 
     return (
@@ -28,9 +69,20 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({}) => {
             <Clock />
             <p>{getTodayInfo()}</p>
 
-            <a href="#marcar" className="bt" onClick={handlePonto}>
-                Marcar Ponto
-            </a>
+            {!isLoadingPonto ? (
+                <a href="#marcar" className="bt" onClick={handlePonto}>
+                    Marcar Ponto
+                </a>
+            ) : (
+                <Lottie
+                    options={{
+                        loop: true,
+                        animationData: LOADING,
+                    }}
+                    height={150}
+                    width={150}
+                />
+            )}
         </div>
     );
 };

@@ -13,7 +13,7 @@ export default [
             height: "full",
             size: 2,
         },
-        content: <MarcarPonto />,
+        content: <MarcarPonto colaboradorId={0} />,
     },
     {
         id: 2,

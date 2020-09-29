@@ -19,6 +19,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.11.0",
+    "react-intl": "^5.8.3",
     "react-lottie": "^1.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
@@ -49,6 +50,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^2.2.6",
+    "@types/react-intl": "^3.0.0",
     "@types/react-lottie": "^1.2.5",
     "@types/react-router-dom": "^5.1.5",
     "@types/react-table": "^7.0.23",

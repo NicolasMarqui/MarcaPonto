@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import "./styles.scss";
 import Card from "../Card";
 import { Link } from "react-router-dom";
@@ -7,18 +7,19 @@ import { FaCog } from "react-icons/fa";
 import { ImBook } from "react-icons/im";
 import CustomTable from "../CustomTable";
 import { LatestPointsColums, LatestPointsData } from "../../Services/MockData";
-
-//MOCK DATA
+import MainContext from "../../Contexts/MainContext";
 
 interface UserRenderProps {}
 
 const UserRender: React.FC<UserRenderProps> = () => {
+    const { currentLoggedUserId } = useContext(MainContext);
+
     return (
         <div className="usrntad__rr">
             <div className="rr__top-row">
                 <div className="tr__ponto">
                     <Card size={2} height="full">
-                        <MarcarPonto />
+                        <MarcarPonto colaboradorId={currentLoggedUserId} />
                     </Card>
                 </div>
                 <div className="tp__afins">
