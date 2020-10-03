@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
+import MainContext from "../../Contexts/MainContext";
 
 interface MenuLinkProps {
     icon?: any;
-    text: String;
-    link: String;
-    from: String;
+    text: string;
+    link: string;
+    from: string;
 }
 
 const MenuLink: React.FC<MenuLinkProps> = ({ icon, text, link, from }) => {
+    const { sideNavOpen } = useContext(MainContext);
+
     return (
         <Link to={`/${from}${link}`}>
-            <div className="link__wrapper">
+            <div
+                className={`link__wrapper ${
+                    !sideNavOpen ? "link__reduced" : ""
+                }`}
+            >
+                <div
+                    className={`link__popover ${
+                        !sideNavOpen ? "popover__show" : ""
+                    }`}
+                >
+                    <p>{text}</p>
+                </div>
                 <div className="link__icon">{icon}</div>
 
                 <div className="link__text">

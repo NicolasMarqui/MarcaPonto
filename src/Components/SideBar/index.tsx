@@ -1,13 +1,18 @@
 import React from "react";
-import { FaHome, FaCog } from "react-icons/fa";
+import { FaHome, FaCog, FaClipboardCheck, FaUserAlt } from "react-icons/fa";
 import { ImBook } from "react-icons/im";
+import { MdWork } from "react-icons/md";
+import { checkIfAdmin } from "../../Functions";
+import { ImBooks } from "react-icons/im";
 import MenuLink from "../MenuLink";
 
 interface SideBarProps {
-    type: string;
+    type: any | null;
 }
 
 const SideBar: React.FC<SideBarProps> = ({ type }) => {
+    const isAdmin = checkIfAdmin(type.perfis);
+
     return (
         <ul>
             <li>
@@ -26,6 +31,56 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                     link="/espelho"
                 />
             </li>
+            {isAdmin && (
+                <li>
+                    <MenuLink
+                        icon={<FaClipboardCheck color="white" size={24} />}
+                        text="Expedientes"
+                        from="dashboard"
+                        link="/expedientes"
+                    />
+                </li>
+            )}
+            {isAdmin && (
+                <li>
+                    <MenuLink
+                        icon={<MdWork color="white" size={24} />}
+                        text="Setor"
+                        from="dashboard"
+                        link="/setor"
+                    />
+                </li>
+            )}
+            {isAdmin && (
+                <li>
+                    <MenuLink
+                        icon={<FaUserAlt color="white" size={24} />}
+                        text="Usuários"
+                        from="dashboard"
+                        link="/usuarios"
+                    />
+                </li>
+            )}
+            {isAdmin && (
+                <li>
+                    <MenuLink
+                        icon={<FaUserAlt color="white" size={24} />}
+                        text="Função"
+                        from="dashboard"
+                        link="/funcao"
+                    />
+                </li>
+            )}
+            {isAdmin && (
+                <li>
+                    <MenuLink
+                        icon={<ImBooks color="white" size={24} />}
+                        text="Relatórios"
+                        from="dashboard"
+                        link="/relatorios"
+                    />
+                </li>
+            )}
             <li>
                 <MenuLink
                     icon={<FaCog color="white" size={24} />}

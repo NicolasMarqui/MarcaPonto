@@ -2,14 +2,16 @@ import React, { useEffect } from "react";
 import "./styles.scss";
 import UserRender from "../../../Components/UserRender";
 import { usePosition } from "use-position";
+import { checkIfAdmin } from "../../../Functions";
+import AdminRender from "../../../Components/AdminRender";
 
 interface HomeProps {
-    match: any;
+    data: any;
 }
 
-const role = "USER";
+const Home: React.FC<HomeProps> = ({ data }) => {
+    const isAdmin = checkIfAdmin(data.perfis);
 
-const Home: React.FC<HomeProps> = () => {
     useEffect(() => {
         document.title = "Marca Ponto - Dashboard";
     }, []);
@@ -25,7 +27,7 @@ const Home: React.FC<HomeProps> = () => {
 
     return (
         <div className="home__wrapper">
-            {role === "USER" ? <UserRender /> : ""}
+            {isAdmin ? <AdminRender /> : <UserRender />}
         </div>
     );
 };

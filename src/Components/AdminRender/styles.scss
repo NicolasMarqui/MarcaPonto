@@ -1,0 +1,41 @@
+@import '../../Styles/responsive';
+
+.admnntad__rr {
+    display: flex;
+    flex-direction: column;
+
+    .adm__info-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .adm__firstRow {
+        display: flex;
+        flex-direction: row;
+
+        .adm__gd-ponto {
+            flex: 1;
+            height: 100%;
+
+            .marca-ponto__logo {
+                img {
+                    width: 200px;
+                }
+            }
+
+            h3 {
+                font-size: 3rem;
+            }
+
+            a.bt {
+                width: auto;
+            }
+        }
+
+        .adm__ls-row {
+            flex: 1;
+            height: 100%;
+        }
+    }
+}

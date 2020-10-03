@@ -5,16 +5,22 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 import useWindowDimensions from "../../Hooks/useWindowDimensions";
 import MainContext from "../../Contexts/MainContext";
 import Lottie from "react-lottie";
-import Settings from "./Settings";
-import Home from "./Home";
-import Espelho from "./Espelho";
 import SideBar from "../../Components/SideBar";
 import api from "../../Services/api";
 import { USER_INFO } from "../../Services/Endpoints";
+import { checkIfAdmin } from "../../Functions";
+import { BsChevronDoubleRight, BsChevronDoubleLeft } from "react-icons/bs";
 
+import Home from "./Home";
+import Espelho from "./Espelho";
+import Settings from "./Settings";
+import Usuarios from "./Usuarios";
+
+//Logos
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
 const JUST_LOGO = require("../../Assets/images/just_logo.png");
 
+//Animation
 const LOADING_CLOCK = require("../../Assets/animations/loading-clock.json");
 
 interface DashboardProps {
@@ -22,17 +28,25 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ match }) => {
-    const { token, setCurrentLoggedUserId } = useContext(MainContext);
+    const {
+        token,
+        setCurrentLoggedUserId,
+        sideNavOpen,
+        setSideNavOpen,
+    } = useContext(MainContext);
 
-    const [loggedUserInfo, setLoggedUserInfo] = useState({});
-    const [isLoadingInfo, setIsLoadingInfo] = useState(true);
+    const [loggedUserInfo, setLoggedUserInfo] = useState({
+        perfis: ["ADMIN"],
+    });
+    const [isLoadingInfo, setIsLoadingInfo] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(true);
 
     const { width } = useWindowDimensions();
     let { path } = useRouteMatch();
 
     useEffect(() => {
         document.title = "Marca Ponto - Dashboard";
-        getLoggedUserInfo();
+        // getLoggedUserInfo();
     }, []);
 
     const getLoggedUserInfo = async () => {
@@ -41,10 +55,13 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
             .then((response) => {
                 const { username, colaboradorId, perfis } = response.data;
 
+                //Check if is Admin
+                setIsAdmin(checkIfAdmin(perfis));
+
                 //Save ID to localStorage
                 setCurrentLoggedUserId(colaboradorId);
 
-                setLoggedUserInfo({ username, colaboradorId, perfis });
+                // setLoggedUserInfo({ username, colaboradorId, perfis });
                 setIsLoadingInfo(false);
             });
     };
@@ -52,37 +69,36 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
     // TODO -> Criar logo em versão white
 
     return (
-        <Switch>
-            <div className="dashboard__wrapper">
-                <div className="dashboard__content">
-                    <div className="content__sidebar">
-                        <div className="sidebar__logo">
-                            <img
-                                src={width < 992 ? JUST_LOGO : LOGO}
-                                alt="Marca Ponto"
-                                className={width < 992 ? "img__smaller" : ""}
-                            />
-                        </div>
-
-                        <div className="sidebar__menu">
-                            {isLoadingInfo ? (
-                                <Lottie
-                                    options={{
-                                        loop: true,
-                                        animationData: LOADING_CLOCK,
-                                    }}
-                                    height={150}
-                                    width={150}
-                                />
-                            ) : (
-                                <SideBar type="USER" />
-                            )}
-                        </div>
+        <div className="dashboard__wrapper">
+            <div className="dashboard__content">
+                <div
+                    className={`content__sidebar ${
+                        !sideNavOpen ? "side__closed" : ""
+                    }`}
+                >
+                    <div className="sidebar__logo">
+                        <img
+                            src={width < 992 || !sideNavOpen ? JUST_LOGO : LOGO}
+                            alt="Marca Ponto"
+                            className={width < 992 ? "img__smaller" : ""}
+                        />
                     </div>
 
-                    <div className="content__main">
-                        <NavBarInterna data={loggedUserInfo} />
-
+                    <div
+                        className={`sidebar__menu ${
+                            !sideNavOpen ? "side__closed" : ""
+                        }`}
+                    >
+                        <div
+                            className="menu__toggle"
+                            onClick={() => setSideNavOpen(!sideNavOpen)}
+                        >
+                            {!sideNavOpen ? (
+                                <BsChevronDoubleRight color="#fff" size={25} />
+                            ) : (
+                                <BsChevronDoubleLeft color="#fff" size={25} />
+                            )}
+                        </div>
                         {isLoadingInfo ? (
                             <Lottie
                                 options={{
@@ -93,8 +109,40 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                 width={150}
                             />
                         ) : (
-                            <>
-                                <Route path={path} component={Home} exact />
+                            <SideBar type={loggedUserInfo} />
+                        )}
+                    </div>
+                </div>
+
+                <div
+                    className={`content__main ${
+                        !sideNavOpen ? "side__closed" : ""
+                    }`}
+                >
+                    <NavBarInterna data={loggedUserInfo} />
+
+                    {isLoadingInfo ? (
+                        <Lottie
+                            options={{
+                                loop: true,
+                                animationData: LOADING_CLOCK,
+                            }}
+                            height={150}
+                            width={150}
+                        />
+                    ) : (
+                        <>
+                            <Switch>
+                                <Route
+                                    path={path}
+                                    exact
+                                    render={(props) => (
+                                        <Home
+                                            data={loggedUserInfo}
+                                            {...props}
+                                        />
+                                    )}
+                                />
                                 <Route
                                     path={`${path}/settings`}
                                     component={Settings}
@@ -105,12 +153,20 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                     component={Espelho}
                                     exact
                                 />
-                            </>
-                        )}
-                    </div>
+
+                                {isAdmin && (
+                                    <Route
+                                        path={`${path}/usuarios`}
+                                        component={Usuarios}
+                                        exact
+                                    />
+                                )}
+                            </Switch>
+                        </>
+                    )}
                 </div>
             </div>
-        </Switch>
+        </div>
     );
 };
 export default Dashboard;

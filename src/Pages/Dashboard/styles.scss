@@ -19,6 +19,27 @@
             display: flex;
             flex-direction: column;
             transition: width .2s linear;
+            z-index: 3;
+
+            &.side__closed {
+                width: 70px;
+
+                &::before {
+                    content: none
+                }
+
+                .sidebar__logo {
+                    img {
+                        width: 70px;
+                    }
+                }
+
+                .sidebar__menu {
+                    .menu__toggle {
+                        right: 20px;
+                    }
+                }
+            }
 
             .sidebar__logo {
                 flex: 1;
@@ -36,7 +57,21 @@
             }
 
             .sidebar__menu {
-                flex: 3;
+                flex: 4;
+                position: relative;
+                transition: width .2s linear;
+
+                .menu__toggle {
+                    position: absolute;
+                    bottom: 10px;
+                    right: 40px;
+                    cursor: pointer;
+                    display: none;
+
+                    @include sm {
+                        display: block;
+                    }
+                }
 
                 ul {
                     li {
@@ -89,6 +124,12 @@
             width: calc(100% - 70px);
             position: relative;
             padding: 30px 40px;
+
+            &.side__closed {
+                padding: 30px 40px;
+                margin-left: 70px;
+                width: calc(100% - 50px);
+            }
 
             @include max-xxs {
                 padding: 30px 10px;

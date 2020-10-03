@@ -9,6 +9,7 @@ const MainProvider = ({ children }) => {
         setCurrentLoggedUserId,
         removeCurrentLoggedUserId,
     ] = useStorage("colId");
+    const [sideNavOpen, setSideNavOpen] = useStorage("sidebarOpen");
 
     return (
         <MainContext.Provider
@@ -19,6 +20,8 @@ const MainProvider = ({ children }) => {
                 currentLoggedUserId,
                 setCurrentLoggedUserId,
                 removeCurrentLoggedUserId,
+                sideNavOpen,
+                setSideNavOpen,
             }}
         >
             {children}

@@ -7,6 +7,8 @@ const MainContext = createContext({
     currentLoggedUserId: null,
     setCurrentLoggedUserId: (id) => {},
     removeCurrentLoggedUserId: (id) => {},
+    sideNavOpen: true,
+    setSideNavOpen: (status) => {},
 });
 
 export default MainContext;

@@ -31,14 +31,18 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
         setIsLoadingPonto(true);
 
         const newPontoData = {
-            colaboradorId,
-            data: getTodayDate().toString(),
+            manual: true,
+            colaboradorId: 1,
+            data: "02/10/2020",
             horario: datePonto.toString(),
         };
 
         await api
             .post(MARCAR_PONTO, newPontoData, {
-                headers: { Authorization: token },
+                headers: {
+                    Authorization: token,
+                    "Access-Control-Allow-Origin": "*",
+                },
             })
             .then((response) => {
                 console.log(response.data);
@@ -50,7 +54,7 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
                 setIsLoadingPonto(false);
             })
             .catch((err) => {
-                console.log(err.response.data);
+                console.log(err);
                 showToast("ERROR", `Ops 😐, algo deu errado`);
 
                 setIsLoadingPonto(false);

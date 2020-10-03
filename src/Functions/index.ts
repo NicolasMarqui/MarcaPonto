@@ -53,17 +53,23 @@ export const getTodayInfo = () => {
 
 export const getTodayDate = () => {
     let now = new Date();
-    return `${now.getDate()}/${
-        now.getMonth() < 10 ? "0" + (now.getMonth() + 1) : now.getMonth() + 1
+    return `${now.getDate() < 1}/${
+        now.getMonth() + 1 < 10
+            ? "0" + (now.getMonth() + 1)
+            : now.getMonth() + 1
     }/${now.getFullYear()}`;
 };
 
 export const handleUndefined = (item: any) => {
     return item === undefined || item === null || !item
-        ? "-"
+        ? "Tester"
         : CapitalizeString(item);
 };
 
 export const CapitalizeString = (s: string) => {
     return s.toString().charAt(0).toUpperCase() + s.slice(1);
+};
+
+export const checkIfAdmin = (arr: [string]) => {
+    return arr.includes("ADMIN") || arr.includes("admin") ? true : false;
 };

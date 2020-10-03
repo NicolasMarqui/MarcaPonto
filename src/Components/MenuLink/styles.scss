@@ -8,6 +8,22 @@
     padding: 10px;
     position: relative;
 
+    .link__popover {
+        position: absolute;
+        right: -204px;
+        bottom: -7px;
+        background-color: #222;
+        padding: 17px 20px;
+        z-index: 3;
+        width: 200px;
+        border-radius: 17px;
+        visibility: hidden;
+
+        p {
+            color: #fff;
+        }
+    }
+
     &.active {
         &::before {
             content: '';
@@ -43,6 +59,31 @@
             text-decoration: none;
             color: #fff;
             display: none;
+        }
+    }
+
+    &.link__reduced {
+        padding: 10px;
+        justify-content: center;
+
+        .link__text {
+            p {
+                text-decoration: none;
+                color: #fff;
+                display: none;
+            }
+        }
+
+        .link__popover {
+            visibility: hidden;
+        }
+
+        &:hover {
+            @include sm {
+                .link__popover {
+                    visibility: visible;
+                }
+            }
         }
     }
 
