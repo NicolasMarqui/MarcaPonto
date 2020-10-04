@@ -14,6 +14,12 @@ $screen-xxl-min: 2000px;
     }
 }
 
+@mixin max-xs {
+    @media (max-width: #{$screen-xs-min}) {
+        @content;
+    }
+}
+
 @mixin xxs {
     @media (min-width: #{$screen-xxs-min}) {
         @content;

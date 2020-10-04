@@ -18,7 +18,9 @@ interface MarcarPontoProps {
 }
 
 const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
-    const { token } = useContext(MainContext);
+    const { token, setIsModalPontoOpen, setPontoStatus } = useContext(
+        MainContext
+    );
 
     const [isLoadingPonto, setIsLoadingPonto] = useState(false);
 
@@ -37,28 +39,40 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
             horario: datePonto.toString(),
         };
 
-        await api
-            .post(MARCAR_PONTO, newPontoData, {
-                headers: {
-                    Authorization: token,
-                    "Access-Control-Allow-Origin": "*",
-                },
-            })
-            .then((response) => {
-                console.log(response.data);
-                showToast(
-                    "SUCCESS",
-                    `Ponto batido com sucesso ás ${datePonto} do dia ${getTodayDate()}`
-                );
+        setPontoStatus("SUCCESS");
 
-                setIsLoadingPonto(false);
-            })
-            .catch((err) => {
-                console.log(err);
-                showToast("ERROR", `Ops 😐, algo deu errado`);
+        showToast(
+            "SUCCESS",
+            `Ponto batido com sucesso ás ${datePonto} do dia ${getTodayDate()}`,
+            { onClose: () => setIsModalPontoOpen(false) }
+        );
 
-                setIsLoadingPonto(false);
-            });
+        setIsLoadingPonto(false);
+
+        setIsModalPontoOpen(true);
+
+        // await api
+        //     .post(MARCAR_PONTO, newPontoData, {
+        //         headers: {
+        //             Authorization: token,
+        //             "Access-Control-Allow-Origin": "*",
+        //         },
+        //     })
+        //     .then((response) => {
+        //         console.log(response.data);
+        //         showToast(
+        //             "SUCCESS",
+        //             `Ponto batido com sucesso ás ${datePonto} do dia ${getTodayDate()}`
+        //         );
+
+        //         setIsLoadingPonto(false);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //         showToast("ERROR", `Ops 😐, algo deu errado`);
+
+        //         setIsLoadingPonto(false);
+        //     });
     };
 
     return (

@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -14,8 +13,8 @@
     "axios": "^0.20.0",
     "formik": "^2.1.5",
     "js-cookie": "^2.2.1",
-    "material-table": "^1.69.0",
     "node-sass": "^4.14.1",
+    "rc-table": "^7.10.0",
     "react": "^16.13.1",
     "react-datepicker": "^3.2.2",
     "react-dom": "^16.13.1",

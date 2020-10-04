@@ -3,10 +3,11 @@ import "./styles.scss";
 import Card from "../Card";
 import { Link } from "react-router-dom";
 import MarcarPonto from "../MarcarPonto";
-import { FaCog } from "react-icons/fa";
 import { ImBook } from "react-icons/im";
 import MainContext from "../../Contexts/MainContext";
 import AdminInfo from "../AdminInfo";
+import CustomTable from "../CustomTable";
+import { LatestPointsColums, LatestPointsData } from "../../Services/MockData";
 
 interface AdminRenderProps {}
 
@@ -55,20 +56,15 @@ const AdminRender: React.FC<AdminRenderProps> = () => {
             </div>
             <div className="adm__firstRow">
                 <div className="adm__gd-ponto">
-                    <Card>
+                    <Card height="height-100p">
                         <MarcarPonto colaboradorId={currentLoggedUserId} />
                     </Card>
                 </div>
 
                 <div className="adm__ls-row">
                     <div className="adm__gg-users">
-                        <Card>
-                            <h3>Últimos Usuários</h3>
-                            <p>Table Aqui</p>
-
-                            <Link to="/dashboard/usuarios" className="bt">
-                                + Cadastrar
-                            </Link>
+                        <Card height="height-100p">
+                            <p>Usuários</p>
                         </Card>
                     </div>
                 </div>

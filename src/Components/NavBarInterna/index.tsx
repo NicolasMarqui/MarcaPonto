@@ -16,7 +16,7 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
     );
 
     const handleLogout = () => {
-        showToast("SUCCESS", "Você foi deslogado com sucesso");
+        showToast("SUCCESS", "Você foi deslogado com sucesso", {});
         removeToken("token");
     };
 

@@ -1,35 +1,19 @@
-import React, { useEffect } from "react";
-import MaterialTable from "material-table";
+import React from "react";
+import "./styles.scss";
+import Table from "rc-table";
 
 interface CustomTableProps {
-    tableTitle: string;
     tableData: any;
     tableColumns: any;
-    exportData?: boolean;
-    filter?: boolean;
-    searchData?: boolean;
+    tableLayout?: string;
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({
-    tableTitle,
     tableData,
     tableColumns,
-    exportData = false,
-    filter = false,
-    searchData = false,
+    tableLayout = "auto",
 }) => {
-    return (
-        <MaterialTable
-            title={tableTitle}
-            data={tableData}
-            columns={tableColumns}
-            options={{
-                exportButton: exportData,
-                filtering: filter,
-                search: searchData,
-            }}
-        />
-    );
+    return <Table data={tableData} columns={tableColumns} />;
 };
 
 export default CustomTable;

@@ -58,13 +58,14 @@ const Login: React.FC = () => {
                                             setIsLoading(false);
                                             showToast(
                                                 "ERROR",
-                                                "Usuário ou senha incorretos :("
+                                                "Usuário ou senha incorretos :(",
+                                                {}
                                             );
                                         }
                                     })
                                     .catch((err) => {
                                         setIsLoading(false);
-                                        showToast("ERROR", err);
+                                        showToast("ERROR", err, {});
                                     });
                             }}
                             validate={(values) => {

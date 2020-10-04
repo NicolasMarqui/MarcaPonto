@@ -1,0 +1,78 @@
+@import '../../Styles/responsive';
+
+.modal__wrapper {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+
+    .modal__close {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        cursor: pointer;
+
+        &:hover {
+            svg {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .modal__content {
+        width: 90%;
+        background-color: #fff;
+        border-radius: 25px;
+
+        svg {
+            opacity: .5;
+        }
+
+        h4 {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            color: #222;
+            font-weight: 700;
+            font-size: 2rem;
+            text-align: center;
+            z-index: 3;
+        }
+
+        .content__type {
+
+            @include max-xs {
+                &>div {
+                    height: 200px !important;
+                    width: auto !important;
+                }
+            }
+
+
+            &.type__error {
+                padding: 40px 0;
+            }
+        }
+
+        @include sm {
+            width: 50%;
+
+            h4 {
+                font-size: 3rem;
+                left: 50%;
+                right: auto;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}

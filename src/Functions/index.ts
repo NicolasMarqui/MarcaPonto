@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const showToast = (type = "SUCCESS", text = "-") => {
+export const showToast = (type = "SUCCESS", text = "-", { ...options }) => {
     if (type === "SUCCESS") {
-        return toast.success(text);
+        return toast.success(text, { ...options });
     } else if (type === "ERROR") {
         return toast.error(text);
     } else if (type === "WARNING") {
@@ -53,7 +53,7 @@ export const getTodayInfo = () => {
 
 export const getTodayDate = () => {
     let now = new Date();
-    return `${now.getDate() < 1}/${
+    return `${now.getDate() < 10 ? "0" + now.getDate() : now.getDate()}/${
         now.getMonth() + 1 < 10
             ? "0" + (now.getMonth() + 1)
             : now.getMonth() + 1

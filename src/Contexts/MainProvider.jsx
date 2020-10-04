@@ -10,6 +10,8 @@ const MainProvider = ({ children }) => {
         removeCurrentLoggedUserId,
     ] = useStorage("colId");
     const [sideNavOpen, setSideNavOpen] = useStorage("sidebarOpen");
+    const [isModalPontoOpen, setIsModalPontoOpen] = useStorage("modalPonto");
+    const [pontoStatus, setPontoStatus] = useStorage("pontoStatus");
 
     return (
         <MainContext.Provider
@@ -22,6 +24,10 @@ const MainProvider = ({ children }) => {
                 removeCurrentLoggedUserId,
                 sideNavOpen,
                 setSideNavOpen,
+                isModalPontoOpen,
+                setIsModalPontoOpen,
+                pontoStatus,
+                setPontoStatus,
             }}
         >
             {children}

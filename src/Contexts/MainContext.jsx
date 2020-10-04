@@ -9,6 +9,10 @@ const MainContext = createContext({
     removeCurrentLoggedUserId: (id) => {},
     sideNavOpen: true,
     setSideNavOpen: (status) => {},
+    isModalPontoOpen: false,
+    setIsModalPontoOpen: (status) => {},
+    pontoStatus: "SUCCESS",
+    setPontoStatus: (stat) => {},
 });
 
 export default MainContext;

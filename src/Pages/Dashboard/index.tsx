@@ -15,6 +15,7 @@ import Home from "./Home";
 import Espelho from "./Espelho";
 import Settings from "./Settings";
 import Usuarios from "./Usuarios";
+import PontoModal from "../../Components/PontoModal";
 
 //Logos
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
@@ -33,6 +34,7 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
         setCurrentLoggedUserId,
         sideNavOpen,
         setSideNavOpen,
+        isModalPontoOpen,
     } = useContext(MainContext);
 
     const [loggedUserInfo, setLoggedUserInfo] = useState({
@@ -120,6 +122,8 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                     }`}
                 >
                     <NavBarInterna data={loggedUserInfo} />
+
+                    {isModalPontoOpen && <PontoModal />}
 
                     {isLoadingInfo ? (
                         <Lottie
