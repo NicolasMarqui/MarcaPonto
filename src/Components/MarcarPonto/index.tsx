@@ -35,44 +35,51 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
         const newPontoData = {
             manual: true,
             colaboradorId: 1,
-            data: "02/10/2020",
+            data: "03/10/2020",
             horario: datePonto.toString(),
         };
 
-        setPontoStatus("SUCCESS");
+        // setPontoStatus("ERROR");
 
-        showToast(
-            "SUCCESS",
-            `Ponto batido com sucesso ás ${datePonto} do dia ${getTodayDate()}`,
-            { onClose: () => setIsModalPontoOpen(false) }
-        );
+        // setIsLoadingPonto(false);
 
-        setIsLoadingPonto(false);
+        // setIsModalPontoOpen(true);
 
-        setIsModalPontoOpen(true);
+        await api
+            .post(MARCAR_PONTO, newPontoData, {
+                headers: {
+                    Authorization: token,
+                    "Access-Control-Allow-Origin": "*",
+                },
+            })
+            .then((response) => {
+                console.log(response.data);
 
-        // await api
-        //     .post(MARCAR_PONTO, newPontoData, {
-        //         headers: {
-        //             Authorization: token,
-        //             "Access-Control-Allow-Origin": "*",
-        //         },
-        //     })
-        //     .then((response) => {
-        //         console.log(response.data);
-        //         showToast(
-        //             "SUCCESS",
-        //             `Ponto batido com sucesso ás ${datePonto} do dia ${getTodayDate()}`
-        //         );
+                setPontoStatus("SUCCESS");
 
-        //         setIsLoadingPonto(false);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //         showToast("ERROR", `Ops 😐, algo deu errado`);
+                setIsModalPontoOpen(true);
 
-        //         setIsLoadingPonto(false);
-        //     });
+                showToast(
+                    "SUCCESS",
+                    `Ponto batido com sucesso ás ${datePonto} do dia ${getTodayDate()}`,
+                    { onClose: () => setIsModalPontoOpen(false) }
+                );
+
+                setIsLoadingPonto(false);
+            })
+            .catch((err) => {
+                console.log(err);
+
+                setPontoStatus("ERROR");
+
+                setIsModalPontoOpen(true);
+
+                showToast("ERROR", `Ops 😐, algo deu errado`, {
+                    onClose: () => setIsModalPontoOpen(false),
+                });
+
+                setIsLoadingPonto(false);
+            });
     };
 
     return (
