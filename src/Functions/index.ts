@@ -73,3 +73,7 @@ export const CapitalizeString = (s: string) => {
 export const checkIfAdmin = (arr: [string]) => {
     return arr.includes("ADMIN") || arr.includes("admin") ? true : false;
 };
+
+export const getOnlyAmount = (arr: any, amount: number) => {
+    return arr.splice(0, amount);
+};

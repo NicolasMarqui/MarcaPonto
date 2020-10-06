@@ -41,6 +41,17 @@
                 }
             }
 
+            &.side__full__xxs {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 99;
+                display: block;
+                width: 200px;
+            }
+
             .sidebar__logo {
                 flex: 1;
                 margin-top: 20px;
@@ -86,6 +97,7 @@
 
             @include max-xxs {
                 width: 50px;
+                display: none;
 
                 .sidebar__logo {
                     img {
@@ -131,10 +143,34 @@
                 width: calc(100% - 50px);
             }
 
+            .open__side__xxs {
+                cursor: pointer;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                display: none;
+
+                @include max-xxs {
+                    display: block;
+                }
+            }
+
+            .close__side__xxs {
+                cursor: pointer;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                display: none;
+
+                @include max-xxs {
+                    display: block;
+                }
+            }
+
             @include max-xxs {
                 padding: 30px 10px;
-                margin-left: 50px;
-                width: calc(100% - 50px);
+                margin-left: 0 !important;
+                width: 100% !important;
             }
 
             @include sm {

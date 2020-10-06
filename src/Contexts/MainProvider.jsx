@@ -12,6 +12,7 @@ const MainProvider = ({ children }) => {
     const [sideNavOpen, setSideNavOpen] = useStorage("sidebarOpen");
     const [isModalPontoOpen, setIsModalPontoOpen] = useStorage("modalPonto");
     const [pontoStatus, setPontoStatus] = useStorage("pontoStatus");
+    const [showNavBarXs, setShowNavBarXs] = useStorage("sideNavXXS");
 
     return (
         <MainContext.Provider
@@ -28,6 +29,8 @@ const MainProvider = ({ children }) => {
                 setIsModalPontoOpen,
                 pontoStatus,
                 setPontoStatus,
+                showNavBarXs,
+                setShowNavBarXs,
             }}
         >
             {children}

@@ -58,61 +58,68 @@
 
 .form__inputs {
     margin-top: 20px;
+}
 
-    .form__group {
-        width: 70%;
-        margin: 20px auto;
-        position: relative;
+.form__group {
+    width: 70%;
+    margin: 20px auto;
+    position: relative;
 
-        &.not__centered {
-            margin: 20px 0;
+    &.not__centered {
+        margin: 20px 0;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .form__error {
+        border: 1px solid red;
+        padding: 10px 30px;
+        position: absolute;
+        top: -23px;
+        color: #fff;
+        right: -135px;
+        background-color: red;
+
+        p {
+            text-align: center;
         }
 
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .form__error {
-            border: 1px solid red;
-            padding: 10px 30px;
+        &::before {
+            content: '';
+            width: 0;
             position: absolute;
-            top: -23px;
-            color: #fff;
-            right: -135px;
-            background-color: red;
-
-            p {
-                text-align: center;
-            }
-
-            &::before {
-                content: '';
-                width: 0;
-                position: absolute;
-                bottom: -7px;
-                left: 8px;
-                height: 0;
-                border-style: solid;
-                border-width: 6px 6px 0 6px;
-                border-color: #ff0000 transparent transparent transparent;
-            }
+            bottom: -7px;
+            left: 8px;
+            height: 0;
+            border-style: solid;
+            border-width: 6px 6px 0 6px;
+            border-color: #ff0000 transparent transparent transparent;
         }
+    }
 
+    input {
+        width: 100%;
+        padding: 10px;
+        background-color: $grey;
+        border: none;
+
+        &.hasError {
+            border: 1px solid $red;
+        }
+    }
+
+    &.group__date {
         input {
-            width: 100%;
-            padding: 10px;
-            background-color: $grey;
-            border: none;
-
-            &.hasError {
-                border: 1px solid $red;
-            }
+            padding: 0;
+            background-color: #fff;
         }
+    }
 
-        .bt {
-            width: 80%;
-            margin-top: 40px;
-        }
+    .bt {
+        width: 80%;
+        margin-top: 40px;
     }
 }

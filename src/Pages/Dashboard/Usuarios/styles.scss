@@ -1,0 +1,27 @@
+.usuarios__wrapper {
+
+    .table__wrapper,
+    .animation__wrapper {
+        margin-top: 40px;
+        position: relative;
+    }
+
+    .table__wrapper {
+        .rdt_TableHeader {
+            position: relative;
+            padding-left: 0;
+        }
+
+        .usuarios__header {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 20;
+
+            a.bt {
+                width: 100%;
+                margin: 0;
+            }
+        }
+    }
+}

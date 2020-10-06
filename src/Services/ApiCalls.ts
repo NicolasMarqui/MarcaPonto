@@ -45,7 +45,11 @@ export async function insertNewColaborador(token: string, data: any) {
     await api
         .post(INSERT_COLABORADORES, { headers: { Authorization: token } }, data)
         .then((response) => {
-            return response;
+            return {
+                statusType: "SUCCESS",
+                text: "Colaborador adicionado com sucesso 😁",
+                response,
+            };
         })
         .catch((err) => {
             return err;

@@ -7,7 +7,13 @@ import { ImBook } from "react-icons/im";
 import MainContext from "../../Contexts/MainContext";
 import AdminInfo from "../AdminInfo";
 import CustomTable from "../CustomTable";
-import { LatestPointsColums, LatestPointsData } from "../../Services/MockData";
+import {
+    LatestPointsColums,
+    LatestPointsData,
+    UsuariosData,
+} from "../../Services/MockData";
+import DataTable from "react-data-table-component";
+import { ColumsTableUser } from "../../Services/TableColumns";
 
 interface AdminRenderProps {}
 
@@ -63,9 +69,13 @@ const AdminRender: React.FC<AdminRenderProps> = () => {
 
                 <div className="adm__ls-row">
                     <div className="adm__gg-users">
-                        <Card height="height-100p">
-                            <p>Usuários</p>
-                        </Card>
+                        <DataTable
+                            striped={true}
+                            title="Últimos usuários cadastrados"
+                            data={UsuariosData}
+                            columns={ColumsTableUser}
+                            responsive={true}
+                        />
                     </div>
                 </div>
             </div>

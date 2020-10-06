@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
 import { BiBell } from "react-icons/bi";

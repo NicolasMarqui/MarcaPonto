@@ -11,10 +11,10 @@ interface MenuLinkProps {
 }
 
 const MenuLink: React.FC<MenuLinkProps> = ({ icon, text, link, from }) => {
-    const { sideNavOpen } = useContext(MainContext);
+    const { sideNavOpen, setShowNavBarXs } = useContext(MainContext);
 
     return (
-        <Link to={`/${from}${link}`}>
+        <Link to={`/${from}${link}`} onClick={() => setShowNavBarXs(false)}>
             <div
                 className={`link__wrapper ${
                     !sideNavOpen ? "link__reduced" : ""

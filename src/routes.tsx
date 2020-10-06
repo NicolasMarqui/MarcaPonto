@@ -10,7 +10,7 @@ import PrivateRoute from "./Services/PrivateRoute";
 const Routes = () => (
     <BrowserRouter>
         <ToastContainer
-            position="top-right"
+            position="bottom-right"
             autoClose={5000}
             hideProgressBar={false}
             pauseOnHover={false}

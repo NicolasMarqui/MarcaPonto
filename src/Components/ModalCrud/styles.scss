@@ -1,0 +1,57 @@
+@import '../../Styles/responsive';
+
+.modal__crud--wrapper {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+
+    .modal__close {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        cursor: pointer;
+
+        &:hover {
+            svg {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .modal__content {
+        width: 90%;
+        background-color: #fff;
+        border-radius: 25px;
+        padding: 40px 20px;
+
+        @include sm {
+            width: 27%;
+        }
+
+        form {
+            .form__group {
+                margin: 15px auto;
+                width: 80%;
+
+
+                label {
+                    font-weight: 700;
+                }
+
+                .bt {
+                    margin-top: 20px;
+                }
+            }
+
+        }
+    }
+}

@@ -16,6 +16,8 @@ import Espelho from "./Espelho";
 import Settings from "./Settings";
 import Usuarios from "./Usuarios";
 import PontoModal from "../../Components/PontoModal";
+import { BiMenuAltLeft } from "react-icons/bi";
+import { IoMdCloseCircle } from "react-icons/io";
 
 //Logos
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
@@ -35,6 +37,8 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
         sideNavOpen,
         setSideNavOpen,
         isModalPontoOpen,
+        showNavBarXs,
+        setShowNavBarXs,
     } = useContext(MainContext);
 
     const [loggedUserInfo, setLoggedUserInfo] = useState({
@@ -76,7 +80,7 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                 <div
                     className={`content__sidebar ${
                         !sideNavOpen ? "side__closed" : ""
-                    }`}
+                    } ${showNavBarXs ? "side__full__xxs" : ""}`}
                 >
                     <div className="sidebar__logo">
                         <img
@@ -122,6 +126,22 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                     }`}
                 >
                     <NavBarInterna data={loggedUserInfo} />
+
+                    <div
+                        className="open__side__xxs"
+                        onClick={() => setShowNavBarXs(true)}
+                    >
+                        <BiMenuAltLeft size={30} />
+                    </div>
+
+                    {showNavBarXs && (
+                        <div
+                            className="close__side__xxs"
+                            onClick={() => setShowNavBarXs(false)}
+                        >
+                            <IoMdCloseCircle size={30} />
+                        </div>
+                    )}
 
                     {isModalPontoOpen && <PontoModal />}
 

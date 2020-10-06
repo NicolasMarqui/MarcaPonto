@@ -1,6 +1,5 @@
 import React from "react";
 import "./styles.scss";
-import Table from "rc-table";
 
 interface CustomTableProps {
     tableData: any;
@@ -11,9 +10,31 @@ interface CustomTableProps {
 const CustomTable: React.FC<CustomTableProps> = ({
     tableData,
     tableColumns,
-    tableLayout = "auto",
 }) => {
-    return <Table data={tableData} columns={tableColumns} />;
+    return (
+        <table>
+            <thead>
+                <tr>
+                    {tableColumns.map((col: any) => (
+                        <td>{col.title}</td>
+                    ))}
+                </tr>
+            </thead>
+            <tbody>
+                {tableData.map((row: any) => (
+                    <tr>
+                        <td>{row.nome}</td>
+                        <td>{row.entrada}</td>
+                        <td>{row.inicio_intervalo}</td>
+                        <td>{row.retorno_intervalo}</td>
+                        <td>{row.saida}</td>
+                        <td>{row.data}</td>
+                        <td>{row.observacoes}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    );
 };
 
 export default CustomTable;

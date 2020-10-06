@@ -115,6 +115,11 @@ header.header__nav-interna {
                 .bt {
                     display: block;
                     width: auto;
+                    background-color: $black;
+
+                    &:hover {
+                        background-color: lighten($black, 10%);
+                    }
                 }
             }
         }

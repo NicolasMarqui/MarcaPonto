@@ -12,7 +12,11 @@
 
     .adm__firstRow {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+
+        @include lg {
+            flex-direction: row;
+        }
 
         .adm__gd-ponto {
             flex: 1;
@@ -35,7 +39,13 @@
 
         .adm__ls-row {
             flex: 3;
-            height: 100%;
+            max-height: 400px;
+            padding: 10px;
+
+            .adm__gg-users {
+                height: 100%;
+                overflow: auto;
+            }
         }
     }
 }

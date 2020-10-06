@@ -13,6 +13,8 @@ const MainContext = createContext({
     setIsModalPontoOpen: (status) => {},
     pontoStatus: "SUCCESS",
     setPontoStatus: (stat) => {},
+    showNavBarXs: false,
+    setShowNavBarXs: (status) => {},
 });
 
 export default MainContext;

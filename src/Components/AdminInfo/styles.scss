@@ -1,3 +1,5 @@
+@import '../../Styles/responsive';
+
 .adm__info {
     background-color: #F2F2F2;
     padding: 10px;
@@ -6,10 +8,6 @@
     border-radius: 17px;
     margin: 10px 10px 5px;
     flex: 1;
-
-    &:first-child {
-        margin-left: 0;
-    }
 
     &>a {
         display: flex;
@@ -26,7 +24,7 @@
             border-radius: 14px;
             height: 100%;
             // margin-right: 30px;
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             padding: 10px;
@@ -39,6 +37,7 @@
         .info__amount {
             flex: 2;
             padding: 10px 20px;
+            text-align: center;
 
             h4 {
                 font-size: 30px;
@@ -50,6 +49,20 @@
                 color: #222;
                 font-size: 14px;
                 font-weight: 400;
+            }
+        }
+
+        @include sm {
+            &:first-child {
+                margin-left: 0;
+            }
+
+            .info__icon {
+                display: flex;
+            }
+
+            .info__amount {
+                text-align: left;
             }
         }
     }

@@ -87,6 +87,20 @@
         }
     }
 
+    @include max-xxs {
+        &.link__reduced {
+            .link__text {
+                p {
+                    display: block;
+                }
+            }
+
+            .link__icon {
+                margin-right: 10px;
+            }
+        }
+    }
+
     @include sm {
         padding: 10px 10px 10px 40px;
         justify-content: flex-start;
