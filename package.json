@@ -16,6 +16,7 @@
     "node-sass": "^4.14.1",
     "rc-table": "^7.10.0",
     "react": "^16.13.1",
+    "react-content-loader": "^5.1.2",
     "react-data-table-component": "^6.11.5",
     "react-date-picker": "^8.0.3",
     "react-datepicker": "^3.2.2",

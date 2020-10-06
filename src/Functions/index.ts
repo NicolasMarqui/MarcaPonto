@@ -61,9 +61,7 @@ export const getTodayDate = () => {
 };
 
 export const handleUndefined = (item: any) => {
-    return item === undefined || item === null || !item
-        ? "Tester"
-        : CapitalizeString(item);
+    return item === undefined || item === null || !item ? "Tester" : item;
 };
 
 export const CapitalizeString = (s: string) => {

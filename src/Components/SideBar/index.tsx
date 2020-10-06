@@ -29,17 +29,16 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                     link="/"
                 />
             </li>
-            {isGestor ||
-                (isColaborador && (
-                    <li>
-                        <MenuLink
-                            icon={<ImBook color="white" size={24} />}
-                            text="Espelho"
-                            from="dashboard"
-                            link="/espelho"
-                        />
-                    </li>
-                ))}
+            {(isGestor || isColaborador) && (
+                <li>
+                    <MenuLink
+                        icon={<ImBook color="white" size={24} />}
+                        text="Espelho"
+                        from="dashboard"
+                        link="/espelho"
+                    />
+                </li>
+            )}
             {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink

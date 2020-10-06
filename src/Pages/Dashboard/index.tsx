@@ -23,6 +23,8 @@ import PontoModal from "../../Components/PontoModal";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMdCloseCircle } from "react-icons/io";
 import LoadingMarcaPonto from "../../Components/LoadingMarcaPonto";
+import DashSkeleton from "../../Components/Skeletons/Dash";
+import SideBarSkeleton from "../../Components/Skeletons/Side";
 
 //Logos
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
@@ -47,7 +49,7 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
     } = useContext(MainContext);
 
     const [loggedUserInfo, setLoggedUserInfo] = useState({});
-    const [isLoadingInfo, setIsLoadingInfo] = useState(false);
+    const [isLoadingInfo, setIsLoadingInfo] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isGestor, setIsGestor] = useState(false);
     const [isColaborador, setIsColaborador] = useState(false);
@@ -130,14 +132,9 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                 )}
                             </div>
                             {isLoadingInfo ? (
-                                <Lottie
-                                    options={{
-                                        loop: true,
-                                        animationData: LOADING_CLOCK,
-                                    }}
-                                    height={150}
-                                    width={150}
-                                />
+                                <div className="skel__wrapper">
+                                    <SideBarSkeleton />
+                                </div>
                             ) : (
                                 <SideBar type={loggedUserInfo} />
                             )}
@@ -170,14 +167,9 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                         {isModalPontoOpen && <PontoModal />}
 
                         {isLoadingInfo ? (
-                            <Lottie
-                                options={{
-                                    loop: true,
-                                    animationData: LOADING_CLOCK,
-                                }}
-                                height={150}
-                                width={150}
-                            />
+                            <div className="skel__wrapper">
+                                <DashSkeleton />
+                            </div>
                         ) : (
                             <>
                                 <Switch>
