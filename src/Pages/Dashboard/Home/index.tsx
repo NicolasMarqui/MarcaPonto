@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import "./styles.scss";
 import UserRender from "../../../Components/UserRender";
 import { usePosition } from "use-position";
-import { checkIfAdmin } from "../../../Functions";
+import { checkIfAdmin, checkIfGestor } from "../../../Functions";
+import GestorRender from "../../../Components/GestorRender";
 import AdminRender from "../../../Components/AdminRender";
 
 interface HomeProps {
@@ -11,6 +12,7 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ data }) => {
     const isAdmin = checkIfAdmin(data.perfis);
+    const isGestor = checkIfGestor(data.perfis);
 
     useEffect(() => {
         document.title = "Marca Ponto - Dashboard";
@@ -27,7 +29,13 @@ const Home: React.FC<HomeProps> = ({ data }) => {
 
     return (
         <div className="home__wrapper">
-            {isAdmin ? <AdminRender /> : <UserRender />}
+            {isAdmin ? (
+                <AdminRender />
+            ) : isGestor ? (
+                <GestorRender />
+            ) : (
+                <UserRender />
+            )}
         </div>
     );
 };

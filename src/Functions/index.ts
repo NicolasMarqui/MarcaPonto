@@ -74,6 +74,16 @@ export const checkIfAdmin = (arr: [string]) => {
     return arr.includes("ADMIN") || arr.includes("admin") ? true : false;
 };
 
+export const checkIfGestor = (arr: [string]) => {
+    return arr.includes("GESTOR") || arr.includes("gestor") ? true : false;
+};
+
+export const checkIfColaborador = (arr: [string]) => {
+    return arr.includes("COLABORADOR") || arr.includes("colaborador")
+        ? true
+        : false;
+};
+
 export const getOnlyAmount = (arr: any, amount: number) => {
     return arr.splice(0, amount);
 };

@@ -8,7 +8,11 @@ import Lottie from "react-lottie";
 import SideBar from "../../Components/SideBar";
 import api from "../../Services/api";
 import { USER_INFO } from "../../Services/Endpoints";
-import { checkIfAdmin } from "../../Functions";
+import {
+    checkIfAdmin,
+    checkIfColaborador,
+    checkIfGestor,
+} from "../../Functions";
 import { BsChevronDoubleRight, BsChevronDoubleLeft } from "react-icons/bs";
 
 import Home from "./Home";
@@ -18,6 +22,7 @@ import Usuarios from "./Usuarios";
 import PontoModal from "../../Components/PontoModal";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMdCloseCircle } from "react-icons/io";
+import LoadingMarcaPonto from "../../Components/LoadingMarcaPonto";
 
 //Logos
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
@@ -41,18 +46,19 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
         setShowNavBarXs,
     } = useContext(MainContext);
 
-    const [loggedUserInfo, setLoggedUserInfo] = useState({
-        perfis: ["ADMIN"],
-    });
+    const [loggedUserInfo, setLoggedUserInfo] = useState({});
     const [isLoadingInfo, setIsLoadingInfo] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isGestor, setIsGestor] = useState(false);
+    const [isColaborador, setIsColaborador] = useState(false);
+    const [isLoadingAll, setIsLoadingAll] = useState(true);
 
     const { width } = useWindowDimensions();
     let { path } = useRouteMatch();
 
     useEffect(() => {
         document.title = "Marca Ponto - Dashboard";
-        // getLoggedUserInfo();
+        getLoggedUserInfo();
     }, []);
 
     const getLoggedUserInfo = async () => {
@@ -64,11 +70,18 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                 //Check if is Admin
                 setIsAdmin(checkIfAdmin(perfis));
 
+                //Check if is Gestor
+                setIsGestor(checkIfGestor(perfis));
+
+                //Check if is Colaborador
+                setIsColaborador(checkIfColaborador(perfis));
+
                 //Save ID to localStorage
                 setCurrentLoggedUserId(colaboradorId);
 
-                // setLoggedUserInfo({ username, colaboradorId, perfis });
+                setLoggedUserInfo({ username, colaboradorId, perfis });
                 setIsLoadingInfo(false);
+                setIsLoadingAll(false);
             });
     };
 
@@ -76,35 +89,86 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
 
     return (
         <div className="dashboard__wrapper">
-            <div className="dashboard__content">
-                <div
-                    className={`content__sidebar ${
-                        !sideNavOpen ? "side__closed" : ""
-                    } ${showNavBarXs ? "side__full__xxs" : ""}`}
-                >
-                    <div className="sidebar__logo">
-                        <img
-                            src={width < 992 || !sideNavOpen ? JUST_LOGO : LOGO}
-                            alt="Marca Ponto"
-                            className={width < 992 ? "img__smaller" : ""}
-                        />
+            {!isLoadingAll ? (
+                <div className="dashboard__content">
+                    <div
+                        className={`content__sidebar ${
+                            !sideNavOpen ? "side__closed" : ""
+                        } ${showNavBarXs ? "side__full__xxs" : ""}`}
+                    >
+                        <div className="sidebar__logo">
+                            <img
+                                src={
+                                    width < 992 || !sideNavOpen
+                                        ? JUST_LOGO
+                                        : LOGO
+                                }
+                                alt="Marca Ponto"
+                                className={width < 992 ? "img__smaller" : ""}
+                            />
+                        </div>
+
+                        <div
+                            className={`sidebar__menu ${
+                                !sideNavOpen ? "side__closed" : ""
+                            }`}
+                        >
+                            <div
+                                className="menu__toggle"
+                                onClick={() => setSideNavOpen(!sideNavOpen)}
+                            >
+                                {!sideNavOpen ? (
+                                    <BsChevronDoubleRight
+                                        color="#fff"
+                                        size={25}
+                                    />
+                                ) : (
+                                    <BsChevronDoubleLeft
+                                        color="#fff"
+                                        size={25}
+                                    />
+                                )}
+                            </div>
+                            {isLoadingInfo ? (
+                                <Lottie
+                                    options={{
+                                        loop: true,
+                                        animationData: LOADING_CLOCK,
+                                    }}
+                                    height={150}
+                                    width={150}
+                                />
+                            ) : (
+                                <SideBar type={loggedUserInfo} />
+                            )}
+                        </div>
                     </div>
 
                     <div
-                        className={`sidebar__menu ${
+                        className={`content__main ${
                             !sideNavOpen ? "side__closed" : ""
                         }`}
                     >
+                        <NavBarInterna data={loggedUserInfo} />
+
                         <div
-                            className="menu__toggle"
-                            onClick={() => setSideNavOpen(!sideNavOpen)}
+                            className="open__side__xxs"
+                            onClick={() => setShowNavBarXs(true)}
                         >
-                            {!sideNavOpen ? (
-                                <BsChevronDoubleRight color="#fff" size={25} />
-                            ) : (
-                                <BsChevronDoubleLeft color="#fff" size={25} />
-                            )}
+                            <BiMenuAltLeft size={30} />
                         </div>
+
+                        {showNavBarXs && (
+                            <div
+                                className="close__side__xxs"
+                                onClick={() => setShowNavBarXs(false)}
+                            >
+                                <IoMdCloseCircle size={30} />
+                            </div>
+                        )}
+
+                        {isModalPontoOpen && <PontoModal />}
+
                         {isLoadingInfo ? (
                             <Lottie
                                 options={{
@@ -115,81 +179,47 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                 width={150}
                             />
                         ) : (
-                            <SideBar type={loggedUserInfo} />
+                            <>
+                                <Switch>
+                                    <Route
+                                        path={path}
+                                        exact
+                                        render={(props) => (
+                                            <Home
+                                                data={loggedUserInfo}
+                                                {...props}
+                                            />
+                                        )}
+                                    />
+                                    <Route
+                                        path={`${path}/settings`}
+                                        component={Settings}
+                                        exact
+                                    />
+                                    {isGestor ||
+                                        (isColaborador && (
+                                            <Route
+                                                path={`${path}/espelho`}
+                                                component={Espelho}
+                                                exact
+                                            />
+                                        ))}
+
+                                    {(isAdmin || isGestor) && (
+                                        <Route
+                                            path={`${path}/usuarios`}
+                                            component={Usuarios}
+                                            exact
+                                        />
+                                    )}
+                                </Switch>
+                            </>
                         )}
                     </div>
                 </div>
-
-                <div
-                    className={`content__main ${
-                        !sideNavOpen ? "side__closed" : ""
-                    }`}
-                >
-                    <NavBarInterna data={loggedUserInfo} />
-
-                    <div
-                        className="open__side__xxs"
-                        onClick={() => setShowNavBarXs(true)}
-                    >
-                        <BiMenuAltLeft size={30} />
-                    </div>
-
-                    {showNavBarXs && (
-                        <div
-                            className="close__side__xxs"
-                            onClick={() => setShowNavBarXs(false)}
-                        >
-                            <IoMdCloseCircle size={30} />
-                        </div>
-                    )}
-
-                    {isModalPontoOpen && <PontoModal />}
-
-                    {isLoadingInfo ? (
-                        <Lottie
-                            options={{
-                                loop: true,
-                                animationData: LOADING_CLOCK,
-                            }}
-                            height={150}
-                            width={150}
-                        />
-                    ) : (
-                        <>
-                            <Switch>
-                                <Route
-                                    path={path}
-                                    exact
-                                    render={(props) => (
-                                        <Home
-                                            data={loggedUserInfo}
-                                            {...props}
-                                        />
-                                    )}
-                                />
-                                <Route
-                                    path={`${path}/settings`}
-                                    component={Settings}
-                                    exact
-                                />
-                                <Route
-                                    path={`${path}/espelho`}
-                                    component={Espelho}
-                                    exact
-                                />
-
-                                {isAdmin && (
-                                    <Route
-                                        path={`${path}/usuarios`}
-                                        component={Usuarios}
-                                        exact
-                                    />
-                                )}
-                            </Switch>
-                        </>
-                    )}
-                </div>
-            </div>
+            ) : (
+                <LoadingMarcaPonto />
+            )}
         </div>
     );
 };

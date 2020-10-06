@@ -2,7 +2,11 @@ import React from "react";
 import { FaHome, FaCog, FaClipboardCheck, FaUserAlt } from "react-icons/fa";
 import { ImBook } from "react-icons/im";
 import { MdWork } from "react-icons/md";
-import { checkIfAdmin } from "../../Functions";
+import {
+    checkIfAdmin,
+    checkIfColaborador,
+    checkIfGestor,
+} from "../../Functions";
 import { ImBooks } from "react-icons/im";
 import MenuLink from "../MenuLink";
 
@@ -12,6 +16,8 @@ interface SideBarProps {
 
 const SideBar: React.FC<SideBarProps> = ({ type }) => {
     const isAdmin = checkIfAdmin(type.perfis);
+    const isGestor = checkIfGestor(type.perfis);
+    const isColaborador = checkIfColaborador(type.perfis);
 
     return (
         <ul>
@@ -23,15 +29,18 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                     link="/"
                 />
             </li>
-            <li>
-                <MenuLink
-                    icon={<ImBook color="white" size={24} />}
-                    text="Espelho"
-                    from="dashboard"
-                    link="/espelho"
-                />
-            </li>
-            {isAdmin && (
+            {isGestor ||
+                (isColaborador && (
+                    <li>
+                        <MenuLink
+                            icon={<ImBook color="white" size={24} />}
+                            text="Espelho"
+                            from="dashboard"
+                            link="/espelho"
+                        />
+                    </li>
+                ))}
+            {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink
                         icon={<FaClipboardCheck color="white" size={24} />}
@@ -41,7 +50,7 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                     />
                 </li>
             )}
-            {isAdmin && (
+            {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink
                         icon={<MdWork color="white" size={24} />}
@@ -51,7 +60,7 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                     />
                 </li>
             )}
-            {isAdmin && (
+            {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink
                         icon={<FaUserAlt color="white" size={24} />}
@@ -61,7 +70,7 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                     />
                 </li>
             )}
-            {isAdmin && (
+            {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink
                         icon={<FaUserAlt color="white" size={24} />}
@@ -71,7 +80,7 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                     />
                 </li>
             )}
-            {isAdmin && (
+            {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink
                         icon={<ImBooks color="white" size={24} />}
