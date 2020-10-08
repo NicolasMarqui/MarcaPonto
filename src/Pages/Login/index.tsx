@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./styles.scss";
 import { Formik } from "formik";
 import Lottie from "react-lottie";
@@ -8,17 +8,30 @@ import { LOGIN_ENDPOINT } from "../../Services/Endpoints";
 import MainContext from "../../Contexts/MainContext";
 import { useHistory } from "react-router-dom";
 import { showToast } from "../../Functions";
+import queryString from "query-string";
 
 const LOGO_VERTICAL = require("../../Assets/images/logo_vertical.png");
 const LOADING_CLOCK = require("../../Assets/animations/loading-clock.json");
 
 //TODO: handle 401 error
 
-const Login: React.FC = () => {
+interface LoginProps {
+    location: any;
+}
+
+const Login: React.FC<LoginProps> = ({ location }) => {
     const [isLoading, setIsLoading] = useState(false);
     const { setToken } = useContext(MainContext);
 
     const history = useHistory();
+
+    useEffect(() => {
+        const hasStatus = queryString.parse(location.search);
+
+        if (hasStatus && hasStatus.status) {
+            showToast("WARNING", hasStatus.status?.toString(), {});
+        }
+    }, [location.search]);
 
     return (
         <div className="login__wrapper">
@@ -65,6 +78,9 @@ const Login: React.FC = () => {
                                     })
                                     .catch((err) => {
                                         setIsLoading(false);
+                                        history.push(
+                                            "/?status=Verifique se as Informações estão corretas 😞"
+                                        );
                                         showToast("ERROR", err, {});
                                     });
                             }}

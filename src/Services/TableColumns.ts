@@ -1,5 +1,11 @@
 export const ColumsTableUser = [
     {
+        name: "ID",
+        selector: "id",
+        sortable: true,
+        center: true,
+    },
+    {
         name: "Nome",
         selector: "nome",
         sortable: true,

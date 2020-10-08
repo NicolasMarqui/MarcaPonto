@@ -14,8 +14,10 @@
     "formik": "^2.1.5",
     "js-cookie": "^2.2.1",
     "node-sass": "^4.14.1",
+    "query-string": "^6.13.5",
     "rc-table": "^7.10.0",
     "react": "^16.13.1",
+    "react-confirm-alert": "^2.6.2",
     "react-content-loader": "^5.1.2",
     "react-data-table-component": "^6.11.5",
     "react-date-picker": "^8.0.3",
@@ -56,6 +58,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^2.2.6",
+    "@types/query-string": "^6.3.0",
     "@types/react-datepicker": "^3.1.1",
     "@types/react-intl": "^3.0.0",
     "@types/react-lottie": "^1.2.5",

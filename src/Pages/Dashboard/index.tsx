@@ -4,7 +4,6 @@ import NavBarInterna from "../../Components/NavBarInterna";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import useWindowDimensions from "../../Hooks/useWindowDimensions";
 import MainContext from "../../Contexts/MainContext";
-import Lottie from "react-lottie";
 import SideBar from "../../Components/SideBar";
 import api from "../../Services/api";
 import { USER_INFO } from "../../Services/Endpoints";
@@ -29,9 +28,6 @@ import SideBarSkeleton from "../../Components/Skeletons/Side";
 //Logos
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
 const JUST_LOGO = require("../../Assets/images/just_logo.png");
-
-//Animation
-const LOADING_CLOCK = require("../../Assets/animations/loading-clock.json");
 
 interface DashboardProps {
     match: any;

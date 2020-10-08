@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./styles.scss";
 import { Formik } from "formik";
 import Lottie from "react-lottie";
@@ -7,19 +7,44 @@ import "react-datepicker/dist/react-datepicker.css";
 import DataTable from "react-data-table-component";
 import ModalCrud from "../../../Components/ModalCrud";
 import { ColumsTableUser } from "../../../Services/TableColumns";
-import { UsuariosData } from "../../../Services/MockData";
+import { getAllColaboradores } from "../../../Services/ApiCalls";
+import MainContext from "../../../Contexts/MainContext";
+import SelectedColaborador from "../../../Components/RenderSelectedRow/SelectedColaborador";
 
 const LOADING_CLOCK = require("../../../Assets/animations/loading-clock.json");
 const LOADING = require("../../../Assets/animations/loading.json");
 const SUCCESS = require("../../../Assets/animations/success.json");
 
 const Usuarios: React.FC = () => {
+    const { token, openMoreInfo, setOpenMoreInfo } = useContext(MainContext);
+
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingNewCadastro, setIsLoadingNewCadastro] = useState(false);
     const [cadastroDone, setcadastroDone] = useState(false);
     const [cadastroSuccess, setCadastroSuccess] = useState(false);
     const [startDate, setStartDate] = useState(new Date(92, 4));
     const [modalOpen, setModalOpen] = useState(false);
+    const [allColaboradores, setAllColaboradores] = useState([]);
+    const [selectedColaborador, setSelectedColaborador] = useState({});
+
+    useEffect(() => {
+        setOpenMoreInfo(false);
+        getAllC();
+    }, []);
+
+    const getAllC = async () => {
+        setIsLoading(true);
+        const response = await getAllColaboradores(token);
+
+        if (response) {
+            const { status, data } = response;
+
+            if (status === 200 && data.length > 0) {
+                setAllColaboradores(data);
+                setIsLoading(false);
+            }
+        }
+    };
 
     const formValues = {
         nomeCompleto: "",
@@ -30,6 +55,20 @@ const Usuarios: React.FC = () => {
     const closeModal = () => {
         setModalOpen(false);
         return true;
+    };
+
+    const closeModalMoreInfo = () => {
+        setOpenMoreInfo(false);
+        return true;
+    };
+
+    // const handleRowChange = (state: any) => {
+    //     console.log("Selected Rows: ", state.selectedRows);
+    // };
+
+    const showMoreInfo = async (dataFromRow: any) => {
+        setOpenMoreInfo(true);
+        setSelectedColaborador(dataFromRow);
     };
 
     return (
@@ -48,10 +87,13 @@ const Usuarios: React.FC = () => {
                         </div>
                         <DataTable
                             title="Todos os Usuários"
-                            data={UsuariosData}
+                            data={allColaboradores}
                             columns={ColumsTableUser}
                             striped={true}
                             pagination={true}
+                            onRowClicked={showMoreInfo}
+                            pointerOnHover={true}
+                            highlightOnHover={true}
                         />
                     </div>
                 ) : (
@@ -59,12 +101,17 @@ const Usuarios: React.FC = () => {
                         <Lottie
                             options={{
                                 loop: true,
-                                animationData: LOADING_CLOCK,
+                                animationData: LOADING,
                             }}
                             height={150}
                             width={150}
                         />
-                        <p>Carregando...</p>
+                        <h2>
+                            Estamos carregando seus dados{" "}
+                            <span role="img" aria-label="Whoops">
+                                🧐
+                            </span>{" "}
+                        </h2>
                     </div>
                 )}
             </div>
@@ -175,6 +222,16 @@ const Usuarios: React.FC = () => {
                             height={150}
                             width={150}
                         />
+                    )}
+                </ModalCrud>
+            )}
+
+            {openMoreInfo && (
+                <ModalCrud onClose={closeModalMoreInfo}>
+                    {selectedColaborador ? (
+                        <SelectedColaborador data={selectedColaborador} />
+                    ) : (
+                        ""
                     )}
                 </ModalCrud>
             )}

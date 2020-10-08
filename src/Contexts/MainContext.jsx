@@ -15,6 +15,8 @@ const MainContext = createContext({
     setPontoStatus: (stat) => {},
     showNavBarXs: false,
     setShowNavBarXs: (status) => {},
+    openMoreInfo: false,
+    setOpenMoreInfo: (status) => {},
 });
 
 export default MainContext;

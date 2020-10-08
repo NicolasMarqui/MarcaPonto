@@ -19,7 +19,7 @@ const Routes = () => (
             rtl={false}
         />
         <Switch>
-            <Route path="/" exact component={Login} />
+            <Route path="/" exact render={(props) => <Login {...props} />} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <Route component={NotFound} />
         </Switch>

@@ -26,13 +26,14 @@ import {
 } from "./Endpoints";
 
 // COLABORADORES ==================================================================
-export async function getAllColaboradores(token: string) {
+export async function getAllColaboradores(token: string | null) {
     if (!token) return false;
 
-    await api
+    return await api
         .get(ALL_COLABORADORES, { headers: { Authorization: token } })
         .then((response) => {
-            return response;
+            const returnInfo = { status: response.status, data: response.data };
+            return returnInfo;
         })
         .catch((err) => {
             return err;
@@ -71,11 +72,15 @@ export async function getColaboradorById(token: string, id: number) {
         });
 }
 
-export async function updateColaboradorById(token: string, id: number) {
+export async function updateColaboradorById(
+    token: string | null,
+    id: number,
+    data: any
+) {
     if (!token) return false;
 
-    await api
-        .put(`${ALL_COLABORADORES}/${id}`, {
+    return await api
+        .put(`${ALL_COLABORADORES}/${id}`, data, {
             headers: { Authorization: token },
         })
         .then((response) => {
@@ -86,10 +91,10 @@ export async function updateColaboradorById(token: string, id: number) {
         });
 }
 
-export async function deleteColaboradorById(token: string, id: number) {
+export async function deleteColaboradorById(token: string | null, id: number) {
     if (!token) return false;
 
-    await api
+    return await api
         .delete(`${ALL_COLABORADORES}/${id}`, {
             headers: { Authorization: token },
         })
@@ -149,10 +154,10 @@ export async function allDiasDaSemana(token: string) {
 }
 
 // EXPEDIENTE =============================================================
-export async function getAllExpediente(token: string) {
+export async function getAllExpediente(token: string | null) {
     if (!token) return false;
 
-    await api
+    return await api
         .get(ALL_EXPEDIENTE, { headers: { Authorization: token } })
         .then((response) => {
             return response;
@@ -175,10 +180,10 @@ export async function insertNewExpediente(token: string, data: any) {
         });
 }
 
-export async function getExpedienteById(token: string, id: number) {
+export async function getExpedienteById(token: string | null, id: number) {
     if (!token) return false;
 
-    await api
+    return await api
         .get(`${ALL_EXPEDIENTE}/${id}`, {
             headers: { Authorization: token },
         })
@@ -254,10 +259,10 @@ export async function getExpedientesByStatus(token: string, status: boolean) {
 }
 
 // FUNÇAO ==========================================================================
-export async function getAllFuncoes(token: string) {
+export async function getAllFuncoes(token: string | null) {
     if (!token) return false;
 
-    await api
+    return await api
         .get(ALL_FUNCAO, { headers: { Authorization: token } })
         .then((response) => {
             return response;
@@ -280,10 +285,10 @@ export async function insertNewFuncao(token: string, data: any) {
         });
 }
 
-export async function getFuncaoById(token: string, id: number) {
+export async function getFuncaoById(token: string | null, id: number) {
     if (!token) return false;
 
-    await api
+    return await api
         .get(`${ALL_FUNCAO}/${id}`, {
             headers: { Authorization: token },
         })
