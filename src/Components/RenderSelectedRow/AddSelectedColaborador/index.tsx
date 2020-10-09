@@ -264,7 +264,7 @@ const AddSelectedColaborador: React.FC = () => {
                                 </select>
                             </div>
 
-                            <div className="form__group not__centered">
+                            <div className="form__group not__centered form__flex">
                                 <label htmlFor="">Ativo</label>
                                 <input
                                     type="checkbox"
@@ -277,13 +277,6 @@ const AddSelectedColaborador: React.FC = () => {
                                         handleChange("ativo");
                                     }}
                                 />
-                                {errors.email ? (
-                                    <div className="form__error">
-                                        <p>{errors.email}</p>
-                                    </div>
-                                ) : (
-                                    ""
-                                )}
                             </div>
 
                             <div className="form__group not__centered">

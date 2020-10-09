@@ -45,10 +45,12 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
         expedienteId
     );
 
-    const [hasChanged, setHasChanged] = useState(false);
     const [isSubmiting, setIsSubmiting] = useState(false);
     const [updateSuccess, setupdateSuccess] = useState(false);
     const [updateError, setUpdateError] = useState(false);
+
+    //States Ativo
+    const [isAtivo, setIsAtivo] = useState(ativo === "true" ? true : false);
 
     //States Expediente
     const [loadingExpediente, setIsLoadingExpediente] = useState(false);
@@ -82,33 +84,51 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                 {
                     label: "Sim",
                     onClick: async () => {
-                        // const responseRemove = await deleteColaboradorById(
-                        //     token,
-                        //     id
-                        // );
+                        const responseRemove = await deleteColaboradorById(
+                            token,
+                            id
+                        );
 
                         setIsSubmiting(true);
 
                         window.setInterval(() => setUpdateError(true), 2000);
 
-                        // if (responseRemove) {
-                        //     if (responseRemove.status === 200) {
-                        //         setupdateSuccess(true);
-                        //         setIsSubmiting(true);
+                        if (responseRemove) {
+                            if (responseRemove.status === 200) {
+                                setupdateSuccess(true);
+                                setIsSubmiting(true);
 
-                        //         window.setTimeout(() => {
-                        //             showToast(
-                        //                 "SUCCESS",
-                        //                 `o Colaborador ${id} - ${nome} foi excluido com sucesso 😉!`,
-                        //                 {}
-                        //             );
+                                window.setTimeout(() => {
+                                    showToast(
+                                        "SUCCESS",
+                                        `o Colaborador ${id} - ${nome} foi excluido com sucesso 😉!`,
+                                        {}
+                                    );
 
-                        //             sethasCloseEditModal(true);
-                        //             removehasCloseEditModal("closedModal");
-                        //             setOpenMoreInfo(false);
-                        //         }, 2000);
-                        //     }
-                        // }
+                                    sethasCloseEditModal(true);
+                                    removehasCloseEditModal("closedModal");
+                                    setOpenMoreInfo(false);
+                                }, 2000);
+                            } else {
+                                window.setInterval(() => {
+                                    setUpdateError(true);
+                                    showToast(
+                                        "ERROR",
+                                        `Algo deu errado 😣`,
+                                        {}
+                                    );
+
+                                    setIsSubmiting(false);
+                                }, 2000);
+                            }
+                        } else {
+                            window.setInterval(() => {
+                                setUpdateError(true);
+                                showToast("ERROR", `Algo deu errado 😣`, {});
+
+                                setIsSubmiting(false);
+                            }, 2000);
+                        }
                     },
                 },
                 {
@@ -223,7 +243,7 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                             email,
                             funcaoId: Number(selectedFuncaoId),
                             expedienteId: Number(selectedExpedienteId),
-                            ativo,
+                            ativo: isAtivo,
                         };
 
                         const responseSubmit = await updateColaboradorById(
@@ -237,22 +257,29 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                 setupdateSuccess(true);
 
                                 window.setTimeout(() => {
-                                    hasChanged &&
-                                        showToast(
-                                            "SUCCESS",
-                                            "Alterações feitas com sucesso 😁",
-                                            {}
-                                        );
+                                    showToast(
+                                        "SUCCESS",
+                                        "Alterações feitas com sucesso 😁",
+                                        {}
+                                    );
 
                                     sethasCloseEditModal(true);
                                     removehasCloseEditModal("closedModal");
                                     setOpenMoreInfo(false);
                                 }, 2000);
                             } else {
-                                showToast("ERROR", "Tente Novamente 🤔", {});
+                                showToast(
+                                    "ERROR",
+                                    `Não foi possivel salvar as alterações no usuário ${nome}`,
+                                    {}
+                                );
                             }
                         } else {
-                            showToast("ERROR", "Tente Novamente 🤔", {});
+                            showToast(
+                                "ERROR",
+                                "Ops, por gentileza recarregue a página",
+                                {}
+                            );
                         }
                     }}
                     validate={(values) => {
@@ -271,10 +298,7 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                     className={`${
                                         errors.nome ? "hasError" : ""
                                     }`}
-                                    onChange={(e) => {
-                                        handleChange("nome");
-                                        setHasChanged(true);
-                                    }}
+                                    onChange={handleChange("nome")}
                                 />
                             </div>
                             <div className="form__group not__centered">
@@ -285,10 +309,7 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                     className={`${
                                         errors.email ? "hasError" : ""
                                     }`}
-                                    onChange={(e) => {
-                                        handleChange("email");
-                                        setHasChanged(true);
-                                    }}
+                                    onChange={handleChange("email")}
                                 />
                                 {errors.email ? (
                                     <div className="form__error">
@@ -307,10 +328,13 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                     onChange={(e) => {
                                         setSelectedFuncaoId(e.target.value);
                                         handleChange("funcaoId");
-                                        setHasChanged(true);
                                     }}
                                 >
-                                    <option selected value={funcaoId}>
+                                    <option
+                                        selected
+                                        defaultValue={funcaoId}
+                                        value={funcaoId}
+                                    >
                                         {loadingFuncao
                                             ? "Aguarde..."
                                             : funcaoName}
@@ -325,14 +349,12 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                             </option>
                                         ))
                                     ) : (
-                                        <Lottie
-                                            options={{
-                                                loop: true,
-                                                animationData: LOADING,
-                                            }}
-                                            height={75}
-                                            width={75}
-                                        />
+                                        <option
+                                            disabled
+                                            defaultValue="Aguarde..."
+                                        >
+                                            Aguarde...
+                                        </option>
                                     )}
                                 </select>
                             </div>
@@ -345,10 +367,13 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                     onChange={(e) => {
                                         setSelectedExpedienteId(e.target.value);
                                         handleChange("expedienteId");
-                                        setHasChanged(true);
                                     }}
                                 >
-                                    <option selected value={expedienteId}>
+                                    <option
+                                        selected
+                                        defaultValue={expedienteId}
+                                        value={expedienteId}
+                                    >
                                         {loadingExpediente
                                             ? "Aguarde..."
                                             : expedienteName}
@@ -363,16 +388,30 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                             </option>
                                         ))
                                     ) : (
-                                        <Lottie
-                                            options={{
-                                                loop: true,
-                                                animationData: LOADING,
-                                            }}
-                                            height={75}
-                                            width={75}
-                                        />
+                                        <option
+                                            disabled
+                                            defaultValue="Aguarde..."
+                                        >
+                                            Aguarde...
+                                        </option>
                                     )}
                                 </select>
+                            </div>
+
+                            <div className="form__group not__centered form__flex">
+                                <label htmlFor="">Ativo</label>
+                                <input
+                                    type="checkbox"
+                                    value={isAtivo.toString()}
+                                    checked={isAtivo ? true : false}
+                                    className={`${
+                                        errors.ativo ? "hasError" : ""
+                                    }`}
+                                    onChange={(e) => {
+                                        setIsAtivo(!isAtivo);
+                                        handleChange("ativo");
+                                    }}
+                                />
                             </div>
 
                             <div className="form__group not__centered form__side-side">

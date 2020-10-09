@@ -129,6 +129,20 @@
     overflow: hidden;
 }
 
+.form__flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    label{
+        flex: 9;
+    }
+
+    input{
+        flex: 1;
+    }
+}
+
 // .rdt_TableBody {
 //     .rdt_TableRow {
 //         position: relative;

@@ -86,7 +86,11 @@ const Usuarios: React.FC = () => {
                         </div>
                         <DataTable
                             title="Todos os Usuários"
-                            data={allColaboradores}
+                            data={allColaboradores.map((c: any) =>
+                                c.ativo
+                                    ? { ...c, ativo: "true" }
+                                    : { ...c, ativo: "false" }
+                            )}
                             columns={ColumsTableUser}
                             striped={true}
                             pagination={true}
