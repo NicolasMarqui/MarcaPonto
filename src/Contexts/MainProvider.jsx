@@ -13,7 +13,13 @@ const MainProvider = ({ children }) => {
     const [isModalPontoOpen, setIsModalPontoOpen] = useStorage("modalPonto");
     const [pontoStatus, setPontoStatus] = useStorage("pontoStatus");
     const [showNavBarXs, setShowNavBarXs] = useStorage("sideNavXXS");
-    const [openMoreInfo, setOpenMoreInfo] = useStorage("sidebarOpen");
+    const [openMoreInfo, setOpenMoreInfo] = useStorage("openMoreInfoModal");
+    const [addModalOpen, setaddModalOpen] = useStorage("openAddModal");
+    const [
+        hasCloseEditModal,
+        sethasCloseEditModal,
+        removehasCloseEditModal,
+    ] = useStorage("closedModal");
 
     return (
         <MainContext.Provider
@@ -34,6 +40,11 @@ const MainProvider = ({ children }) => {
                 setShowNavBarXs,
                 openMoreInfo,
                 setOpenMoreInfo,
+                hasCloseEditModal,
+                sethasCloseEditModal,
+                removehasCloseEditModal,
+                addModalOpen,
+                setaddModalOpen,
             }}
         >
             {children}

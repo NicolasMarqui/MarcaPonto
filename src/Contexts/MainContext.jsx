@@ -17,6 +17,11 @@ const MainContext = createContext({
     setShowNavBarXs: (status) => {},
     openMoreInfo: false,
     setOpenMoreInfo: (status) => {},
+    hasCloseEditModal: false,
+    sethasCloseEditModal: (status) => {},
+    removehasCloseEditModal: (id) => {},
+    addModalOpen: false,
+    setaddModalOpen: (status) => {},
 });
 
 export default MainContext;

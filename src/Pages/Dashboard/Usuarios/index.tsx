@@ -10,20 +10,21 @@ import { ColumsTableUser } from "../../../Services/TableColumns";
 import { getAllColaboradores } from "../../../Services/ApiCalls";
 import MainContext from "../../../Contexts/MainContext";
 import SelectedColaborador from "../../../Components/RenderSelectedRow/SelectedColaborador";
+import AddSelectedColaborador from "../../../Components/RenderSelectedRow/AddSelectedColaborador";
 
-const LOADING_CLOCK = require("../../../Assets/animations/loading-clock.json");
 const LOADING = require("../../../Assets/animations/loading.json");
-const SUCCESS = require("../../../Assets/animations/success.json");
 
 const Usuarios: React.FC = () => {
-    const { token, openMoreInfo, setOpenMoreInfo } = useContext(MainContext);
+    const {
+        token,
+        openMoreInfo,
+        setOpenMoreInfo,
+        hasCloseEditModal,
+        addModalOpen,
+        setaddModalOpen,
+    } = useContext(MainContext);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isLoadingNewCadastro, setIsLoadingNewCadastro] = useState(false);
-    const [cadastroDone, setcadastroDone] = useState(false);
-    const [cadastroSuccess, setCadastroSuccess] = useState(false);
-    const [startDate, setStartDate] = useState(new Date(92, 4));
-    const [modalOpen, setModalOpen] = useState(false);
     const [allColaboradores, setAllColaboradores] = useState([]);
     const [selectedColaborador, setSelectedColaborador] = useState({});
 
@@ -31,6 +32,10 @@ const Usuarios: React.FC = () => {
         setOpenMoreInfo(false);
         getAllC();
     }, []);
+
+    useEffect(() => {
+        getAllC();
+    }, [hasCloseEditModal]);
 
     const getAllC = async () => {
         setIsLoading(true);
@@ -46,14 +51,8 @@ const Usuarios: React.FC = () => {
         }
     };
 
-    const formValues = {
-        nomeCompleto: "",
-        email: "",
-        dataNascimento: "",
-    };
-
     const closeModal = () => {
-        setModalOpen(false);
+        setaddModalOpen(false);
         return true;
     };
 
@@ -80,7 +79,7 @@ const Usuarios: React.FC = () => {
                             <a
                                 href="#new"
                                 className="bt"
-                                onClick={() => setModalOpen(true)}
+                                onClick={() => setaddModalOpen(true)}
                             >
                                 + Novo Usuário
                             </a>
@@ -107,7 +106,7 @@ const Usuarios: React.FC = () => {
                             width={150}
                         />
                         <h2>
-                            Estamos carregando seus dados{" "}
+                            Estamos carregando seus dados
                             <span role="img" aria-label="Whoops">
                                 🧐
                             </span>{" "}
@@ -116,113 +115,9 @@ const Usuarios: React.FC = () => {
                 )}
             </div>
 
-            {modalOpen && (
+            {addModalOpen && (
                 <ModalCrud onClose={closeModal}>
-                    {!isLoadingNewCadastro ? (
-                        <Formik
-                            initialValues={formValues}
-                            onSubmit={async (values) => {
-                                const { nomeCompleto, email } = values;
-
-                                console.log(nomeCompleto, email, startDate);
-
-                                setIsLoadingNewCadastro(true);
-
-                                await window.setInterval(() => {
-                                    setcadastroDone(true);
-                                    setCadastroSuccess(true);
-                                }, 2000);
-                            }}
-                            validate={(values) => {
-                                const errors: any = {};
-
-                                return errors;
-                            }}
-                        >
-                            {({
-                                values,
-                                handleChange,
-                                handleSubmit,
-                                errors,
-                            }) => (
-                                <form onSubmit={handleSubmit}>
-                                    <div className="form__group not__centered">
-                                        <label htmlFor="">Nome Completo</label>
-                                        <input
-                                            type="text"
-                                            value={values.nomeCompleto}
-                                            className={`${
-                                                errors.nomeCompleto
-                                                    ? "hasError"
-                                                    : ""
-                                            }`}
-                                            onChange={handleChange(
-                                                "nomeCompleto"
-                                            )}
-                                        />
-                                        {errors.nomeCompleto ? (
-                                            <div className="form__error">
-                                                <p>{errors.nomeCompleto}</p>
-                                            </div>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                    <div className="form__group not__centered">
-                                        <label htmlFor="">E-mail</label>
-                                        <input
-                                            type="email"
-                                            value={values.email}
-                                            className={`${
-                                                errors.email ? "hasError" : ""
-                                            }`}
-                                            onChange={handleChange("email")}
-                                        />
-                                        {errors.email ? (
-                                            <div className="form__error">
-                                                <p>{errors.email}</p>
-                                            </div>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                    <div className="form__group not__centered">
-                                        <label htmlFor="">
-                                            Data de Nascimento
-                                        </label>
-                                        <DatePicker
-                                            dateFormat="dd/MM/yyyy"
-                                            selected={startDate}
-                                            onChange={(date: any) =>
-                                                setStartDate(date)
-                                            }
-                                        />
-                                    </div>
-                                    <div className="form__group not__centered">
-                                        <button
-                                            type="submit"
-                                            className="bt form__login"
-                                        >
-                                            Cadastrar
-                                        </button>
-                                    </div>
-                                </form>
-                            )}
-                        </Formik>
-                    ) : (
-                        <Lottie
-                            options={{
-                                loop: cadastroDone ? false : true,
-                                animationData: !cadastroDone
-                                    ? LOADING
-                                    : cadastroSuccess
-                                    ? SUCCESS
-                                    : LOADING_CLOCK,
-                            }}
-                            height={150}
-                            width={150}
-                        />
-                    )}
+                    <AddSelectedColaborador />
                 </ModalCrud>
             )}
 

@@ -40,11 +40,11 @@ export async function getAllColaboradores(token: string | null) {
         });
 }
 
-export async function insertNewColaborador(token: string, data: any) {
+export async function insertNewColaborador(token: string | null, data: any) {
     if (!token) return false;
 
-    await api
-        .post(INSERT_COLABORADORES, { headers: { Authorization: token } }, data)
+    return await api
+        .post(INSERT_COLABORADORES, data, { headers: { Authorization: token } })
         .then((response) => {
             return {
                 statusType: "SUCCESS",

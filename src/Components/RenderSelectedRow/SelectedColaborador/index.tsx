@@ -19,13 +19,19 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 //Animations
 const LOADING = require("../../../Assets/animations/loading.json");
 const SUCCESS = require("../../../Assets/animations/success.json");
+const ERROR = require("../../../Assets/animations/error.json");
 
 interface SelectedRowPrColaborador {
     data: any;
 }
 
 const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
-    const { token, setOpenMoreInfo } = useContext(MainContext);
+    const {
+        token,
+        setOpenMoreInfo,
+        sethasCloseEditModal,
+        removehasCloseEditModal,
+    } = useContext(MainContext);
     const { id, nome, email, funcaoId, expedienteId, ativo } = data;
 
     // States Função
@@ -42,6 +48,7 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
     const [hasChanged, setHasChanged] = useState(false);
     const [isSubmiting, setIsSubmiting] = useState(false);
     const [updateSuccess, setupdateSuccess] = useState(false);
+    const [updateError, setUpdateError] = useState(false);
 
     //States Expediente
     const [loadingExpediente, setIsLoadingExpediente] = useState(false);
@@ -70,25 +77,38 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
     const askIfDelete = () => {
         confirmAlert({
             title: "Confirme antes de continuar",
-            message: `Tem certeza que deseja #${id}${nome}?`,
+            message: `Tem certeza que deseja excluir #${id}${nome}?`,
             buttons: [
                 {
                     label: "Sim",
                     onClick: async () => {
-                        const responseRemove = await deleteColaboradorById(
-                            token,
-                            id
-                        );
+                        // const responseRemove = await deleteColaboradorById(
+                        //     token,
+                        //     id
+                        // );
 
-                        if (responseRemove) {
-                            if (responseRemove.status === 200) {
-                                showToast(
-                                    "SUCCESS",
-                                    `o Colaborador ${id} - ${nome} foi excluido com sucesso 😉!`,
-                                    {}
-                                );
-                            }
-                        }
+                        setIsSubmiting(true);
+
+                        window.setInterval(() => setUpdateError(true), 2000);
+
+                        // if (responseRemove) {
+                        //     if (responseRemove.status === 200) {
+                        //         setupdateSuccess(true);
+                        //         setIsSubmiting(true);
+
+                        //         window.setTimeout(() => {
+                        //             showToast(
+                        //                 "SUCCESS",
+                        //                 `o Colaborador ${id} - ${nome} foi excluido com sucesso 😉!`,
+                        //                 {}
+                        //             );
+
+                        //             sethasCloseEditModal(true);
+                        //             removehasCloseEditModal("closedModal");
+                        //             setOpenMoreInfo(false);
+                        //         }, 2000);
+                        //     }
+                        // }
                     },
                 },
                 {
@@ -206,8 +226,6 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                             ativo,
                         };
 
-                        console.log(colaboradoresField);
-
                         const responseSubmit = await updateColaboradorById(
                             token,
                             id,
@@ -226,6 +244,8 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                             {}
                                         );
 
+                                    sethasCloseEditModal(true);
+                                    removehasCloseEditModal("closedModal");
                                     setOpenMoreInfo(false);
                                 }, 2000);
                             } else {
@@ -376,7 +396,12 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                 <Lottie
                     options={{
                         loop: !updateSuccess ? true : false,
-                        animationData: !updateSuccess ? LOADING : SUCCESS,
+                        animationData:
+                            !updateSuccess && !updateError
+                                ? LOADING
+                                : updateSuccess
+                                ? SUCCESS
+                                : ERROR,
                     }}
                     height={105}
                     width={105}
