@@ -8,7 +8,7 @@ import {
     getAllFuncoes,
     insertNewColaborador,
 } from "../../../Services/ApiCalls";
-import { showToast } from "../../../Functions";
+import { showToast, validateEmail } from "../../../Functions";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 //Animations
@@ -117,8 +117,6 @@ const AddSelectedColaborador: React.FC = () => {
                             newColaborador
                         );
 
-                        console.log(newColaboradorResponse);
-
                         if (newColaboradorResponse) {
                             if (
                                 newColaboradorResponse.response.status ===
@@ -155,6 +153,16 @@ const AddSelectedColaborador: React.FC = () => {
                     validate={(values) => {
                         const errors: any = {};
 
+                        const { nome, email } = values;
+
+                        if (!nome) {
+                            errors.nome = "Insira um nome para continuar";
+                        }
+
+                        if (!email || !validateEmail(email)) {
+                            errors.email = "E-mail inválido 🤨";
+                        }
+
                         return errors;
                     }}
                 >
@@ -165,16 +173,25 @@ const AddSelectedColaborador: React.FC = () => {
                                 <input
                                     type="text"
                                     value={values.nome}
+                                    required
                                     className={`${
                                         errors.nome ? "hasError" : ""
                                     }`}
                                     onChange={handleChange("nome")}
                                 />
+                                {errors.nome ? (
+                                    <div className="form__error">
+                                        <p>{errors.nome}</p>
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
                             </div>
                             <div className="form__group not__centered">
                                 <label htmlFor="">E-mail</label>
                                 <input
                                     type="email"
+                                    required
                                     value={values.email}
                                     className={`${
                                         errors.email ? "hasError" : ""
@@ -195,6 +212,7 @@ const AddSelectedColaborador: React.FC = () => {
                                     className={`${
                                         errors.funcaoId ? "hasError" : ""
                                     }`}
+                                    required
                                     onChange={(e) => {
                                         setSelectedFuncaoId(e.target.value);
                                         handleChange("funcaoId");
@@ -232,6 +250,7 @@ const AddSelectedColaborador: React.FC = () => {
                                     className={`${
                                         errors.expedienteId ? "hasError" : ""
                                     }`}
+                                    required
                                     defaultValue={"Selecione um expediente"}
                                     onChange={(e) => {
                                         setSelectedExpedienteId(e.target.value);
@@ -282,7 +301,26 @@ const AddSelectedColaborador: React.FC = () => {
                             <div className="form__group not__centered">
                                 <button
                                     type="submit"
-                                    className="bt form__login"
+                                    className={`bt form__login ${
+                                        isLoadingAllExpedientes ||
+                                        isLoadingAllFunçoes ||
+                                        errors.nome ||
+                                        errors.email ||
+                                        !selectedFuncaoId ||
+                                        !selectedExpedienteId
+                                            ? "bt__not"
+                                            : ""
+                                    }`}
+                                    disabled={
+                                        isLoadingAllExpedientes ||
+                                        isLoadingAllFunçoes ||
+                                        errors.nome ||
+                                        errors.email ||
+                                        !selectedFuncaoId ||
+                                        !selectedExpedienteId
+                                            ? true
+                                            : false
+                                    }
                                 >
                                     Salvar
                                 </button>

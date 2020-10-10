@@ -12,7 +12,7 @@ import {
     getFuncaoById,
     updateColaboradorById,
 } from "../../../Services/ApiCalls";
-import { showToast } from "../../../Functions";
+import { showToast, validateEmail } from "../../../Functions";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
@@ -233,7 +233,7 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                 <Formik
                     initialValues={formValues}
                     onSubmit={async (values) => {
-                        const { id, nome, email, ativo } = values;
+                        const { id, nome, email } = values;
 
                         setIsSubmiting(true);
 
@@ -256,13 +256,13 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                             if (responseSubmit.status === 200) {
                                 setupdateSuccess(true);
 
-                                window.setTimeout(() => {
-                                    showToast(
-                                        "SUCCESS",
-                                        "Alterações feitas com sucesso 😁",
-                                        {}
-                                    );
+                                showToast(
+                                    "SUCCESS",
+                                    "Alterações feitas com sucesso 😁",
+                                    {}
+                                );
 
+                                window.setTimeout(() => {
                                     sethasCloseEditModal(true);
                                     removehasCloseEditModal("closedModal");
                                     setOpenMoreInfo(false);
@@ -285,6 +285,16 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                     validate={(values) => {
                         const errors: any = {};
 
+                        const { nome, email } = values;
+
+                        if (!nome) {
+                            errors.nome = "Insira um nome para continuar";
+                        }
+
+                        if (!email || !validateEmail(email)) {
+                            errors.email = "E-mail inválido 🤨";
+                        }
+
                         return errors;
                     }}
                 >
@@ -300,6 +310,13 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                     }`}
                                     onChange={handleChange("nome")}
                                 />
+                                {errors.nome ? (
+                                    <div className="form__error">
+                                        <p>{errors.nome}</p>
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
                             </div>
                             <div className="form__group not__centered">
                                 <label htmlFor="">E-mail</label>
@@ -423,7 +440,26 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                 </div>
                                 <button
                                     type="submit"
-                                    className="bt form__login"
+                                    className={`bt form__login ${
+                                        isLoadingAllExpedientes ||
+                                        isLoadingAllFunçoes ||
+                                        errors.nome ||
+                                        errors.email ||
+                                        !selectedFuncaoId ||
+                                        !selectedExpedienteId
+                                            ? "bt__not"
+                                            : ""
+                                    }`}
+                                    disabled={
+                                        isLoadingAllExpedientes ||
+                                        isLoadingAllFunçoes ||
+                                        errors.nome ||
+                                        errors.email ||
+                                        !selectedFuncaoId ||
+                                        !selectedExpedienteId
+                                            ? true
+                                            : false
+                                    }
                                 >
                                     Salvar
                                 </button>

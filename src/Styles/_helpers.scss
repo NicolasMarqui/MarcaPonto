@@ -143,6 +143,32 @@
     }
 }
 
+.bt__not{
+    // pointer-events: none;
+    cursor: not-allowed;
+    position: relative;
+
+    &:hover {
+        &::before {
+            content: 'Preencha todos os campos para continuar';
+            position: absolute;
+            right: 0;
+            left: 0;
+            bottom: auto;
+            margin: 0 auto;
+            top: 122%;
+            color: #fff;
+            background-color: #616161;
+            padding: 7px 0px;
+            z-index: 4;
+            text-align: center;
+            font-size: 13px;
+            width: 100%;
+            border-radius: 17px;
+        }
+    }
+}
+
 // .rdt_TableBody {
 //     .rdt_TableRow {
 //         position: relative;

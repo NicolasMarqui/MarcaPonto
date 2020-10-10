@@ -29,6 +29,7 @@ const Usuarios: React.FC = () => {
     const [selectedColaborador, setSelectedColaborador] = useState({});
 
     useEffect(() => {
+        document.title = "Marca Ponto - Usuários";
         setOpenMoreInfo(false);
         getAllC();
     }, []);
