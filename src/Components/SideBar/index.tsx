@@ -75,7 +75,7 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                         icon={<MdWork color="white" size={24} />}
                         text="Setor"
                         from="dashboard"
-                        link="/setor"
+                        link="/setores"
                     />
                 </li>
             )}

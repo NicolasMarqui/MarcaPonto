@@ -26,6 +26,7 @@ import DashSkeleton from "../../Components/Skeletons/Dash";
 import SideBarSkeleton from "../../Components/Skeletons/Side";
 import Expedientes from "./Expedientes";
 import Funcao from "./Funcao";
+import Setor from "./Setor";
 
 //Logos
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
@@ -215,6 +216,14 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                         <Route
                                             path={`${path}/funcoes`}
                                             component={Funcao}
+                                            exact
+                                        />
+                                    )}
+
+                                    {(isAdmin || isGestor) && (
+                                        <Route
+                                            path={`${path}/setores`}
+                                            component={Setor}
                                             exact
                                         />
                                     )}

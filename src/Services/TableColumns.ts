@@ -87,3 +87,23 @@ export const ColumsTableFuncoes = [
         center: true,
     },
 ];
+
+export const ColumsTableSetores = [
+    {
+        name: "ID",
+        selector: "id",
+        sortable: true,
+        center: true,
+    },
+    {
+        name: "Nome",
+        selector: "nome",
+        sortable: true,
+        center: true,
+    },
+    {
+        name: "Ativo",
+        selector: "ativo",
+        center: true,
+    },
+];
