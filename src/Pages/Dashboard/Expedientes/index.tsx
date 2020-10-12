@@ -4,15 +4,18 @@ import Lottie from "react-lottie";
 import "react-datepicker/dist/react-datepicker.css";
 import DataTable from "react-data-table-component";
 import ModalCrud from "../../../Components/ModalCrud";
-import { ColumsTableUser } from "../../../Services/TableColumns";
-import { getAllColaboradores } from "../../../Services/ApiCalls";
+import { ColumsTableExpediente } from "../../../Services/TableColumns";
+import { getAllExpediente } from "../../../Services/ApiCalls";
 import MainContext from "../../../Contexts/MainContext";
 import SelectedColaborador from "../../../Components/RenderSelectedRow/SelectedColaborador";
-import AddSelectedColaborador from "../../../Components/RenderSelectedRow/AddSelectedColaborador";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { FaTimesCircle } from "react-icons/fa";
+import AddSelectedExpediente from "../../../Components/RenderSelectedRow/Expediente/AddSelectedExpediente";
+import SelectedExpediente from "../../../Components/RenderSelectedRow/Expediente/SelectedExpediente";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
-const Usuarios: React.FC = () => {
+const Expedientes: React.FC = () => {
     const {
         token,
         openMoreInfo,
@@ -23,28 +26,28 @@ const Usuarios: React.FC = () => {
     } = useContext(MainContext);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [allColaboradores, setAllColaboradores] = useState([]);
-    const [selectedColaborador, setSelectedColaborador] = useState({});
+    const [allExpedientes, setAllExpedientes] = useState([]);
+    const [selectedExpediente, setSelectedExpediente] = useState({});
 
     useEffect(() => {
-        document.title = "Marca Ponto - Usuários";
+        document.title = "Marca Ponto - Expedientes";
         setOpenMoreInfo(false);
-        getAllC();
+        getAllE();
     }, []);
 
     useEffect(() => {
-        getAllC();
+        getAllE();
     }, [hasCloseEditModal]);
 
-    const getAllC = async () => {
+    const getAllE = async () => {
         setIsLoading(true);
-        const response = await getAllColaboradores(token);
+        const response = await getAllExpediente(token);
 
         if (response) {
             const { status, data } = response;
 
             if (status === 200 && data.length > 0) {
-                setAllColaboradores(data);
+                setAllExpedientes(data);
                 setIsLoading(false);
             }
         }
@@ -66,7 +69,7 @@ const Usuarios: React.FC = () => {
 
     const showMoreInfo = async (dataFromRow: any) => {
         setOpenMoreInfo(true);
-        setSelectedColaborador(dataFromRow);
+        setSelectedExpediente(dataFromRow);
     };
 
     return (
@@ -80,17 +83,17 @@ const Usuarios: React.FC = () => {
                                 className="bt"
                                 onClick={() => setaddModalOpen(true)}
                             >
-                                + Novo Usuário
+                                + Novo Expediente
                             </a>
                         </div>
                         <DataTable
-                            title="Todos os Usuários"
-                            data={allColaboradores.map((c: any) =>
+                            title="Todos os Expedientes"
+                            data={allExpedientes.map((c: any) =>
                                 c.ativo
                                     ? { ...c, ativo: "true" }
                                     : { ...c, ativo: "false" }
                             )}
-                            columns={ColumsTableUser}
+                            columns={ColumsTableExpediente}
                             striped={true}
                             pagination={true}
                             onRowClicked={showMoreInfo}
@@ -120,14 +123,14 @@ const Usuarios: React.FC = () => {
 
             {addModalOpen && (
                 <ModalCrud onClose={closeModal}>
-                    <AddSelectedColaborador />
+                    <AddSelectedExpediente />
                 </ModalCrud>
             )}
 
             {openMoreInfo && (
                 <ModalCrud onClose={closeModalMoreInfo}>
-                    {selectedColaborador ? (
-                        <SelectedColaborador data={selectedColaborador} />
+                    {selectedExpediente ? (
+                        <SelectedExpediente data={selectedExpediente} />
                     ) : (
                         ""
                     )}
@@ -136,4 +139,4 @@ const Usuarios: React.FC = () => {
         </>
     );
 };
-export default Usuarios;
+export default Expedientes;

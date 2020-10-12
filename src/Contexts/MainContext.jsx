@@ -22,6 +22,8 @@ const MainContext = createContext({
     removehasCloseEditModal: (id) => {},
     addModalOpen: false,
     setaddModalOpen: (status) => {},
+    userLocalization: '',
+    setUserLocalization: (local) => {}
 });
 
 export default MainContext;

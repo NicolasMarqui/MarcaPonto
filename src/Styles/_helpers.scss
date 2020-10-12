@@ -101,7 +101,8 @@
     }
 
     input,
-    select {
+    select,
+    textarea{
         width: 100%;
         padding: 10px;
         background-color: $grey;
@@ -167,6 +168,14 @@
             border-radius: 17px;
         }
     }
+}
+
+textarea.no-resize{
+    resize: none;
+}
+
+textarea.set-height{
+    height: 200px;
 }
 
 // .rdt_TableBody {

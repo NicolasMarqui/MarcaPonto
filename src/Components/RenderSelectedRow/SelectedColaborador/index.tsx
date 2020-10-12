@@ -32,6 +32,7 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
         sethasCloseEditModal,
         removehasCloseEditModal,
     } = useContext(MainContext);
+
     const { id, nome, email, funcaoId, expedienteId, ativo } = data;
 
     // States Função
@@ -268,18 +269,28 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                     setOpenMoreInfo(false);
                                 }, 2000);
                             } else {
-                                showToast(
-                                    "ERROR",
-                                    `Não foi possivel salvar as alterações no usuário ${nome}`,
-                                    {}
-                                );
+                                window.setInterval(() => {
+                                    setUpdateError(true);
+                                    showToast(
+                                        "ERROR",
+                                        `Não foi possivel salvar as alterações no usuário ${nome}`,
+                                        {}
+                                    );
+
+                                    setIsSubmiting(false);
+                                }, 2000);
                             }
                         } else {
-                            showToast(
-                                "ERROR",
-                                "Ops, por gentileza recarregue a página",
-                                {}
-                            );
+                            window.setInterval(() => {
+                                setUpdateError(true);
+                                showToast(
+                                    "ERROR",
+                                    "Ops, por gentileza recarregue a página",
+                                    {}
+                                );
+
+                                setIsSubmiting(false);
+                            }, 2000);
                         }
                     }}
                     validate={(values) => {

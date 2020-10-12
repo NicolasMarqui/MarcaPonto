@@ -42,26 +42,6 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
             {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink
-                        icon={<FaClipboardCheck color="white" size={24} />}
-                        text="Expedientes"
-                        from="dashboard"
-                        link="/expedientes"
-                    />
-                </li>
-            )}
-            {(isAdmin || isGestor) && (
-                <li>
-                    <MenuLink
-                        icon={<MdWork color="white" size={24} />}
-                        text="Setor"
-                        from="dashboard"
-                        link="/setor"
-                    />
-                </li>
-            )}
-            {(isAdmin || isGestor) && (
-                <li>
-                    <MenuLink
                         icon={<FaUserAlt color="white" size={24} />}
                         text="Usuários"
                         from="dashboard"
@@ -72,10 +52,30 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
             {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink
+                        icon={<FaClipboardCheck color="white" size={24} />}
+                        text="Expedientes"
+                        from="dashboard"
+                        link="/expedientes"
+                    />
+                </li>
+            )}
+            {(isAdmin || isGestor) && (
+                <li>
+                    <MenuLink
                         icon={<FaUserAlt color="white" size={24} />}
                         text="Função"
                         from="dashboard"
                         link="/funcao"
+                    />
+                </li>
+            )}
+            {(isAdmin || isGestor) && (
+                <li>
+                    <MenuLink
+                        icon={<MdWork color="white" size={24} />}
+                        text="Setor"
+                        from="dashboard"
+                        link="/setor"
                     />
                 </li>
             )}

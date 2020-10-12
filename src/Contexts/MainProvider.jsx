@@ -20,6 +20,7 @@ const MainProvider = ({ children }) => {
         sethasCloseEditModal,
         removehasCloseEditModal,
     ] = useStorage("closedModal");
+    const [userLocalization, setUserLocalization] = useStorage("local");
 
     return (
         <MainContext.Provider
@@ -45,6 +46,8 @@ const MainProvider = ({ children }) => {
                 removehasCloseEditModal,
                 addModalOpen,
                 setaddModalOpen,
+                userLocalization,
+                setUserLocalization
             }}
         >
             {children}

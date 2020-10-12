@@ -10,9 +10,9 @@ export const ALL_COLABORADORES_BY_STATUS = "/api/v1/colaborador/status";
 export const ALL_DIAS_DA_SEMANA = "/api/v1/diadasemana";
 //Expediente
 export const ALL_EXPEDIENTE = "/api/v1/expediente";
-export const INSERT_EXPEDIENTE = "/api/v1/colaborador";
+export const INSERT_EXPEDIENTE = "/api/v1/expediente";
 export const ALL_EXPEDIENTE_BY_GESTOR = "/api/v1/colaborador/find-by-gestor";
-export const ALL_EXPEDIENTE_BY_STATUS = "/api/v1/colaborador/status";
+export const ALL_EXPEDIENTE_BY_STATUS = "/api/v1/expediente/status";
 //Função
 export const ALL_FUNCAO = "/api/v1/funcao";
 export const INSERT_FUNCAO = "/api/v1/funcao";

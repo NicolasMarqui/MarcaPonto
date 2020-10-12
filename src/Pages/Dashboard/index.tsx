@@ -24,6 +24,7 @@ import { IoMdCloseCircle } from "react-icons/io";
 import LoadingMarcaPonto from "../../Components/LoadingMarcaPonto";
 import DashSkeleton from "../../Components/Skeletons/Dash";
 import SideBarSkeleton from "../../Components/Skeletons/Side";
+import Expedientes from "./Expedientes";
 
 //Logos
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
@@ -197,6 +198,14 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                         <Route
                                             path={`${path}/usuarios`}
                                             component={Usuarios}
+                                            exact
+                                        />
+                                    )}
+
+                                    {(isAdmin || isGestor) && (
+                                        <Route
+                                            path={`${path}/expedientes`}
+                                            component={Expedientes}
                                             exact
                                         />
                                     )}

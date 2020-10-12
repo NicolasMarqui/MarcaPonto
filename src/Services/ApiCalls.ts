@@ -167,11 +167,11 @@ export async function getAllExpediente(token: string | null) {
         });
 }
 
-export async function insertNewExpediente(token: string, data: any) {
+export async function insertNewExpediente(token: string | null, data: any) {
     if (!token) return false;
 
-    await api
-        .post(INSERT_EXPEDIENTE, { headers: { Authorization: token } }, data)
+    return await api
+        .post(INSERT_EXPEDIENTE, data, { headers: { Authorization: token } })
         .then((response) => {
             return response;
         })
@@ -195,25 +195,31 @@ export async function getExpedienteById(token: string | null, id: number) {
         });
 }
 
-export async function updateExpedienteById(token: string, id: number) {
+export async function updateExpedienteById(
+    token: string | null,
+    id: number,
+    data: any
+) {
     if (!token) return false;
 
-    await api
-        .put(`${ALL_EXPEDIENTE}/${id}`, {
+    return await api
+        .put(`${ALL_EXPEDIENTE}/${id}`, data, {
             headers: { Authorization: token },
         })
         .then((response) => {
+            console.log(response);
             return response;
         })
         .catch((err) => {
+            console.log(`FROM FILE ${err.message}`);
             return err;
         });
 }
 
-export async function deleteExpedienteById(token: string, id: number) {
+export async function deleteExpedienteById(token: string | null, id: number) {
     if (!token) return false;
 
-    await api
+    return await api
         .delete(`${ALL_EXPEDIENTE}/${id}`, {
             headers: { Authorization: token },
         })

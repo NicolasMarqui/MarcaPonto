@@ -18,9 +18,12 @@ interface MarcarPontoProps {
 }
 
 const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
-    const { token, setIsModalPontoOpen, setPontoStatus } = useContext(
-        MainContext
-    );
+    const {
+        token,
+        setIsModalPontoOpen,
+        setPontoStatus,
+        userLocalization,
+    } = useContext(MainContext);
 
     const [isLoadingPonto, setIsLoadingPonto] = useState(false);
 
@@ -37,6 +40,7 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
             colaboradorId: 1,
             data: "03/10/2020",
             horario: datePonto.toString(),
+            localizacao: userLocalization,
         };
 
         // setPontoStatus("ERROR");
@@ -68,7 +72,14 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
                 setIsLoadingPonto(false);
             })
             .catch((err) => {
-                console.log(err);
+                const { response } = err;
+                console.log(response);
+
+                if (response) {
+                    const errorMessage = response.data.message;
+
+                    showToast("ERROR", errorMessage, {});
+                }
 
                 setPontoStatus("ERROR");
 

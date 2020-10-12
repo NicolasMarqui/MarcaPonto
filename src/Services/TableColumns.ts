@@ -32,3 +32,28 @@ export const ColumsTableUser = [
         center: true,
     },
 ];
+
+export const ColumsTableExpediente = [
+    {
+        name: "ID",
+        selector: "id",
+        sortable: true,
+        center: true,
+    },
+    {
+        name: "Nome",
+        selector: "nome",
+        sortable: true,
+        center: true,
+    },
+    {
+        name: "Descrição",
+        selector: "descricao",
+        center: true,
+    },
+    {
+        name: "Ativo",
+        selector: "ativo",
+        center: true,
+    },
+];
