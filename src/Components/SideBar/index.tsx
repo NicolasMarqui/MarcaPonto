@@ -65,7 +65,7 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                         icon={<FaUserAlt color="white" size={24} />}
                         text="Função"
                         from="dashboard"
-                        link="/funcao"
+                        link="/funcoes"
                     />
                 </li>
             )}
