@@ -8,7 +8,6 @@ import { LOGIN_ENDPOINT } from "../../Services/Endpoints";
 import MainContext from "../../Contexts/MainContext";
 import { useHistory } from "react-router-dom";
 import { showToast } from "../../Functions";
-import queryString from "query-string";
 
 const LOGO_VERTICAL = require("../../Assets/images/logo_vertical.png");
 const LOADING_CLOCK = require("../../Assets/animations/loading-clock.json");
@@ -21,17 +20,16 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ location }) => {
     const [isLoading, setIsLoading] = useState(false);
-    const { setToken } = useContext(MainContext);
+    const { setToken, token } = useContext(MainContext);
 
     const history = useHistory();
 
     useEffect(() => {
-        const hasStatus = queryString.parse(location.search);
-
-        if (hasStatus && hasStatus.status) {
-            showToast("WARNING", hasStatus.status?.toString(), {});
+        //Check if user is already Logged
+        if (token) {
+            history.push("/dashboard");
         }
-    }, [location.search]);
+    }, []);
 
     return (
         <div className="login__wrapper">
@@ -78,10 +76,11 @@ const Login: React.FC<LoginProps> = ({ location }) => {
                                     })
                                     .catch((err) => {
                                         setIsLoading(false);
-                                        history.push(
-                                            "/?status=Verifique se as Informações estão corretas 😞"
+                                        showToast(
+                                            "ERROR",
+                                            err.response.data.message,
+                                            {}
                                         );
-                                        showToast("ERROR", err, {});
                                     });
                             }}
                             validate={(values) => {

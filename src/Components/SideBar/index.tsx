@@ -82,6 +82,16 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
             {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink
+                        icon={<MdWork color="white" size={24} />}
+                        text="Horários"
+                        from="dashboard"
+                        link="/horarios"
+                    />
+                </li>
+            )}
+            {(isAdmin || isGestor) && (
+                <li>
+                    <MenuLink
                         icon={<ImBooks color="white" size={24} />}
                         text="Relatórios"
                         from="dashboard"

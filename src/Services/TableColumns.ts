@@ -107,3 +107,44 @@ export const ColumsTableSetores = [
         center: true,
     },
 ];
+
+export const ColumsTableHorarios = [
+    {
+        name: "ID",
+        selector: "id",
+        sortable: true,
+        center: true,
+    },
+    {
+        name: "Dia da Semana",
+        selector: "diaDaSemana",
+        sortable: true,
+        center: true,
+    },
+    {
+        name: "ID - Expediente",
+        selector: "expedienteId",
+        center: true,
+    },
+    {
+        name: "Horário",
+        selector: "horario",
+        sortable: true,
+        center: true,
+    },
+    {
+        name: "Tipo de Registro",
+        selector: "tipoRegistro",
+        center: true,
+    },
+    {
+        name: "Tolerância Atraso",
+        selector: "toleranciaAtraso",
+        center: true,
+    },
+    {
+        name: "Tolerância Extra",
+        selector: "toleranciaExtra",
+        center: true,
+    },
+];

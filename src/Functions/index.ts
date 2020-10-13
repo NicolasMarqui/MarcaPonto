@@ -73,7 +73,7 @@ export const checkIfAdmin = (arr: [string]) => {
 };
 
 export const checkIfGestor = (arr: [string]) => {
-    return arr.includes("GESTOR") || arr.includes("gestor") ? true : false;
+    return arr.includes("RESPONSAVEL") || arr.includes("GESTOR") ? true : false;
 };
 
 export const checkIfColaborador = (arr: [string]) => {

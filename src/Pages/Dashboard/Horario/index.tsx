@@ -4,17 +4,17 @@ import Lottie from "react-lottie";
 import "react-datepicker/dist/react-datepicker.css";
 import DataTable from "react-data-table-component";
 import ModalCrud from "../../../Components/ModalCrud";
-import { ColumsTableSetores } from "../../../Services/TableColumns";
+import { ColumsTableHorarios } from "../../../Services/TableColumns";
 import MainContext from "../../../Contexts/MainContext";
 import api from "../../../Services/api";
-import { ALL_SETOR } from "../../../Services/Endpoints";
+import { ALL_HORARIOS } from "../../../Services/Endpoints";
 import { showToast } from "../../../Functions";
-import AddSelectedSetor from "../../../Components/RenderSelectedRow/Setores/AddSelectedSetor";
-import SelectedSetor from "../../../Components/RenderSelectedRow/Setores/SelectedSetor";
+import AddSelectedHorario from "../../../Components/RenderSelectedRow/Horarios/AddSelectedHorario";
+import SelectedHorario from "../../../Components/RenderSelectedRow/Horarios/SelectedHorario";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
-const Setor: React.FC = () => {
+const Horario: React.FC = () => {
     const {
         token,
         openMoreInfo,
@@ -25,27 +25,27 @@ const Setor: React.FC = () => {
     } = useContext(MainContext);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [allSetores, setAllSetores] = useState([]);
-    const [selectedSetor, setSelectedSetor] = useState({});
+    const [allHorarios, setAllHorarios] = useState([]);
+    const [selectedHorario, setSelectedHorario] = useState({});
 
     useEffect(() => {
-        document.title = "Marca Ponto - Setores";
+        document.title = "Marca Ponto - Horários";
         setOpenMoreInfo(false);
-        getAllSetores();
+        getAllHorários();
     }, []);
 
     useEffect(() => {
-        getAllSetores();
+        getAllHorários();
     }, [hasCloseEditModal]);
 
-    const getAllSetores = async () => {
+    const getAllHorários = async () => {
         setIsLoading(true);
         await api
-            .get(ALL_SETOR, { headers: { Authorization: token } })
+            .get(ALL_HORARIOS, { headers: { Authorization: token } })
             .then((resp) => {
                 const { status, data } = resp;
                 if (status === 200) {
-                    setAllSetores(data);
+                    setAllHorarios(data);
                     setIsLoading(false);
                 }
             })
@@ -70,7 +70,7 @@ const Setor: React.FC = () => {
 
     const showMoreInfo = async (dataFromRow: any) => {
         setOpenMoreInfo(true);
-        setSelectedSetor(dataFromRow);
+        setSelectedHorario(dataFromRow);
     };
 
     return (
@@ -84,22 +84,23 @@ const Setor: React.FC = () => {
                                 className="bt"
                                 onClick={() => setaddModalOpen(true)}
                             >
-                                + Novo Setor
+                                + Novo Horário
                             </a>
                         </div>
                         <DataTable
-                            title="Todos os Setores"
-                            data={allSetores.map((c: any) =>
+                            title="Todos os Horários"
+                            data={allHorarios.map((c: any) =>
                                 c.ativo
                                     ? { ...c, ativo: "true" }
                                     : { ...c, ativo: "false" }
                             )}
-                            columns={ColumsTableSetores}
+                            columns={ColumsTableHorarios}
                             striped={true}
                             pagination={true}
                             onRowClicked={showMoreInfo}
                             pointerOnHover={true}
                             highlightOnHover={true}
+                            paginationPerPage={30}
                         />
                     </div>
                 ) : (
@@ -124,14 +125,14 @@ const Setor: React.FC = () => {
 
             {addModalOpen && (
                 <ModalCrud onClose={closeModal}>
-                    <AddSelectedSetor />
+                    <AddSelectedHorario />
                 </ModalCrud>
             )}
 
             {openMoreInfo && (
                 <ModalCrud onClose={closeModalMoreInfo}>
-                    {selectedSetor ? (
-                        <SelectedSetor data={selectedSetor} />
+                    {selectedHorario ? (
+                        <SelectedHorario data={selectedHorario} />
                     ) : (
                         ""
                     )}
@@ -140,4 +141,4 @@ const Setor: React.FC = () => {
         </>
     );
 };
-export default Setor;
+export default Horario;

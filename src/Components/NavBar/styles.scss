@@ -32,6 +32,37 @@ header {
                             font-size: 18px;
                             padding: 5px 0;
                             display: block;
+
+                            &.nav__not-logged{
+                                cursor: not-allowed;
+                            }
+                        }
+
+                        .popup__nav{
+                            position: absolute;
+                            right: 0;
+                            width: 300px;
+                            top: 110%;
+                            background-color: $black;
+                            padding: 10px;
+                            border-radius: 20px;
+                            animation: fromBottom .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+                            visibility: hidden;
+
+                            p{
+                                color: #fff;
+                                text-align: center;
+                            }
+                        }
+
+                        @keyframes fromBottom {
+                            from{
+                                top: 150%;
+                            }
+
+                            to{
+                                top: 110%;
+                            }
                         }
 
                         &.menu__destaque {
@@ -62,6 +93,10 @@ header {
                                 background-color: $red;
                                 height: 3px;
                                 animation: hoverMenu .2s linear;
+                            }
+
+                            .popup__nav{
+                                visibility: visible;
                             }
                         }
 

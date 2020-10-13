@@ -38,7 +38,7 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
         const newPontoData = {
             manual: true,
             colaboradorId: 1,
-            data: "03/10/2020",
+            data: getTodayDate(),
             horario: datePonto.toString(),
             localizacao: userLocalization,
         };
@@ -72,22 +72,17 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
                 setIsLoadingPonto(false);
             })
             .catch((err) => {
-                const { response } = err;
-                console.log(response);
-
-                if (response) {
-                    const errorMessage = response.data.message;
-
-                    showToast("ERROR", errorMessage, {});
-                }
-
                 setPontoStatus("ERROR");
 
                 setIsModalPontoOpen(true);
 
-                showToast("ERROR", `Ops 😐, algo deu errado`, {
-                    onClose: () => setIsModalPontoOpen(false),
-                });
+                const { errors } = err.response.data;
+
+                errors.map((err: any) =>
+                    showToast("ERROR", err.message, {
+                        onClose: () => setIsModalPontoOpen(false),
+                    })
+                );
 
                 setIsLoadingPonto(false);
             });

@@ -32,4 +32,4 @@ export const ALL_SETOR = "/api/v1/setor";
 export const INSERT_SETOR = "/api/v1/setor";
 export const ALL_SETOR_BY_STATUS = "/api/v1/setor/status";
 //Tipo de Registro
-export const ALL_REGISTRO = "/api/v1/tipoderegistro";
+export const ALL_REGISTRO = "/api/v1/tipodoregistro";

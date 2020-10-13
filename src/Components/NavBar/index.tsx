@@ -26,7 +26,21 @@ const NavBar: React.FC = () => {
                                     <Link to="/">Home</Link>
                                 </li>
                                 <li>
-                                    <Link to="/dashboard">Ponto</Link>
+                                    <Link
+                                        to="/dashboard"
+                                        className={
+                                            !token ? "nav__not-logged" : ""
+                                        }
+                                    >
+                                        Ponto
+                                    </Link>
+                                    {!token ? (
+                                        <div className="popup__nav">
+                                            <p>Faça o login para acessar!</p>
+                                        </div>
+                                    ) : (
+                                        ""
+                                    )}
                                 </li>
                                 {token ? (
                                     <li className="menu__destaque">

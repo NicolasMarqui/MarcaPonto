@@ -33,6 +33,13 @@
         border-radius: 25px;
         padding: 40px 20px;
 
+        &.content__scroll{
+            position: absolute;
+            top: 50px;
+            bottom: 50px;
+            overflow-y: auto;
+        }
+
         @include sm {
             width: 27%;
         }
