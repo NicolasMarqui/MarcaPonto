@@ -357,12 +357,9 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                         setSelectedFuncaoId(e.target.value);
                                         handleChange("funcaoId");
                                     }}
+                                    defaultValue={funcaoId}
                                 >
-                                    <option
-                                        selected
-                                        defaultValue={funcaoId}
-                                        value={funcaoId}
-                                    >
+                                    <option value={funcaoId}>
                                         {loadingFuncao
                                             ? "Aguarde..."
                                             : funcaoName}
@@ -396,12 +393,9 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                                         setSelectedExpedienteId(e.target.value);
                                         handleChange("expedienteId");
                                     }}
+                                    defaultValue={expedienteId}
                                 >
-                                    <option
-                                        selected
-                                        defaultValue={expedienteId}
-                                        value={expedienteId}
-                                    >
+                                    <option value={expedienteId}>
                                         {loadingExpediente
                                             ? "Aguarde..."
                                             : expedienteName}

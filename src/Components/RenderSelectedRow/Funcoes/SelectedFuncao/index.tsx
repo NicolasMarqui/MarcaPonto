@@ -275,12 +275,9 @@ const SelectedFuncao: React.FC<SelectedRowPrFuncao> = ({ data }) => {
                                         setSelectedUsuarioID(e.target.value);
                                         handleChange("funcaoResponsavelId");
                                     }}
+                                    defaultValue={funcaoResponsavelId}
                                 >
-                                    <option
-                                        selected
-                                        defaultValue={funcaoResponsavelId}
-                                        value={funcaoResponsavelId}
-                                    >
+                                    <option value={funcaoResponsavelId}>
                                         {isLoadingAllUsuarios
                                             ? "Aguarde..."
                                             : currentUser}
@@ -317,12 +314,9 @@ const SelectedFuncao: React.FC<SelectedRowPrFuncao> = ({ data }) => {
                                         setSelectedSetorID(e.target.value);
                                         handleChange("setorId");
                                     }}
+                                    defaultValue={setorId}
                                 >
-                                    <option
-                                        selected
-                                        defaultValue={setorId}
-                                        value={setorId}
-                                    >
+                                    <option value={setorId}>
                                         {isLoadingAllSetores
                                             ? "Aguarde..."
                                             : currentSetor}

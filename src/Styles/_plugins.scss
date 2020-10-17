@@ -1,0 +1,7 @@
+@import './responsive';
+
+.react-timekeeper{
+    @include max-xxs{
+        width: 220px!important;
+    }
+}

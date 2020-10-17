@@ -19,11 +19,17 @@
         top: 30px;
         right: 30px;
         cursor: pointer;
+        z-index: 3;
 
         &:hover {
             svg {
                 transform: scale(1.1);
             }
+        }
+
+        @include max-sm{
+            background: #a6a6a6;
+            border-radius: 50%;
         }
     }
 
@@ -41,6 +47,11 @@
         }
 
         @include sm {
+            width: 45%;
+        }
+
+
+        @include lg{
             width: 27%;
         }
 

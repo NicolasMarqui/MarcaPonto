@@ -47,8 +47,12 @@
                 overflow: auto;
 
                 .bt{
-                    width: 30%;
+                    width: auto;
                     margin: 30px auto 0;
+
+                    @include sm{
+                        width: 30%;
+                    }
                 }
             }
         }

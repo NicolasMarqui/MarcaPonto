@@ -27,6 +27,15 @@ header.header__nav-interna {
 
             p {
                 text-align: center;
+                margin-top: 20px;
+
+                @include sm{
+                    margin-top: 0;
+                }
+
+                @include max-xs{
+                    font-size: 14px;
+                }
             }
         }
 

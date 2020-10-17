@@ -20,6 +20,12 @@ $screen-xxl-min: 2000px;
     }
 }
 
+@mixin max-sm {
+    @media (max-width: #{$screen-sm-min}) {
+        @content;
+    }
+}
+
 @mixin xxs {
     @media (min-width: #{$screen-xxs-min}) {
         @content;

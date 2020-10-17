@@ -26,17 +26,32 @@
         .rdt_TableHeader {
             position: relative;
             padding-left: 0;
+
+            @include max-xs{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .eihLXW{
+                    width: 100%;
+                    text-align: center;
+                }
+            }
         }
 
         .usuarios__header {
-            position: absolute;
-            top: 0;
-            right: 0;
+            position: relative;
             z-index: 20;
 
             a.bt {
                 width: 100%;
                 margin: 0;
+            }
+
+            @include xs{
+                position: absolute;
+                top: 0;
+                right: 0;
             }
         }
     }
