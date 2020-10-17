@@ -1,9 +1,20 @@
+@import '../../../Styles/responsive';
+
 .usuarios__wrapper {
 
     .table__wrapper,
     .animation__wrapper {
-        margin-top: 40px;
         position: relative;
+        // height: 40vh;
+        // display: flex;
+        // flex-direction: column;
+        // align-items: center;
+        // justify-content: center;
+
+        // @include sm{
+        //     margin: 40px auto 0;
+        //     height: calc(100vh - 30vh);
+        // }
 
         h2 {
             text-align: center;

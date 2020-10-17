@@ -45,6 +45,11 @@
             .adm__gg-users {
                 height: 100%;
                 overflow: auto;
+
+                .bt{
+                    width: 30%;
+                    margin: 30px auto 0;
+                }
             }
         }
     }

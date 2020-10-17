@@ -1,5 +1,12 @@
 import React from "react";
-import { FaHome, FaCog, FaClipboardCheck, FaUserAlt } from "react-icons/fa";
+import {
+    FaHome,
+    FaCog,
+    FaClipboardCheck,
+    FaUserAlt,
+    FaUserClock,
+    FaHammer,
+} from "react-icons/fa";
 import { ImBook } from "react-icons/im";
 import { MdWork } from "react-icons/md";
 import {
@@ -62,7 +69,7 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
             {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink
-                        icon={<FaUserAlt color="white" size={24} />}
+                        icon={<FaHammer color="white" size={24} />}
                         text="Função"
                         from="dashboard"
                         link="/funcoes"
@@ -82,7 +89,7 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
             {(isAdmin || isGestor) && (
                 <li>
                     <MenuLink
-                        icon={<MdWork color="white" size={24} />}
+                        icon={<FaUserClock color="white" size={24} />}
                         text="Horários"
                         from="dashboard"
                         link="/horarios"
