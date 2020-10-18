@@ -35,7 +35,9 @@ const SelectedSetor: React.FC<SelectedRowPrSetor> = ({ data }) => {
     const [updateError, setUpdateError] = useState(false);
 
     //States Ativo
-    const [isAtivo, setIsAtivo] = useState(ativo === "true" ? true : false);
+    const [isAtivo, setIsAtivo] = useState(
+        ativo?.props.values === "true" ? true : false
+    );
 
     const formValues = {
         id,

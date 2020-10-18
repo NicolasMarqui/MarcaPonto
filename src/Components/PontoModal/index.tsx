@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./styles.scss";
 import { IoMdCloseCircle } from "react-icons/io";
 import MainContext from "../../Contexts/MainContext";
@@ -15,16 +15,14 @@ const PontoModal: React.FC<PontoModalProps> = ({}) => {
         MainContext
     );
 
-    useEffect(() => {
-        // closeOnInterval();
-    }, []);
-
-    const closeOnInterval = () => {
-        window.setInterval(() => setIsModalPontoOpen(!isModalPontoOpen), 5000);
+    const handleClose = (event: any) => {
+        if (event.target === event.currentTarget) {
+            setIsModalPontoOpen(false);
+        }
     };
 
     return (
-        <div className="modal__wrapper">
+        <div className="modal__wrapper" onClick={handleClose}>
             <div
                 className="modal__close"
                 onClick={() => setIsModalPontoOpen(!isModalPontoOpen)}
@@ -48,7 +46,7 @@ const PontoModal: React.FC<PontoModalProps> = ({}) => {
                 ) : (
                     <div className="content__type type__success">
                         <h4>
-                            Ponto marcado <br /> com sucesso{" "}
+                            Ponto marcado <br /> com sucesso
                         </h4>
                         <Lottie
                             options={{

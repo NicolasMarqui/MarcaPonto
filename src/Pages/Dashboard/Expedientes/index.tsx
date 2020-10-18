@@ -7,11 +7,10 @@ import ModalCrud from "../../../Components/ModalCrud";
 import { ColumsTableExpediente } from "../../../Services/TableColumns";
 import { getAllExpediente } from "../../../Services/ApiCalls";
 import MainContext from "../../../Contexts/MainContext";
-import SelectedColaborador from "../../../Components/RenderSelectedRow/SelectedColaborador";
-import { AiFillCheckCircle } from "react-icons/ai";
-import { FaTimesCircle } from "react-icons/fa";
 import AddSelectedExpediente from "../../../Components/RenderSelectedRow/Expediente/AddSelectedExpediente";
 import SelectedExpediente from "../../../Components/RenderSelectedRow/Expediente/SelectedExpediente";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { FaTimesCircle } from "react-icons/fa";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -90,8 +89,25 @@ const Expedientes: React.FC = () => {
                             title="Todos os Expedientes"
                             data={allExpedientes.map((c: any) =>
                                 c.ativo
-                                    ? { ...c, ativo: "true" }
-                                    : { ...c, ativo: "false" }
+                                    ? {
+                                          ...c,
+                                          ativo: (
+                                              <AiFillCheckCircle
+                                                  color="green"
+                                                  size={20}
+                                                  values="true"
+                                              />
+                                          ),
+                                      }
+                                    : {
+                                          ...c,
+                                          ativo: (
+                                              <FaTimesCircle
+                                                  color="red"
+                                                  size={20}
+                                              />
+                                          ),
+                                      }
                             )}
                             columns={ColumsTableExpediente}
                             striped={true}

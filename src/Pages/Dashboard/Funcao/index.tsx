@@ -7,10 +7,10 @@ import ModalCrud from "../../../Components/ModalCrud";
 import { ColumsTableFuncoes } from "../../../Services/TableColumns";
 import { getAllFuncoes } from "../../../Services/ApiCalls";
 import MainContext from "../../../Contexts/MainContext";
-import AddSelectedExpediente from "../../../Components/RenderSelectedRow/Expediente/AddSelectedExpediente";
-import SelectedExpediente from "../../../Components/RenderSelectedRow/Expediente/SelectedExpediente";
 import AddSelectedFuncao from "../../../Components/RenderSelectedRow/Funcoes/AddSelectedFuncao";
 import SelectedFuncao from "../../../Components/RenderSelectedRow/Funcoes/SelectedFuncao";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { FaTimesCircle } from "react-icons/fa";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -90,8 +90,25 @@ const Funcao: React.FC = () => {
                             title="Todas as Funcões"
                             data={allFuncoes.map((c: any) =>
                                 c.responsavel
-                                    ? { ...c, responsavel: "true" }
-                                    : { ...c, responsavel: "false" }
+                                    ? {
+                                          ...c,
+                                          responsavel: (
+                                              <AiFillCheckCircle
+                                                  color="green"
+                                                  size={20}
+                                                  values="true"
+                                              />
+                                          ),
+                                      }
+                                    : {
+                                          ...c,
+                                          responsavel: (
+                                              <FaTimesCircle
+                                                  color="red"
+                                                  size={20}
+                                              />
+                                          ),
+                                      }
                             )}
                             columns={ColumsTableFuncoes}
                             striped={true}

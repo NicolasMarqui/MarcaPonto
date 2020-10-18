@@ -51,7 +51,9 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
     const [updateError, setUpdateError] = useState(false);
 
     //States Ativo
-    const [isAtivo, setIsAtivo] = useState(ativo === "true" ? true : false);
+    const [isAtivo, setIsAtivo] = useState(
+        ativo?.props.values === "true" ? true : false
+    );
 
     //States Expediente
     const [loadingExpediente, setIsLoadingExpediente] = useState(false);

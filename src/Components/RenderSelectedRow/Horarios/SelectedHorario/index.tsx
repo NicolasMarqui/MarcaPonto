@@ -18,6 +18,7 @@ import {
     ALL_REGISTRO,
     ALL_SETOR,
 } from "../../../../Services/Endpoints";
+import MaskedInput from "react-text-mask";
 
 //Animations
 const LOADING = require("../../../../Assets/animations/loading.json");
@@ -397,6 +398,51 @@ const SelectedHorario: React.FC<SelectedRowPrHorario> = ({ data }) => {
                                         </option>
                                     )}
                                 </select>
+                            </div>
+
+                            <div className="form__group not__centered">
+                                <label htmlFor="">Tolerância Atraso</label>
+                                <MaskedInput
+                                    type="tel"
+                                    pattern="[0-9]*"
+                                    value={valueToleranciaAtraso}
+                                    defaultValue={valueToleranciaAtraso}
+                                    required
+                                    placeholder="__:__"
+                                    onChange={(e) => {
+                                        setToleranciaAtraso(e.target.value);
+                                        handleChange("toleranciaAtraso");
+                                    }}
+                                    mask={[
+                                        /[0-9]/,
+                                        /[0-9]/,
+                                        ":",
+                                        /[0-9]/,
+                                        /[0-9]/,
+                                    ]}
+                                />
+                            </div>
+                            <div className="form__group not__centered">
+                                <label htmlFor="">Tolerância Extra</label>
+                                <MaskedInput
+                                    type="tel"
+                                    pattern="[0-9]*"
+                                    value={valueToleranciaExtra}
+                                    defaultValue={valueToleranciaExtra}
+                                    required
+                                    placeholder="__:__"
+                                    onChange={(e) => {
+                                        setToleranciaExtra(e.target.value);
+                                        handleChange("toleranciaExtra");
+                                    }}
+                                    mask={[
+                                        /[0-9]/,
+                                        /[0-9]/,
+                                        ":",
+                                        /[0-9]/,
+                                        /[0-9]/,
+                                    ]}
+                                />
                             </div>
 
                             <div className="form__group not__centered form__side-side">

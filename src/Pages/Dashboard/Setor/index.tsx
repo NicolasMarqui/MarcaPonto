@@ -11,6 +11,8 @@ import { ALL_SETOR } from "../../../Services/Endpoints";
 import { showToast } from "../../../Functions";
 import AddSelectedSetor from "../../../Components/RenderSelectedRow/Setores/AddSelectedSetor";
 import SelectedSetor from "../../../Components/RenderSelectedRow/Setores/SelectedSetor";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { FaTimesCircle } from "react-icons/fa";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -91,8 +93,25 @@ const Setor: React.FC = () => {
                             title="Todos os Setores"
                             data={allSetores.map((c: any) =>
                                 c.ativo
-                                    ? { ...c, ativo: "true" }
-                                    : { ...c, ativo: "false" }
+                                    ? {
+                                          ...c,
+                                          ativo: (
+                                              <AiFillCheckCircle
+                                                  color="green"
+                                                  size={20}
+                                                  values="true"
+                                              />
+                                          ),
+                                      }
+                                    : {
+                                          ...c,
+                                          ativo: (
+                                              <FaTimesCircle
+                                                  color="red"
+                                                  size={20}
+                                              />
+                                          ),
+                                      }
                             )}
                             columns={ColumsTableSetores}
                             striped={true}

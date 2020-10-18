@@ -9,6 +9,8 @@ import { getAllColaboradores } from "../../../Services/ApiCalls";
 import MainContext from "../../../Contexts/MainContext";
 import SelectedColaborador from "../../../Components/RenderSelectedRow/SelectedColaborador";
 import AddSelectedColaborador from "../../../Components/RenderSelectedRow/AddSelectedColaborador";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { FaTimesCircle } from "react-icons/fa";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -87,8 +89,25 @@ const Usuarios: React.FC = () => {
                             title="Todos os Usuários"
                             data={allColaboradores.map((c: any) =>
                                 c.ativo
-                                    ? { ...c, ativo: "true" }
-                                    : { ...c, ativo: "false" }
+                                    ? {
+                                          ...c,
+                                          ativo: (
+                                              <AiFillCheckCircle
+                                                  color="green"
+                                                  size={20}
+                                                  values="true"
+                                              />
+                                          ),
+                                      }
+                                    : {
+                                          ...c,
+                                          ativo: (
+                                              <FaTimesCircle
+                                                  color="red"
+                                                  size={20}
+                                              />
+                                          ),
+                                      }
                             )}
                             columns={ColumsTableUser}
                             striped={true}

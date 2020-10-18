@@ -185,8 +185,13 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                     />
                                     <Route
                                         path={`${path}/settings`}
-                                        component={Settings}
                                         exact
+                                        render={(props) => (
+                                            <Settings
+                                                data={loggedUserInfo}
+                                                {...props}
+                                            />
+                                        )}
                                     />
                                     {isGestor ||
                                         (isColaborador && (

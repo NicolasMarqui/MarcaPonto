@@ -55,7 +55,7 @@ const SelectedFuncao: React.FC<SelectedRowPrFuncao> = ({ data }) => {
 
     //States Ativo
     const [isResponsavel, setIsResponsavel] = useState(
-        responsavel === "true" ? true : false
+        responsavel?.props.values === "true" ? true : false
     );
 
     const formValues = {
