@@ -3,7 +3,6 @@ import "./styles.scss";
 import Card from "../Card";
 import { Link } from "react-router-dom";
 import MarcarPonto from "../MarcarPonto";
-import { ImBook } from "react-icons/im";
 import MainContext from "../../Contexts/MainContext";
 import AdminInfo from "../AdminInfo";
 import DataTable from "react-data-table-component";
@@ -18,7 +17,13 @@ import {
     ALL_SETOR,
 } from "../../Services/Endpoints";
 import Lottie from "react-lottie";
-import { FaHome, FaCog, FaClipboardCheck, FaUserAlt } from "react-icons/fa";
+import {
+    FaClipboardCheck,
+    FaUserAlt,
+    FaUserClock,
+    FaHammer,
+} from "react-icons/fa";
+import { MdWork } from "react-icons/md";
 
 const LOADING = require("../../Assets/animations/loading.json");
 
@@ -128,23 +133,23 @@ const GestorRender: React.FC<GestorRenderProps> = () => {
                 <AdminInfo
                     Icon={FaClipboardCheck}
                     text="Expedientes"
-                    number={allExpedientes.length}
+                    number={allExpedientes.length} 
                     linkTo="/dashboard/expedientes"
                 />
                 <AdminInfo
-                    Icon={ImBook}
+                    Icon={FaHammer}
                     text="Funções"
                     number={allFuncoes.length}
                     linkTo="/dashboard/funcoes"
                 />
                 <AdminInfo
-                    Icon={ImBook}
+                    Icon={MdWork}
                     text="Setores"
                     number={allSetores.length}
                     linkTo="/dashboard/setores"
                 />
                 <AdminInfo
-                    Icon={ImBook}
+                    Icon={FaUserClock}
                     text="Horários"
                     number={allHorarios.length}
                     linkTo="/dashboard/horarios"

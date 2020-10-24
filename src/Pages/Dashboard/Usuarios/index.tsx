@@ -76,14 +76,16 @@ const Usuarios: React.FC = () => {
             <div className="usuarios__wrapper">
                 {!isLoading ? (
                     <div className="table__wrapper">
-                        <div className="usuarios__header">
-                            <a
-                                href="#new"
-                                className="bt"
-                                onClick={() => setaddModalOpen(true)}
-                            >
-                                + Novo Usuário
-                            </a>
+                        <div className="table__header">
+                            <div className="usuarios__header">
+                                <a
+                                    href="#new"
+                                    className="bt"
+                                    onClick={() => setaddModalOpen(true)}
+                                >
+                                    + Novo Usuário
+                                </a>
+                            </div>
                         </div>
                         <DataTable
                             title="Todos os Usuários"

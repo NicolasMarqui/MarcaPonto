@@ -37,7 +37,7 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
 
         const newPontoData = {
             manual: true,
-            colaboradorId: 1,
+            colaboradorId: colaboradorId,
             data: getTodayDate(),
             horario: datePonto.toString(),
             localizacao: userLocalization,

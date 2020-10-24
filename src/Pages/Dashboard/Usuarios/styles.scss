@@ -1,58 +1,58 @@
 @import '../../../Styles/responsive';
 
-.usuarios__wrapper {
+// .usuarios__wrapper {
 
-    .table__wrapper,
-    .animation__wrapper {
-        position: relative;
-        // height: 40vh;
-        // display: flex;
-        // flex-direction: column;
-        // align-items: center;
-        // justify-content: center;
+//     .table__wrapper,
+//     .animation__wrapper {
+//         position: relative;
+//         // height: 40vh;
+//         // display: flex;
+//         // flex-direction: column;
+//         // align-items: center;
+//         // justify-content: center;
 
-        // @include sm{
-        //     margin: 40px auto 0;
-        //     height: calc(100vh - 30vh);
-        // }
+//         // @include sm{
+//         //     margin: 40px auto 0;
+//         //     height: calc(100vh - 30vh);
+//         // }
 
-        h2 {
-            text-align: center;
-            font-size: 30px;
-        }
-    }
+//         h2 {
+//             text-align: center;
+//             font-size: 30px;
+//         }
+//     }
 
-    .table__wrapper {
-        .rdt_TableHeader {
-            position: relative;
-            padding-left: 0;
+//     .table__wrapper {
+//         .rdt_TableHeader {
+//             position: relative;
+//             padding-left: 0;
 
-            @include max-xs{
-                display: flex;
-                justify-content: center;
-                align-items: center;
+//             @include max-xs{
+//                 display: flex;
+//                 justify-content: center;
+//                 align-items: center;
 
-                .eihLXW{
-                    width: 100%;
-                    text-align: center;
-                }
-            }
-        }
+//                 .eihLXW{
+//                     width: 100%;
+//                     text-align: center;
+//                 }
+//             }
+//         }
 
-        .usuarios__header {
-            position: relative;
-            z-index: 20;
+//         .usuarios__header {
+//             position: relative;
+//             z-index: 20;
 
-            a.bt {
-                width: 100%;
-                margin: 0;
-            }
+//             a.bt {
+//                 width: 100%;
+//                 margin: 0;
+//             }
 
-            @include xs{
-                position: absolute;
-                top: 0;
-                right: 0;
-            }
-        }
-    }
-}
+//             @include xs{
+//                 position: absolute;
+//                 top: 0;
+//                 right: 0;
+//             }
+//         }
+//     }
+// }

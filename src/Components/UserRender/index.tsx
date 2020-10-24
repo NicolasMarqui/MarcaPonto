@@ -1,12 +1,10 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import "./styles.scss";
 import Card from "../Card";
 import { Link } from "react-router-dom";
 import MarcarPonto from "../MarcarPonto";
 import { FaCog } from "react-icons/fa";
 import { ImBook } from "react-icons/im";
-import CustomTable from "../CustomTable";
-import { LatestPointsColums, LatestPointsData } from "../../Services/MockData";
 import MainContext from "../../Contexts/MainContext";
 
 interface UserRenderProps {}
@@ -51,7 +49,6 @@ const UserRender: React.FC<UserRenderProps> = () => {
                     </div>
                 </div>
             </div>
-            <div className="rr__down-row">Row down</div>
         </div>
     );
 };
