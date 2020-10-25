@@ -4,7 +4,6 @@ import { Formik } from "formik";
 import { BsTrash } from "react-icons/bs";
 import Lottie from "react-lottie";
 import MainContext from "../../../../Contexts/MainContext";
-import { deleteExpedienteById } from "../../../../Services/ApiCalls";
 import { showToast } from "../../../../Functions";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";

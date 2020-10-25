@@ -13,6 +13,8 @@ import {
     checkIfGestor,
 } from "../../Functions";
 import { BsChevronDoubleRight, BsChevronDoubleLeft } from "react-icons/bs";
+import { usePosition } from "use-position";
+import detectBrowserLanguage from "detect-browser-language";
 
 import Home from "./Home";
 import Espelho from "./Espelho";
@@ -46,6 +48,9 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
         isModalPontoOpen,
         showNavBarXs,
         setShowNavBarXs,
+        setUserLocalization,
+        setBrowserLanguage,
+        browserLanguage,
     } = useContext(MainContext);
 
     const [loggedUserInfo, setLoggedUserInfo] = useState({});
@@ -58,10 +63,28 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
     const { width } = useWindowDimensions();
     let { path } = useRouteMatch();
 
+    let watch = false;
+    const { latitude, longitude } = usePosition(watch);
+
+    useEffect(() => {
+        if (latitude && longitude) {
+            setUserLocalization(`[${latitude}, ${longitude}]`);
+        }
+    }, [latitude, longitude]);
+
     useEffect(() => {
         document.title = "Marca Ponto - Dashboard";
         getLoggedUserInfo();
+        getBrowserLanguage();
     }, []);
+
+    const getBrowserLanguage = () => {
+        let browLanguage = detectBrowserLanguage();
+
+        if (browserLanguage) return browserLanguage;
+
+        return setBrowserLanguage(browLanguage);
+    };
 
     const getLoggedUserInfo = async () => {
         await api

@@ -23,7 +23,9 @@ const MainContext = createContext({
     addModalOpen: false,
     setaddModalOpen: (status) => {},
     userLocalization: '',
-    setUserLocalization: (local) => {}
+    setUserLocalization: (local) => {},
+    browserLanguage: '',
+    setBrowserLanguage: (local) => {}
 });
 
 export default MainContext;

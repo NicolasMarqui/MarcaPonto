@@ -57,8 +57,6 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
                 },
             })
             .then((response) => {
-                console.log(response.data);
-
                 setPontoStatus("SUCCESS");
 
                 setIsModalPontoOpen(true);

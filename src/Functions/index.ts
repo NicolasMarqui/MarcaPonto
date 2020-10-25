@@ -90,3 +90,20 @@ export function validateEmail(email: string) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
+
+export const getCurrentFlag = (locale: string) => {
+    switch (locale) {
+        case "pt-BR":
+            return "br";
+        case "en-US":
+            return "us";
+        case "es-ES":
+            return "es";
+        case "de-DE":
+            return "de";
+        case "fr-FR":
+            return "fr";
+        default:
+            return "br";
+    }
+};
