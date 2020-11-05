@@ -44,13 +44,11 @@ const NavBar: React.FC = () => {
                                 </li>
                                 {token ? (
                                     <li className="menu__destaque">
-                                        <Link to="/dashboard/settings">
-                                            Minha Conta
-                                        </Link>
+                                        <Link to="/dashboard">Minha Conta</Link>
                                     </li>
                                 ) : (
                                     <li className="menu__destaque">
-                                        <Link to="/">Login</Link>
+                                        <Link to="/login">Login</Link>
                                     </li>
                                 )}
                             </ul>

@@ -74,10 +74,14 @@
 
                 .menu__toggle {
                     position: absolute;
-                    bottom: 10px;
-                    right: 40px;
+                    top: -104px;
+                    right: -1px;
                     cursor: pointer;
                     display: none;
+                    background-color: #fff;
+                    padding: 10px;
+                    border-radius: 50%;
+                    box-shadow: 2px 2px 2px #eee;
 
                     @include sm {
                         display: block;
@@ -184,4 +188,10 @@
             }
         }
     }
+}
+
+.dashboard__outHeader{
+    position: relative;
+    height: 200px;
+    background-color: #222;
 }

@@ -1,0 +1,19 @@
+.hins__wrap{
+    .hins__header{
+        ul{
+            li:not(.hins__not-round){
+                background-color: #f2f2f2;
+            }
+
+            li{
+                border-radius: 25px;
+                padding: 10px;
+                display: inline-block;
+
+                a{
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}

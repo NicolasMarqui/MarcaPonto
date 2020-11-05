@@ -38,23 +38,28 @@
         }
 
         .adm__ls-row {
-            flex: 3;
+            flex: 1;
+            height: 400px;
             max-height: 400px;
             padding: 10px;
 
-            .adm__gg-users {
-                height: 100%;
-                overflow: auto;
+            // .adm__gg-users {
+            //     height: 100%;
+            //     overflow: auto;
 
-                .bt{
-                    width: auto;
-                    margin: 30px auto 0;
+            //     .bt{
+            //         width: auto;
+            //         margin: 30px auto 0;
 
-                    @include sm{
-                        width: 30%;
-                    }
-                }
-            }
+            //         @include sm{
+            //             width: 30%;
+            //         }
+            //     }
+            // }
+        }
+
+        .adm__lp-row{
+            flex: 1;
         }
     }
 }

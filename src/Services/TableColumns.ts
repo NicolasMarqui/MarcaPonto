@@ -148,3 +148,43 @@ export const ColumsTableHorarios = [
         center: true,
     },
 ];
+
+export const ColumsTablePontos = [
+    {
+        name: "ID",
+        selector: "id",
+        sortable: true,
+        center: true,
+    },
+    {
+        name: "Data",
+        selector: "data",
+        sortable: true,
+        center: true,
+    },
+    {
+        name: "Horário",
+        selector: "horario",
+        center: true,
+    },
+    {
+        name: "Localização",
+        selector: "localizacao",
+        center: true,
+    },
+    {
+        name: "Tempo Variavel",
+        selector: "tempoVariavel",
+        center: true,
+    },
+    {
+        name: "Tipo de registro",
+        selector: "tipoDoRegistro",
+        center: true,
+    },
+    {
+        name: "Observação",
+        selector: "obs",
+        center: true,
+    },
+];

@@ -30,6 +30,7 @@ import Expedientes from "./Expedientes";
 import Funcao from "./Funcao";
 import Setor from "./Setor";
 import Horario from "./Horario";
+import Pontos from "./Pontos";
 
 //Logos
 const LOGO = require("../../Assets/images/logo_horizontal.svg");
@@ -115,160 +116,179 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
     return (
         <div className="dashboard__wrapper">
             {!isLoadingAll ? (
-                <div className="dashboard__content">
-                    <div
-                        className={`content__sidebar ${
-                            !sideNavOpen ? "side__closed" : ""
-                        } ${showNavBarXs ? "side__full__xxs" : ""}`}
-                    >
-                        <div className="sidebar__logo">
-                            <img
-                                src={
-                                    width < 992 || !sideNavOpen
-                                        ? JUST_LOGO
-                                        : LOGO
-                                }
-                                alt="Marca Ponto"
-                                className={width < 992 ? "img__smaller" : ""}
-                            />
+                <>
+                    <div className="dashboard__outHeader">Oi</div>
+                    <div className="dashboard__content">
+                        <div
+                            className={`content__sidebar ${
+                                !sideNavOpen ? "side__closed" : ""
+                            } ${showNavBarXs ? "side__full__xxs" : ""}`}
+                        >
+                            <div className="sidebar__logo">
+                                <img
+                                    src={
+                                        width < 992 || !sideNavOpen
+                                            ? JUST_LOGO
+                                            : LOGO
+                                    }
+                                    alt="Marca Ponto"
+                                    className={
+                                        width < 992 ? "img__smaller" : ""
+                                    }
+                                />
+                            </div>
+
+                            <div
+                                className={`sidebar__menu ${
+                                    !sideNavOpen ? "side__closed" : ""
+                                }`}
+                            >
+                                <div
+                                    className="menu__toggle"
+                                    onClick={() => setSideNavOpen(!sideNavOpen)}
+                                >
+                                    {!sideNavOpen ? (
+                                        <BsChevronDoubleRight
+                                            color="#000"
+                                            size={25}
+                                        />
+                                    ) : (
+                                        <BsChevronDoubleLeft
+                                            color="#000"
+                                            size={25}
+                                        />
+                                    )}
+                                </div>
+                                {isLoadingInfo ? (
+                                    <div className="skel__wrapper">
+                                        <SideBarSkeleton />
+                                    </div>
+                                ) : (
+                                    <SideBar type={loggedUserInfo} />
+                                )}
+                            </div>
                         </div>
 
                         <div
-                            className={`sidebar__menu ${
+                            className={`content__main ${
                                 !sideNavOpen ? "side__closed" : ""
                             }`}
                         >
+                            <NavBarInterna data={loggedUserInfo} />
+
                             <div
-                                className="menu__toggle"
-                                onClick={() => setSideNavOpen(!sideNavOpen)}
+                                className="open__side__xxs"
+                                onClick={() => setShowNavBarXs(true)}
                             >
-                                {!sideNavOpen ? (
-                                    <BsChevronDoubleRight
-                                        color="#fff"
-                                        size={25}
-                                    />
-                                ) : (
-                                    <BsChevronDoubleLeft
-                                        color="#fff"
-                                        size={25}
-                                    />
-                                )}
+                                <BiMenuAltLeft size={30} />
                             </div>
+
+                            {showNavBarXs && (
+                                <div
+                                    className="close__side__xxs"
+                                    onClick={() => setShowNavBarXs(false)}
+                                >
+                                    <IoMdCloseCircle size={30} />
+                                </div>
+                            )}
+
+                            {isModalPontoOpen && <PontoModal />}
+
                             {isLoadingInfo ? (
                                 <div className="skel__wrapper">
-                                    <SideBarSkeleton />
+                                    <DashSkeleton />
                                 </div>
                             ) : (
-                                <SideBar type={loggedUserInfo} />
+                                <>
+                                    <Switch>
+                                        <Route
+                                            path={path}
+                                            exact
+                                            render={(props) => (
+                                                <Home
+                                                    data={loggedUserInfo}
+                                                    {...props}
+                                                />
+                                            )}
+                                        />
+                                        <Route
+                                            path={`${path}/settings`}
+                                            exact
+                                            render={(props) => (
+                                                <Settings
+                                                    data={loggedUserInfo}
+                                                    {...props}
+                                                />
+                                            )}
+                                        />
+                                        {(isGestor || isColaborador) && (
+                                            <Route
+                                                path={`${path}/pontos`}
+                                                render={(props) => (
+                                                    <Pontos
+                                                        dataPonto={
+                                                            loggedUserInfo
+                                                        }
+                                                        {...props}
+                                                    />
+                                                )}
+                                                exact
+                                            />
+                                        )}
+                                        {isGestor ||
+                                            (isColaborador && (
+                                                <Route
+                                                    path={`${path}/espelho`}
+                                                    component={Espelho}
+                                                    exact
+                                                />
+                                            ))}
+
+                                        {(isAdmin || isGestor) && (
+                                            <Route
+                                                path={`${path}/usuarios`}
+                                                component={Usuarios}
+                                                exact
+                                            />
+                                        )}
+
+                                        {(isAdmin || isGestor) && (
+                                            <Route
+                                                path={`${path}/expedientes`}
+                                                component={Expedientes}
+                                                exact
+                                            />
+                                        )}
+
+                                        {(isAdmin || isGestor) && (
+                                            <Route
+                                                path={`${path}/funcoes`}
+                                                component={Funcao}
+                                                exact
+                                            />
+                                        )}
+
+                                        {(isAdmin || isGestor) && (
+                                            <Route
+                                                path={`${path}/setores`}
+                                                component={Setor}
+                                                exact
+                                            />
+                                        )}
+
+                                        {(isAdmin || isGestor) && (
+                                            <Route
+                                                path={`${path}/horarios`}
+                                                component={Horario}
+                                                exact
+                                            />
+                                        )}
+                                    </Switch>
+                                </>
                             )}
                         </div>
                     </div>
-
-                    <div
-                        className={`content__main ${
-                            !sideNavOpen ? "side__closed" : ""
-                        }`}
-                    >
-                        <NavBarInterna data={loggedUserInfo} />
-
-                        <div
-                            className="open__side__xxs"
-                            onClick={() => setShowNavBarXs(true)}
-                        >
-                            <BiMenuAltLeft size={30} />
-                        </div>
-
-                        {showNavBarXs && (
-                            <div
-                                className="close__side__xxs"
-                                onClick={() => setShowNavBarXs(false)}
-                            >
-                                <IoMdCloseCircle size={30} />
-                            </div>
-                        )}
-
-                        {isModalPontoOpen && <PontoModal />}
-
-                        {isLoadingInfo ? (
-                            <div className="skel__wrapper">
-                                <DashSkeleton />
-                            </div>
-                        ) : (
-                            <>
-                                <Switch>
-                                    <Route
-                                        path={path}
-                                        exact
-                                        render={(props) => (
-                                            <Home
-                                                data={loggedUserInfo}
-                                                {...props}
-                                            />
-                                        )}
-                                    />
-                                    <Route
-                                        path={`${path}/settings`}
-                                        exact
-                                        render={(props) => (
-                                            <Settings
-                                                data={loggedUserInfo}
-                                                {...props}
-                                            />
-                                        )}
-                                    />
-                                    {isGestor ||
-                                        (isColaborador && (
-                                            <Route
-                                                path={`${path}/espelho`}
-                                                component={Espelho}
-                                                exact
-                                            />
-                                        ))}
-
-                                    {(isAdmin || isGestor) && (
-                                        <Route
-                                            path={`${path}/usuarios`}
-                                            component={Usuarios}
-                                            exact
-                                        />
-                                    )}
-
-                                    {(isAdmin || isGestor) && (
-                                        <Route
-                                            path={`${path}/expedientes`}
-                                            component={Expedientes}
-                                            exact
-                                        />
-                                    )}
-
-                                    {(isAdmin || isGestor) && (
-                                        <Route
-                                            path={`${path}/funcoes`}
-                                            component={Funcao}
-                                            exact
-                                        />
-                                    )}
-
-                                    {(isAdmin || isGestor) && (
-                                        <Route
-                                            path={`${path}/setores`}
-                                            component={Setor}
-                                            exact
-                                        />
-                                    )}
-
-                                    {(isAdmin || isGestor) && (
-                                        <Route
-                                            path={`${path}/horarios`}
-                                            component={Horario}
-                                            exact
-                                        />
-                                    )}
-                                </Switch>
-                            </>
-                        )}
-                    </div>
-                </div>
+                </>
             ) : (
                 <LoadingMarcaPonto />
             )}

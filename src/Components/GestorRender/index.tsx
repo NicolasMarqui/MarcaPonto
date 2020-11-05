@@ -14,6 +14,7 @@ import {
     ALL_EXPEDIENTE,
     ALL_FUNCAO,
     ALL_HORARIOS,
+    ALL_PONTO,
     ALL_SETOR,
 } from "../../Services/Endpoints";
 import Lottie from "react-lottie";
@@ -40,6 +41,7 @@ const GestorRender: React.FC<GestorRenderProps> = () => {
     const [allFuncoes, setAllFuncoes] = useState<any[]>([]);
     const [allSetores, setAllSetores] = useState<any[]>([]);
     const [allHorarios, setAllHorarios] = useState<any[]>([]);
+    const [allPontos, setAllPontos] = useState<any[]>([]);
 
     useEffect(() => {
         getTodosUsuarios();
@@ -47,6 +49,7 @@ const GestorRender: React.FC<GestorRenderProps> = () => {
         getTodasFuncoes();
         getTodosSetores();
         getTodosHorarios();
+        getTodosPontos();
     }, []);
 
     const getTodosUsuarios = async () => {
@@ -121,6 +124,20 @@ const GestorRender: React.FC<GestorRenderProps> = () => {
             });
     };
 
+    const getTodosPontos = async () => {
+        await api
+            .get(ALL_PONTO, { headers: { Authorization: token } })
+            .then((resp) => {
+                const { status, data } = resp;
+                if (status === 200) {
+                    setAllPontos(data);
+                }
+            })
+            .catch((err) => {
+                showToast("ERROR", err.message, {});
+            });
+    };
+
     return (
         <div className="admnntad__rr">
             <div className="adm__info-wrapper">
@@ -133,7 +150,7 @@ const GestorRender: React.FC<GestorRenderProps> = () => {
                 <AdminInfo
                     Icon={FaClipboardCheck}
                     text="Expedientes"
-                    number={allExpedientes.length} 
+                    number={allExpedientes.length}
                     linkTo="/dashboard/expedientes"
                 />
                 <AdminInfo
@@ -162,38 +179,7 @@ const GestorRender: React.FC<GestorRenderProps> = () => {
                     </Card>
                 </div>
 
-                <div className="adm__ls-row">
-                    <div className="adm__gg-users">
-                        <DataTable
-                            striped={true}
-                            title="Últimos usuários cadastrados"
-                            data={allUsuarios
-                                .slice(0, 4)
-                                .map((c: any) =>
-                                    c.ativo
-                                        ? { ...c, ativo: "true" }
-                                        : { ...c, ativo: "false" }
-                                )}
-                            progressPending={isLoadingAllUsuarios}
-                            progressComponent={
-                                <Lottie
-                                    options={{
-                                        loop: true,
-                                        animationData: LOADING,
-                                    }}
-                                    height={125}
-                                    width={125}
-                                />
-                            }
-                            columns={ColumsTableUser}
-                            responsive={true}
-                        />
-
-                        <Link to="/dashboard/usuarios" className="bt">
-                            Ver todos usuários
-                        </Link>
-                    </div>
-                </div>
+                <div className="adm__ls-row">empty</div>
             </div>
         </div>
     );

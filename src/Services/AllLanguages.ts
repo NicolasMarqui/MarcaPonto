@@ -19,16 +19,22 @@ export const AllLanguages = [
         flag: "es",
         locale: "es-ES",
     },
+    // {
+    //     id: 4,
+    //     title: "Francês",
+    //     flag: "fr",
+    //     locale: "fr-FR",
+    // },
+    // {
+    //     id: 5,
+    //     title: "Alemão",
+    //     flag: "de",
+    //     locale: "de-DE",
+    // },
     {
-        id: 4,
-        title: "Francês",
-        flag: "fr",
-        locale: "fr-FR",
-    },
-    {
-        id: 5,
-        title: "Alemão",
-        flag: "de",
-        locale: "de-DE",
+        id: 6,
+        title: "Italiano",
+        flag: "it",
+        locale: "it-IT",
     },
 ];

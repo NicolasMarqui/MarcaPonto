@@ -73,11 +73,7 @@ const AddSelectedSetor: React.FC = () => {
                         });
 
                         if (hasSetor && hasSetor.length > 0) {
-                            showToast(
-                                "ERROR",
-                                "Esse expediente já existe!",
-                                {}
-                            );
+                            showToast("ERROR", "Esse setor já existe!", {});
 
                             return false;
                         }
@@ -89,7 +85,6 @@ const AddSelectedSetor: React.FC = () => {
                             ativo: isAtivo,
                         };
 
-                        console.log(newSetor);
                         await api
                             .post(INSERT_SETOR, newSetor, {
                                 headers: { Authorization: token },

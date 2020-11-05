@@ -1,0 +1,52 @@
+@import '../../../Styles/responsive';
+
+.pontos__wrapper{
+    .pontos__header{
+        margin-top: 30px;
+        
+        // @include md{
+        //     width: 50%;
+        // }
+        
+        h2{
+            font-size: 30px;
+            font-weight: 600;
+            margin-top: 20px;
+            position: relative;
+
+            // &::before{
+            //     content: '';
+            //     position: absolute;
+            //     left: 0px;
+            //     bottom: -8px;
+            //     width: 5%;
+            //     background: red;
+            //     height: 4px;
+            // }
+        }
+
+        ul.pontos__filter{
+            display: flex;
+            margin-top: 5px;
+            border: 1px solid #f2f2f2;
+            padding: 20px 0;
+
+            li{
+                flex: 3;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                margin: 0 10px;
+
+                &:first-child{
+                    flex: 7;
+                }
+
+                .form__group{
+                    margin: 0 10px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

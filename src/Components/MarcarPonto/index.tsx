@@ -36,7 +36,7 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
         setIsLoadingPonto(true);
 
         const newPontoData = {
-            manual: true,
+            manual: false,
             colaboradorId: colaboradorId,
             data: getTodayDate(),
             horario: datePonto.toString(),

@@ -29,12 +29,19 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
         removeToken("token");
     };
 
+    const changeBrowserLanguage = (value: string, title: string) => {
+        let toastSuccessMessage = `Idioma alterado para ${title}`;
+
+        showToast("SUCCESS", toastSuccessMessage, {});
+        setBrowserLanguage(value);
+    };
+
     return (
         <header className="header__nav-interna">
             <div className="nav__interna">
                 <div className="nav__bemvindo">
                     <h2 className="tt-title">
-                        <FormattedMessage id="helloDashboard" />{" "}
+                        <FormattedMessage id="helloDashboard" />
                         <span>{handleUndefined(data.username)}</span>
                     </h2>
                     <p className="nav__curentDate">{getTodayInfo()}</p>
@@ -58,7 +65,10 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
                                 <div
                                     className="mo__wrapper"
                                     onClick={() =>
-                                        setBrowserLanguage(lang.locale)
+                                        changeBrowserLanguage(
+                                            lang.locale,
+                                            lang.title
+                                        )
                                     }
                                 >
                                     <img

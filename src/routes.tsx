@@ -8,13 +8,14 @@ import Dashboard from "./Pages/Dashboard";
 import Login from "./Pages/Login";
 import PrivateRoute from "./Services/PrivateRoute";
 import MainContext from "./Contexts/MainContext";
+import Landing from "./Pages/Landing";
 
 const messagesInEnglish = {
-    helloDashboard: "Welcome",
+    helloDashboard: "Welcome ",
 };
 
 const messagesInPortuguese = {
-    helloDashboard: "Bem Vindo",
+    helloDashboard: "Bem Vindo ",
 };
 
 const Routes = () => {
@@ -27,7 +28,7 @@ const Routes = () => {
         <IntlProvider
             messages={messages}
             locale={browserLanguage}
-            defaultLocale="en"
+            defaultLocale="pt-BR"
         >
             <BrowserRouter>
                 <ToastContainer
@@ -40,8 +41,9 @@ const Routes = () => {
                     rtl={false}
                 />
                 <Switch>
+                    <Route path="/" exact component={Landing} />
                     <Route
-                        path="/"
+                        path="/login"
                         exact
                         render={(props) => <Login {...props} />}
                     />
