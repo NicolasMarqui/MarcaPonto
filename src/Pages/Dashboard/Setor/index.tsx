@@ -13,6 +13,7 @@ import AddSelectedSetor from "../../../Components/RenderSelectedRow/Setores/AddS
 import SelectedSetor from "../../../Components/RenderSelectedRow/Setores/SelectedSetor";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FaTimesCircle } from "react-icons/fa";
+import HeaderInside from "../../../Components/HeaderInside";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -78,19 +79,32 @@ const Setor: React.FC = () => {
     return (
         <>
             <div className="usuarios__wrapper">
+                <div className="usuarios__header">
+                    <HeaderInside isHome={false} nome={"Setores"} />
+                </div>
+                <div className="page__title-info">
+                    <div className="tinf__name">
+                        <h2 className="tt-title title-blue title-bold">
+                            Setores
+                        </h2>
+                        <p>
+                            Você possui
+                            <span> {allSetores.length}</span> setor(es)
+                            cadastrado(s)
+                        </p>
+                    </div>
+                    <a
+                        href="#new"
+                        className="bt"
+                        onClick={() => setaddModalOpen(true)}
+                    >
+                        + Novo Setor
+                    </a>
+                </div>
                 {!isLoading ? (
                     <div className="table__wrapper">
-                        <div className="usuarios__header">
-                            <a
-                                href="#new"
-                                className="bt"
-                                onClick={() => setaddModalOpen(true)}
-                            >
-                                + Novo Setor
-                            </a>
-                        </div>
                         <DataTable
-                            title="Todos os Setores"
+                            noHeader={true}
                             data={allSetores.map((c: any) =>
                                 c.ativo
                                     ? {

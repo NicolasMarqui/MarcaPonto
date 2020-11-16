@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import "./styles.scss";
 import { Link } from "react-router-dom";
-import { BiBell, BiChevronDown } from "react-icons/bi";
+import { BiChevronDown } from "react-icons/bi";
+import { AiFillBell } from "react-icons/ai";
 import {
     getCurrentFlag,
     getTodayInfo,
@@ -11,6 +12,7 @@ import {
 import MainContext from "../../Contexts/MainContext";
 import { FormattedMessage } from "react-intl";
 import { AllLanguages } from "../../Services/AllLanguages";
+import { AiOutlineSearch } from "react-icons/ai";
 
 interface NavBarInternaProps {
     data: any;
@@ -20,9 +22,9 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
     const { removeToken, setBrowserLanguage, browserLanguage } = useContext(
         MainContext
     );
-    const [dropdownNotificationOpen, setdropdownNotificationOpen] = useState(
-        false
-    );
+    // const [dropdownNotificationOpen, setdropdownNotificationOpen] = useState(
+    //     false
+    // );
 
     const handleLogout = () => {
         showToast("SUCCESS", "Você foi deslogado com sucesso", {});
@@ -39,12 +41,11 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
     return (
         <header className="header__nav-interna">
             <div className="nav__interna">
-                <div className="nav__bemvindo">
-                    <h2 className="tt-title">
-                        <FormattedMessage id="helloDashboard" />
-                        <span>{handleUndefined(data.username)}</span>
-                    </h2>
-                    <p className="nav__curentDate">{getTodayInfo()}</p>
+                <div className="nav__search">
+                    <input type="text" placeholder="Pesquisa" />
+                    <div className="s__go">
+                        <AiOutlineSearch color="#fff" size={18} />
+                    </div>
                 </div>
 
                 <div className="nav__opcoes">
@@ -56,7 +57,7 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
                                 )}/flat/64.png`}
                                 alt="Portuguese"
                             />
-                            <BiChevronDown size={20} />
+                            <BiChevronDown size={20} color="#fff" />
                         </div>
                         <div className="lang__more-options">
                             {AllLanguages.filter(
@@ -89,25 +90,14 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
                         </Link>
                     </div>
 
-                    <div
-                        className="opcoes__notifications"
-                        onClick={() =>
-                            setdropdownNotificationOpen(
-                                !dropdownNotificationOpen
-                            )
-                        }
-                    >
-                        <BiBell size={30} />
+                    <div className="opcoes__notifications">
+                        <AiFillBell size={30} color="#fff" />
 
                         <div className="notifications__hasNot">
                             <span>1</span>
                         </div>
 
-                        <div
-                            className={`notifications__dropdown ${
-                                dropdownNotificationOpen ? "show" : ""
-                            }`}
-                        >
+                        <div className={`notifications__dropdown`}>
                             <p>Nenhuma notificação ainda</p>
                         </div>
                     </div>

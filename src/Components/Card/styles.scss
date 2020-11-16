@@ -2,14 +2,22 @@
 
 .card__wrapper {
     padding: 40px;
-    background-color: $grey;
-    margin: 10px;
+    background-color: #fff;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
+    height: 100%;
+
+    &.not-flex{
+        display: block;
+    }
+
+    &.no-padding{
+        padding: 0;
+    }
 
     &:first-child {
         margin-left: 0;
@@ -25,18 +33,6 @@
 
     &.size3 {
         flex: 1 1 70%;
-    }
-
-    &.height-auto {
-        min-height: 242px;
-    }
-
-    &.height-full {
-        height: 70vh;
-    }
-
-    &.height-100p {
-        min-height: 100%;
     }
 
     &>a {

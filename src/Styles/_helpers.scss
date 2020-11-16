@@ -54,6 +54,26 @@
         font-size: 40px;
         line-height: 45px;
     }
+
+    &.title-blue{
+        color: #040E4B;
+    }
+
+    &.title-bold{
+        font-weight: 700;
+    }
+}
+
+.tt-sub{
+    font-size: 20px;
+
+    &.title-blue{
+        color: #040E4B;
+    }
+
+    &.title-bold{
+        font-weight: 700;
+    }
 }
 
 .skel__margin {
@@ -184,28 +204,40 @@ textarea.set-height{
     height: 200px;
 }
 
-// .rdt_TableBody {
-//     .rdt_TableRow {
-//         position: relative;
+.page__title-info{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-//         &:hover {
-//             &::before {
-//                 content: 'Clique para ver mais detalhes 😄';
-//                 position: absolute;
-//                 right: 0;
-//                 left: 0;
-//                 bottom: auto;
-//                 margin: 0 auto;
-//                 top: -40px;
-//                 color: #fff;
-//                 background-color: #616161;
-//                 padding: 17px 20px;
-//                 z-index: 4;
-//                 text-align: center;
-//                 font-size: 20px;
-//                 width: 20%;
-//                 border-radius: 17px;
-//             }
-//         }
-//     }
-// }
+    @include md{
+        flex-direction: row;
+    }
+
+    p{
+        color: #5E6E91;
+        font-size: 16px;
+    }
+
+    .tinf__name{
+        flex: 6;
+    }
+
+    .bt{
+        width: auto;
+        background-color: transparent;
+        color: #000;
+        border: 3px solid $red;
+        font-weight: 700;
+
+        &:hover{
+            background-color: $red;
+            color: #fff;
+            transition: all .5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+    }
+}
+
+.table__wrapper{
+    border-radius: 30px 30px 0 0;
+}

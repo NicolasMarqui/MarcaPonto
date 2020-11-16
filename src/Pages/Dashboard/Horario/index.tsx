@@ -11,6 +11,7 @@ import { ALL_HORARIOS } from "../../../Services/Endpoints";
 import { showToast } from "../../../Functions";
 import AddSelectedHorario from "../../../Components/RenderSelectedRow/Horarios/AddSelectedHorario";
 import SelectedHorario from "../../../Components/RenderSelectedRow/Horarios/SelectedHorario";
+import HeaderInside from "../../../Components/HeaderInside";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -76,19 +77,34 @@ const Horario: React.FC = () => {
     return (
         <>
             <div className="usuarios__wrapper">
+                <div className="usuarios__header">
+                    <HeaderInside isHome={false} nome={"Horários"} />
+                </div>
+                <div className="page__title-info">
+                    <div className="tinf__name">
+                        <h2 className="tt-title title-blue title-bold">
+                            Horários
+                        </h2>
+                        <p>
+                            Você possui{" "}
+                            <span>
+                                {allHorarios ? allHorarios.length : "-"}
+                            </span>{" "}
+                            horário(s) cadastrados
+                        </p>
+                    </div>
+                    <a
+                        href="#new"
+                        className="bt"
+                        onClick={() => setaddModalOpen(true)}
+                    >
+                        + Novo Horário
+                    </a>
+                </div>
                 {!isLoading ? (
                     <div className="table__wrapper">
-                        <div className="usuarios__header">
-                            <a
-                                href="#new"
-                                className="bt"
-                                onClick={() => setaddModalOpen(true)}
-                            >
-                                + Novo Horário
-                            </a>
-                        </div>
                         <DataTable
-                            title="Todos os Horários"
+                            noHeader={true}
                             data={allHorarios.map((c: any) =>
                                 c.ativo
                                     ? { ...c, ativo: "true" }

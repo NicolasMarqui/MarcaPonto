@@ -11,6 +11,7 @@ import AddSelectedFuncao from "../../../Components/RenderSelectedRow/Funcoes/Add
 import SelectedFuncao from "../../../Components/RenderSelectedRow/Funcoes/SelectedFuncao";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FaTimesCircle } from "react-icons/fa";
+import HeaderInside from "../../../Components/HeaderInside";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -75,19 +76,33 @@ const Funcao: React.FC = () => {
     return (
         <>
             <div className="usuarios__wrapper">
+                <div className="usuarios__header">
+                    <HeaderInside isHome={false} nome={"Funções"} />
+                </div>
+                <div className="page__title-info">
+                    <div className="tinf__name">
+                        <h2 className="tt-title title-blue title-bold">
+                            Funções
+                        </h2>
+                        <p>
+                            Você possui
+                            <span> {allFuncoes.length}</span>{" "}
+                            {allFuncoes.length > 1 ? "Funções " : "Função "}
+                            cadastrada(s)
+                        </p>
+                    </div>
+                    <a
+                        href="#new"
+                        className="bt"
+                        onClick={() => setaddModalOpen(true)}
+                    >
+                        + Nova Função
+                    </a>
+                </div>
                 {!isLoading ? (
                     <div className="table__wrapper">
-                        <div className="usuarios__header">
-                            <a
-                                href="#new"
-                                className="bt"
-                                onClick={() => setaddModalOpen(true)}
-                            >
-                                + Nova Função
-                            </a>
-                        </div>
                         <DataTable
-                            title="Todas as Funcões"
+                            noHeader={true}
                             data={allFuncoes.map((c: any) =>
                                 c.responsavel
                                     ? {

@@ -4,62 +4,40 @@
     display: flex;
     flex-direction: column;
 
-    .adm__info-wrapper {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .adm__firstRow {
+    .adm__bemvindo{
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
 
-        @include lg {
+        @include md{
             flex-direction: row;
         }
 
-        .adm__gd-ponto {
-            flex: 1;
-            height: 100%;
-
-            .marca-ponto__logo {
-                img {
-                    width: 200px;
-                }
-            }
-
-            h3 {
-                font-size: 3rem;
-            }
-
-            a.bt {
-                width: auto;
-            }
+        .bem__vindo-info{
+            margin-bottom: 20px;
         }
 
-        .adm__ls-row {
-            flex: 1;
-            height: 400px;
-            max-height: 400px;
-            padding: 10px;
-
-            // .adm__gg-users {
-            //     height: 100%;
-            //     overflow: auto;
-
-            //     .bt{
-            //         width: auto;
-            //         margin: 30px auto 0;
-
-            //         @include sm{
-            //             width: 30%;
-            //         }
-            //     }
-            // }
-        }
-
-        .adm__lp-row{
-            flex: 1;
-        }
+        // p{
+        //     margin-top: 20px;
+        //     font-size: 16px;
+        // }
     }
+
+    .adm__grid--container{
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px 10px;
+        grid-template-areas:
+            "ponto pontos_hoje pontos_hoje"
+            "logs logs grafico_users";
+
+        .ponto { grid-area: ponto; }
+        .pontos_hoje { grid-area: pontos_hoje; }
+        .logs { grid-area: logs; }
+        .grafico_users { grid-area: grafico_users; }
+    }
+
 }

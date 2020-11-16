@@ -11,6 +11,7 @@ import AddSelectedExpediente from "../../../Components/RenderSelectedRow/Expedie
 import SelectedExpediente from "../../../Components/RenderSelectedRow/Expediente/SelectedExpediente";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FaTimesCircle } from "react-icons/fa";
+import HeaderInside from "../../../Components/HeaderInside";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -74,19 +75,32 @@ const Expedientes: React.FC = () => {
     return (
         <>
             <div className="usuarios__wrapper">
+                <div className="usuarios__header">
+                    <HeaderInside isHome={false} nome={"Expedientes"} />
+                </div>
+                <div className="page__title-info">
+                    <div className="tinf__name">
+                        <h2 className="tt-title title-blue title-bold">
+                            Expedientes
+                        </h2>
+                        <p>
+                            Você possui
+                            <span> {allExpedientes.length}</span> expediente(s)
+                            cadastrado(s)
+                        </p>
+                    </div>
+                    <a
+                        href="#new"
+                        className="bt"
+                        onClick={() => setaddModalOpen(true)}
+                    >
+                        + Novo Expediente
+                    </a>
+                </div>
                 {!isLoading ? (
                     <div className="table__wrapper">
-                        <div className="usuarios__header">
-                            <a
-                                href="#new"
-                                className="bt"
-                                onClick={() => setaddModalOpen(true)}
-                            >
-                                + Novo Expediente
-                            </a>
-                        </div>
                         <DataTable
-                            title="Todos os Expedientes"
+                            noHeader={true}
                             data={allExpedientes.map((c: any) =>
                                 c.ativo
                                     ? {

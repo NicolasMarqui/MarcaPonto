@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import api from "./api";
 import {
@@ -28,19 +28,32 @@ import {
 } from "./Endpoints";
 
 // COLABORADORES ==================================================================
-export async function getAllColaboradores(token: string | null) {
-    if (!token) return false;
+export const GetAllColaboradores = (
+    token: string | null,
+    closedModal?: boolean | undefined
+) => {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
 
-    return await api
-        .get(ALL_COLABORADORES, { headers: { Authorization: token } })
-        .then((response) => {
-            const returnInfo = { status: response.status, data: response.data };
-            return returnInfo;
-        })
-        .catch((err) => {
-            return err;
-        });
-}
+    useEffect(() => {
+        api.get(ALL_COLABORADORES, { headers: { Authorization: token } })
+            .then((response) => {
+                const { status, data } = response;
+                setApiData(data);
+                setStatusCode(status);
+            })
+            .catch((err) => {
+                return err;
+            });
+    }, [closedModal]);
+
+    // if (!token) return false;
+
+    return {
+        dataAllColaboradores: apiData as any,
+        statusCodeAllColaboradores: statusCode,
+    };
+};
 
 export async function insertNewColaborador(token: string | null, data: any) {
     if (!token) return false;
@@ -466,18 +479,27 @@ export async function deleteHorarioById(token: string, id: number) {
 }
 
 // PONTO =============================================================
-export async function getAllPontos(token: string) {
-    if (!token) return false;
+export const GetAllPontos = (token: string | null) => {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
 
-    await api
-        .get(ALL_PONTO, { headers: { Authorization: token } })
-        .then((response) => {
-            return response;
-        })
-        .catch((err) => {
-            return err;
-        });
-}
+    useEffect(() => {
+        api.get(ALL_PONTO, { headers: { Authorization: token } })
+            .then((response) => {
+                const { status, data } = response;
+                setApiData(data);
+                setStatusCode(status);
+            })
+            .catch((err) => {
+                return err;
+            });
+    }, []);
+
+    return {
+        dataAllPontos: apiData as any,
+        statusCodeAllPontos: statusCode,
+    };
+};
 
 export async function insertNewPonto(token: string, data: any) {
     if (!token) return false;

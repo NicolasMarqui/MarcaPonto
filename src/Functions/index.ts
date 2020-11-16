@@ -60,6 +60,15 @@ export const getTodayDate = () => {
     }/${now.getFullYear()}`;
 };
 
+export const getTodayDateConsulta = () => {
+    let now = new Date();
+    return `${now.getFullYear()}-${
+        now.getMonth() + 1 < 10
+            ? "0" + (now.getMonth() + 1)
+            : now.getMonth() + 1
+    }-${now.getDate() < 10 ? "0" + now.getDate() : now.getDate()}`;
+};
+
 export const handleUndefined = (item: any) => {
     return item === undefined || item === null || !item ? "Tester" : item;
 };

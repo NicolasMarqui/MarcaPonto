@@ -5,85 +5,56 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding: 10px 0;
     position: relative;
 
-    .link__popover {
-        position: absolute;
-        right: -204px;
-        bottom: -7px;
-        background-color: #222;
-        padding: 17px 20px;
-        z-index: 3;
-        width: 200px;
-        border-radius: 17px;
-        visibility: hidden;
-
-        p {
-            color: #fff;
-        }
-    }
-
-    &.active {
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 4px;
-            background-color: $red;
-        }
-    }
-
-    &:hover {
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 4px;
-            background-color: $red;
-        }
-
-        .link__icon {
-            svg {
-                transform: scale(1.02);
-            }
+    &:hover{
+        .link__icon{
+            transform: scale(1.06);
         }
     }
 
     .link__text {
         p {
             text-decoration: none;
-            color: #fff;
+            color: #252F3F;
             display: none;
         }
+    }
+
+    .link__arrow{
+        flex: 1;
+        justify-content: flex-end;
+        display: flex;
+        align-items: center;
     }
 
     &.link__reduced {
         padding: 10px;
         justify-content: center;
+        flex-direction: column;
+        align-items: center;
 
         .link__text {
             p {
                 text-decoration: none;
-                color: #fff;
-                display: none;
+                color: #222;
+                font-size: 10px;
+                text-align: center;
+                // display: none;
             }
+        }
+
+        .link__icon{
+            margin: 0;
+        }
+
+        .link__arrow{
+            display: none;
         }
 
         .link__popover {
             visibility: hidden;
-        }
-
-        &:hover {
-            @include sm {
-                .link__popover {
-                    visibility: visible;
-                }
-            }
         }
     }
 
@@ -102,7 +73,6 @@
     }
 
     @include sm {
-        padding: 10px 10px 10px 40px;
         justify-content: flex-start;
 
         .link__text {

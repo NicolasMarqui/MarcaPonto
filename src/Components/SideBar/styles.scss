@@ -1,0 +1,39 @@
+.side__block{
+    margin: 25px 0;
+
+    span{
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.49);
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    ul{
+        li{
+            a{
+                text-decoration: none;
+            }
+
+            // &:hover{
+            //     .dropdown__menu{
+            //         display: block;
+            //         opacity: 1;
+            //     }
+            // }
+
+            // .dropdown__menu{
+            //     background-color: #f2f2f2;
+            //     display: none;
+            //     opacity: 0;
+            //     transition: opacity .2s cubic-bezier(0.19, 1, 0.22, 1);
+            //     padding-left: 20px;
+                
+            //     li{
+            //         a{
+            //             font-size: 14px;
+            //         }
+            //     }
+            // }
+        }
+    }
+}

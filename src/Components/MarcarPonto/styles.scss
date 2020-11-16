@@ -7,15 +7,19 @@
     align-items: center;
 
     h3 {
-        font-size: 5rem;
+        font-size: 4rem;
         margin-bottom: 16px;
+    }
+
+    .bt{
+        width: 70%;
     }
 
     .marca-ponto__logo {
         margin-bottom: 20px;
 
         img {
-            width: 300px;
+            width: 155px;
         }
     }
 }

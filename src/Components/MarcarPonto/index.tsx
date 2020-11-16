@@ -74,13 +74,17 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
 
                 setIsModalPontoOpen(true);
 
-                const { errors } = err.response.data;
+                //TODO Fix error message
 
-                errors.map((err: any) =>
-                    showToast("ERROR", err.message, {
-                        onClose: () => setIsModalPontoOpen(false),
-                    })
-                );
+                console.log(err.response.data);
+
+                // const { errors } = err.response.data;
+
+                // errors.map((err: any) =>
+                //     showToast("ERROR", err.message, {
+                //         onClose: () => setIsModalPontoOpen(false),
+                //     })
+                // );
 
                 setIsLoadingPonto(false);
             });
@@ -96,7 +100,6 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
                 />
             </div>
             <Clock />
-            <p>{getTodayInfo()}</p>
 
             {!isLoadingPonto ? (
                 <a href="#marcar" className="bt" onClick={handlePonto}>

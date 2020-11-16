@@ -1,185 +1,105 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import "./styles.scss";
 import Card from "../Card";
-import { Link } from "react-router-dom";
 import MarcarPonto from "../MarcarPonto";
 import MainContext from "../../Contexts/MainContext";
-import AdminInfo from "../AdminInfo";
 import DataTable from "react-data-table-component";
-import { ColumsTableUser } from "../../Services/TableColumns";
-import { showToast } from "../../Functions";
-import api from "../../Services/api";
-import {
-    ALL_COLABORADORES,
-    ALL_EXPEDIENTE,
-    ALL_FUNCAO,
-    ALL_HORARIOS,
-    ALL_PONTO,
-    ALL_SETOR,
-} from "../../Services/Endpoints";
+import { ColumsTablePontos } from "../../Services/TableColumns";
+import { getTodayDateConsulta, getTodayInfo } from "../../Functions";
+import { GetAllPontos } from "../../Services/ApiCalls";
+import EmptyData from "../EmptyData";
 import Lottie from "react-lottie";
-import {
-    FaClipboardCheck,
-    FaUserAlt,
-    FaUserClock,
-    FaHammer,
-} from "react-icons/fa";
-import { MdWork } from "react-icons/md";
 
 const LOADING = require("../../Assets/animations/loading.json");
 
-interface GestorRenderProps {}
+interface GestorRenderProps {
+    info: any;
+}
 
-const GestorRender: React.FC<GestorRenderProps> = () => {
+const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
     const { currentLoggedUserId, token } = useContext(MainContext);
-
-    const [isLoadingAllUsuarios, setIsLoadingAllUsuarios] = useState(false);
-
-    // Gestor total de Cadastros
-    const [allUsuarios, setAllUsuarios] = useState<any[]>([]);
-    const [allExpedientes, setAllExpedientes] = useState<any[]>([]);
-    const [allFuncoes, setAllFuncoes] = useState<any[]>([]);
-    const [allSetores, setAllSetores] = useState<any[]>([]);
-    const [allHorarios, setAllHorarios] = useState<any[]>([]);
-    const [allPontos, setAllPontos] = useState<any[]>([]);
-
-    useEffect(() => {
-        getTodosUsuarios();
-        getTodosExpedientes();
-        getTodasFuncoes();
-        getTodosSetores();
-        getTodosHorarios();
-        getTodosPontos();
-    }, []);
-
-    const getTodosUsuarios = async () => {
-        setIsLoadingAllUsuarios(true);
-        await api
-            .get(ALL_COLABORADORES, { headers: { Authorization: token } })
-            .then((resp) => {
-                const { status, data } = resp;
-                if (status === 200) {
-                    setAllUsuarios(data);
-                    setIsLoadingAllUsuarios(false);
-                }
-            })
-            .catch((err) => {
-                showToast("ERROR", err.message, {});
-            });
-    };
-
-    const getTodosExpedientes = async () => {
-        await api
-            .get(ALL_EXPEDIENTE, { headers: { Authorization: token } })
-            .then((resp) => {
-                const { status, data } = resp;
-                if (status === 200) {
-                    setAllExpedientes(data);
-                }
-            })
-            .catch((err) => {
-                showToast("ERROR", err.message, {});
-            });
-    };
-
-    const getTodasFuncoes = async () => {
-        await api
-            .get(ALL_FUNCAO, { headers: { Authorization: token } })
-            .then((resp) => {
-                const { status, data } = resp;
-                if (status === 200) {
-                    setAllFuncoes(data);
-                }
-            })
-            .catch((err) => {
-                showToast("ERROR", err.message, {});
-            });
-    };
-
-    const getTodosSetores = async () => {
-        await api
-            .get(ALL_SETOR, { headers: { Authorization: token } })
-            .then((resp) => {
-                const { status, data } = resp;
-                if (status === 200) {
-                    setAllSetores(data);
-                }
-            })
-            .catch((err) => {
-                showToast("ERROR", err.message, {});
-            });
-    };
-
-    const getTodosHorarios = async () => {
-        await api
-            .get(ALL_HORARIOS, { headers: { Authorization: token } })
-            .then((resp) => {
-                const { status, data } = resp;
-                if (status === 200) {
-                    setAllHorarios(data);
-                }
-            })
-            .catch((err) => {
-                showToast("ERROR", err.message, {});
-            });
-    };
-
-    const getTodosPontos = async () => {
-        await api
-            .get(ALL_PONTO, { headers: { Authorization: token } })
-            .then((resp) => {
-                const { status, data } = resp;
-                if (status === 200) {
-                    setAllPontos(data);
-                }
-            })
-            .catch((err) => {
-                showToast("ERROR", err.message, {});
-            });
-    };
+    const { dataAllPontos, statusCodeAllPontos } = GetAllPontos(token);
 
     return (
         <div className="admnntad__rr">
-            <div className="adm__info-wrapper">
-                <AdminInfo
-                    Icon={FaUserAlt}
-                    text="Usuários"
-                    number={allUsuarios.length}
-                    linkTo="/dashboard/usuarios"
-                />
-                <AdminInfo
-                    Icon={FaClipboardCheck}
-                    text="Expedientes"
-                    number={allExpedientes.length}
-                    linkTo="/dashboard/expedientes"
-                />
-                <AdminInfo
-                    Icon={FaHammer}
-                    text="Funções"
-                    number={allFuncoes.length}
-                    linkTo="/dashboard/funcoes"
-                />
-                <AdminInfo
-                    Icon={MdWork}
-                    text="Setores"
-                    number={allSetores.length}
-                    linkTo="/dashboard/setores"
-                />
-                <AdminInfo
-                    Icon={FaUserClock}
-                    text="Horários"
-                    number={allHorarios.length}
-                    linkTo="/dashboard/horarios"
-                />
+            <div className="adm__bemvindo">
+                <div className="bem__vindo-info">
+                    <h2 className="tt-title title-blue title-bold">
+                        Bem Vindo
+                    </h2>
+                    <h3 className="tt-sub title-blue title-blue title-bold">
+                        {info.username}
+                    </h3>
+                </div>
+
+                <div className="bem__vindo-date">
+                    <p>{getTodayInfo()}</p>
+                </div>
             </div>
-            <div className="adm__firstRow">
-                <div className="adm__gd-ponto">
+            <div className="adm__grid--container">
+                <div className="ponto">
                     <Card height="height-100p">
                         <MarcarPonto colaboradorId={currentLoggedUserId} />
                     </Card>
                 </div>
-
-                <div className="adm__ls-row">empty</div>
+                <div className="pontos_hoje">
+                    <Card isFlex={false}>
+                        {statusCodeAllPontos === 200 ? (
+                            <DataTable
+                                title="Pontos batidos hoje"
+                                data={dataAllPontos.filter(
+                                    (p: any) =>
+                                        p.data === getTodayDateConsulta()
+                                )}
+                                columns={ColumsTablePontos}
+                                striped={true}
+                                pagination={false}
+                                highlightOnHover={true}
+                                noDataComponent={<EmptyData />}
+                            />
+                        ) : (
+                            <Lottie
+                                options={{
+                                    loop: true,
+                                    animationData: LOADING,
+                                }}
+                                height={200}
+                                width={200}
+                            />
+                        )}
+                    </Card>
+                </div>
+                <div className="logs">
+                    <Card isFlex={false}>
+                        {statusCodeAllPontos === 200 ? (
+                            <DataTable
+                                title="Logs"
+                                data={dataAllPontos.filter(
+                                    (p: any) => p.data === "2020-06-11"
+                                )}
+                                columns={ColumsTablePontos}
+                                striped={true}
+                                pagination={false}
+                                highlightOnHover={true}
+                                noDataComponent={<EmptyData />}
+                            />
+                        ) : (
+                            <Lottie
+                                options={{
+                                    loop: true,
+                                    animationData: LOADING,
+                                }}
+                                height={200}
+                                width={200}
+                            />
+                        )}
+                    </Card>
+                </div>
+                <div className="grafico_users">
+                    <Card>
+                        <h3>Gráfico aqui</h3>
+                    </Card>
+                </div>
             </div>
         </div>
     );

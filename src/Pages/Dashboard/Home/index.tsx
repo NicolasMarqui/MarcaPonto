@@ -22,7 +22,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             {isAdmin ? (
                 <AdminRender />
             ) : isGestor ? (
-                <GestorRender />
+                <GestorRender info={data} />
             ) : (
                 <UserRender />
             )}

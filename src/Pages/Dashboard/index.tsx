@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./styles.scss";
 import NavBarInterna from "../../Components/NavBarInterna";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
 import useWindowDimensions from "../../Hooks/useWindowDimensions";
 import MainContext from "../../Contexts/MainContext";
 import SideBar from "../../Components/SideBar";
@@ -33,7 +33,6 @@ import Horario from "./Horario";
 import Pontos from "./Pontos";
 
 //Logos
-const LOGO = require("../../Assets/images/logo_horizontal.svg");
 const JUST_LOGO = require("../../Assets/images/just_logo.png");
 
 interface DashboardProps {
@@ -111,31 +110,36 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
             });
     };
 
-    // TODO -> Criar logo em versão white
-
     return (
         <div className="dashboard__wrapper">
             {!isLoadingAll ? (
                 <>
-                    <div className="dashboard__outHeader">Oi</div>
                     <div className="dashboard__content">
                         <div
                             className={`content__sidebar ${
                                 !sideNavOpen ? "side__closed" : ""
                             } ${showNavBarXs ? "side__full__xxs" : ""}`}
                         >
+                            <div
+                                className="menu__toggle"
+                                onClick={() => setSideNavOpen(!sideNavOpen)}
+                            >
+                                {!sideNavOpen ? (
+                                    <BsChevronDoubleRight
+                                        color="#000"
+                                        size={20}
+                                    />
+                                ) : (
+                                    <BsChevronDoubleLeft
+                                        color="#000"
+                                        size={20}
+                                    />
+                                )}
+                            </div>
                             <div className="sidebar__logo">
-                                <img
-                                    src={
-                                        width < 992 || !sideNavOpen
-                                            ? JUST_LOGO
-                                            : LOGO
-                                    }
-                                    alt="Marca Ponto"
-                                    className={
-                                        width < 992 ? "img__smaller" : ""
-                                    }
-                                />
+                                <Link to="/dashboard">
+                                    <img src={JUST_LOGO} alt="Marca Ponto" />
+                                </Link>
                             </div>
 
                             <div
@@ -143,22 +147,6 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                     !sideNavOpen ? "side__closed" : ""
                                 }`}
                             >
-                                <div
-                                    className="menu__toggle"
-                                    onClick={() => setSideNavOpen(!sideNavOpen)}
-                                >
-                                    {!sideNavOpen ? (
-                                        <BsChevronDoubleRight
-                                            color="#000"
-                                            size={25}
-                                        />
-                                    ) : (
-                                        <BsChevronDoubleLeft
-                                            color="#000"
-                                            size={25}
-                                        />
-                                    )}
-                                </div>
                                 {isLoadingInfo ? (
                                     <div className="skel__wrapper">
                                         <SideBarSkeleton />
@@ -199,7 +187,7 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                     <DashSkeleton />
                                 </div>
                             ) : (
-                                <>
+                                <div className="main__childs">
                                     <Switch>
                                         <Route
                                             path={path}
@@ -284,7 +272,7 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                             />
                                         )}
                                     </Switch>
-                                </>
+                                </div>
                             )}
                         </div>
                     </div>
