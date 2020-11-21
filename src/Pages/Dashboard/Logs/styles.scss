@@ -1,0 +1,25 @@
+.page__search--logs{
+    margin: 20px 0;
+    border-bottom: 1px solid #f2f2f2;
+    position: relative;
+
+    input{
+        width: 100%;
+        padding: 10px 10px;
+        outline: none;
+        border: none;
+    }
+
+    svg{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        background-color: red;
+        height: 100%;
+        width: 3%;
+        padding: 5px;
+        cursor: pointer;
+        color: #f2f2f2;
+    }
+}

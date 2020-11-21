@@ -31,6 +31,7 @@ import Funcao from "./Funcao";
 import Setor from "./Setor";
 import Horario from "./Horario";
 import Pontos from "./Pontos";
+import Logs from "./Logs";
 
 //Logos
 const JUST_LOGO = require("../../Assets/images/just_logo.png");
@@ -268,6 +269,16 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                             <Route
                                                 path={`${path}/horarios`}
                                                 component={Horario}
+                                                exact
+                                            />
+                                        )}
+
+                                        {(isAdmin ||
+                                            isGestor ||
+                                            isColaborador) && (
+                                            <Route
+                                                path={`${path}/logs`}
+                                                component={Logs}
                                                 exact
                                             />
                                         )}

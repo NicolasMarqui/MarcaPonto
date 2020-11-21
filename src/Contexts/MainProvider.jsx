@@ -22,6 +22,7 @@ const MainProvider = ({ children }) => {
     ] = useStorage("closedModal");
     const [userLocalization, setUserLocalization] = useStorage("local");
     const [browserLanguage, setBrowserLanguage] = useStorage("language");
+    const [notificationCount, setNotificationCount] = useStorage("notificationCount");
 
     return (
         <MainContext.Provider
@@ -50,7 +51,9 @@ const MainProvider = ({ children }) => {
                 userLocalization,
                 setUserLocalization,
                 browserLanguage,
-                setBrowserLanguage
+                setBrowserLanguage,
+                notificationCount,
+                setNotificationCount
             }}
         >
             {children}

@@ -161,23 +161,95 @@ header.header__nav-interna {
                     position: absolute;
                     top: 100%;
                     right: -10px;
-                    width: 200px;
+                    width: 247px;
                     background-color: #fff;
                     z-index: 2;
-                    border-radius: 20px;
-                    box-shadow: -2px 0px 12px #eeee;
+                    border-radius: 15px;
+                    box-shadow: -2px 8px 8px 0px #eaeaeaee;
                     padding: 20px 10px;
                     height: 300px;
                     display: flex;
-                    justify-content: center;
-                    align-items: center;
+                    flex-direction: column;
+                    // justify-content: center;
+                    // align-items: center;
                     cursor: auto;
                     visibility: hidden;
                     overflow: auto;
                     // transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
 
-                    p {
+                    .not__linha{
+                        width: 100%;
+                        background-color: #F2F2F2;
+                        height: 1px;
+                        margin: 10px 0;
+                    }
+
+                    .not__no{
                         text-align: center;
+                        font-size: 14px;
+                        font-weight: 700;
+                    }
+
+                    .dropdown__header{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 5px;
+
+                        h3{
+                            font-size: 16px;
+                            font-weight: 700;
+                        }
+
+                        p{
+                            font-size: 9px;
+                            cursor: pointer;
+                            color: #ACACAC;
+
+                            &:hover{
+                                transform: scale(1.02);
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+
+                    ul{
+                        li{
+                            margin: 10px 0;
+
+                            .not__area{
+                                display: flex;
+                                flex-direction: row;
+                                align-items: center;
+                                cursor: pointer;
+                                position: relative;
+
+                                &:hover{
+                                    transform: scale(1.02);
+                                }
+
+                                .area__avatar{
+                                    img{
+                                        width: 27px;
+                                        height: 27px;
+                                        border-radius: 50%;
+                                    }
+                                }
+
+                                .area__content{
+                                    margin: 0 5px;
+
+                                    p{
+                                        font-size: 12px;
+                                    }
+                                }
+
+                                .area__date{
+                                    color: #ACACAC;
+                                    font-size: 10px;
+                                }
+                            }
+                        }
                     }
                 }
             }

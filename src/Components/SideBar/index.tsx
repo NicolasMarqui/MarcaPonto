@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { ImBook } from "react-icons/im";
 import { MdWork } from "react-icons/md";
+import { SiAnalogue } from "react-icons/si";
 import {
     checkIfAdmin,
     checkIfColaborador,
@@ -116,6 +117,14 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                                 text="Relatórios"
                                 from="dashboard"
                                 link="/relatorios"
+                            />
+                        </li>
+                        <li>
+                            <MenuLink
+                                icon={<SiAnalogue color="#222" size={18} />}
+                                text="Logs"
+                                from="dashboard"
+                                link="/logs"
                             />
                         </li>
                     </ul>

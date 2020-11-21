@@ -4,11 +4,19 @@ import Card from "../Card";
 import MarcarPonto from "../MarcarPonto";
 import MainContext from "../../Contexts/MainContext";
 import DataTable from "react-data-table-component";
-import { ColumsTablePontos } from "../../Services/TableColumns";
-import { getTodayDateConsulta, getTodayInfo } from "../../Functions";
-import { GetAllPontos } from "../../Services/ApiCalls";
+import {
+    ColumsTableLogs,
+    ColumsTablePontos,
+} from "../../Services/TableColumns";
+import {
+    getLogDate,
+    getTodayDateConsulta,
+    getTodayInfo,
+} from "../../Functions";
+import { GetAllLogs, GetAllPontos } from "../../Services/ApiCalls";
 import EmptyData from "../EmptyData";
 import Lottie from "react-lottie";
+import { Link } from "react-router-dom";
 
 const LOADING = require("../../Assets/animations/loading.json");
 
@@ -19,6 +27,7 @@ interface GestorRenderProps {
 const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
     const { currentLoggedUserId, token } = useContext(MainContext);
     const { dataAllPontos, statusCodeAllPontos } = GetAllPontos(token);
+    const { dataAllLogs, statusCodeAllLogs } = GetAllLogs(info.colaboradorId);
 
     return (
         <div className="admnntad__rr">
@@ -71,13 +80,11 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
                 </div>
                 <div className="logs">
                     <Card isFlex={false}>
-                        {statusCodeAllPontos === 200 ? (
+                        {statusCodeAllLogs === 200 ? (
                             <DataTable
                                 title="Logs"
-                                data={dataAllPontos.filter(
-                                    (p: any) => p.data === "2020-06-11"
-                                )}
-                                columns={ColumsTablePontos}
+                                data={dataAllLogs.slice(0, 5)}
+                                columns={ColumsTableLogs}
                                 striped={true}
                                 pagination={false}
                                 highlightOnHover={true}
@@ -93,6 +100,9 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
                                 width={200}
                             />
                         )}
+                        <Link to="/logs" className="bt">
+                            Todos os logs
+                        </Link>
                     </Card>
                 </div>
                 <div className="grafico_users">

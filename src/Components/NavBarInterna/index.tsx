@@ -3,28 +3,36 @@ import "./styles.scss";
 import { Link } from "react-router-dom";
 import { BiChevronDown } from "react-icons/bi";
 import { AiFillBell } from "react-icons/ai";
-import {
-    getCurrentFlag,
-    getTodayInfo,
-    handleUndefined,
-    showToast,
-} from "../../Functions";
+import { getCurrentFlag, getHour, showToast } from "../../Functions";
 import MainContext from "../../Contexts/MainContext";
 import { FormattedMessage } from "react-intl";
 import { AllLanguages } from "../../Services/AllLanguages";
 import { AiOutlineSearch } from "react-icons/ai";
+import SideBarSkeleton from "../Skeletons/Side";
+import {
+    GetAllNotifications,
+    makeAllNotificationRead,
+    makeOneNotificationRead,
+} from "../../Services/ApiCalls";
 
 interface NavBarInternaProps {
     data: any;
 }
 
 const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
-    const { removeToken, setBrowserLanguage, browserLanguage } = useContext(
-        MainContext
-    );
-    // const [dropdownNotificationOpen, setdropdownNotificationOpen] = useState(
-    //     false
-    // );
+    const {
+        removeToken,
+        setBrowserLanguage,
+        browserLanguage,
+        currentLoggedUserId,
+        notificationCount,
+        setNotificationCount,
+    } = useContext(MainContext);
+
+    const {
+        dataAllNotifications,
+        statusCodeAllNotifications,
+    } = GetAllNotifications(currentLoggedUserId);
 
     const handleLogout = () => {
         showToast("SUCCESS", "Você foi deslogado com sucesso", {});
@@ -94,11 +102,83 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
                         <AiFillBell size={30} color="#fff" />
 
                         <div className="notifications__hasNot">
-                            <span>1</span>
+                            <span>{dataAllNotifications.length}</span>
                         </div>
 
                         <div className={`notifications__dropdown`}>
-                            <p>Nenhuma notificação ainda</p>
+                            <div className="dropdown__header">
+                                <h3>Notificações</h3>
+                                <p
+                                    onClick={() => {
+                                        makeAllNotificationRead(
+                                            currentLoggedUserId
+                                        );
+
+                                        setNotificationCount(
+                                            notificationCount -
+                                                notificationCount
+                                        );
+                                    }}
+                                >
+                                    Marcar tudo como lido
+                                </p>
+                            </div>
+
+                            <div className="not__linha"></div>
+
+                            {statusCodeAllNotifications === 200 ? (
+                                <ul>
+                                    {dataAllNotifications.length === 0 ? (
+                                        <li>
+                                            <p className="not__no">
+                                                Nenhuma notificação
+                                            </p>
+                                        </li>
+                                    ) : (
+                                        dataAllNotifications.map((not: any) => (
+                                            <li key={not._id}>
+                                                <div
+                                                    className="not__area"
+                                                    onClick={() => {
+                                                        makeOneNotificationRead(
+                                                            not._id
+                                                        );
+                                                        setNotificationCount(
+                                                            notificationCount -
+                                                                1
+                                                        );
+                                                    }}
+                                                >
+                                                    <div className="area__avatar">
+                                                        <img
+                                                            src={`https://ui-avatars.com/api/?name=${data.username}&background=0D8ABC&color=fff`}
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                    <div className="area__content">
+                                                        <p>{not.content}</p>
+                                                    </div>
+                                                    <div className="area__date">
+                                                        <p>
+                                                            {getHour(
+                                                                new Date(
+                                                                    not.date
+                                                                )
+                                                            )}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="not__linha"></div>
+                                            </li>
+                                        ))
+                                    )}
+                                </ul>
+                            ) : (
+                                <>
+                                    <SideBarSkeleton />
+                                </>
+                            )}
                         </div>
                     </div>
 

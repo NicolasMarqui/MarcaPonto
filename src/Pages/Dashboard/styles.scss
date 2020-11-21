@@ -21,6 +21,11 @@
             padding: 20px 40px;
             z-index: 3;
             transition: width .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+            
+            @media(max-height: 720px){
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
 
             &.side__closed{
                 width: 70px;
@@ -65,7 +70,8 @@
 
             .sidebar__logo{
                 img{
-                    width: 80px;
+                    width: 66px;
+                    margin-left: -11px;
                 }
             }
         }

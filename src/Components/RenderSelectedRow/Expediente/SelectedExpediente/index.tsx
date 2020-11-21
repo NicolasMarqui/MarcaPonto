@@ -4,7 +4,10 @@ import { Formik } from "formik";
 import { BsTrash } from "react-icons/bs";
 import Lottie from "react-lottie";
 import MainContext from "../../../../Contexts/MainContext";
-import { deleteExpedienteById } from "../../../../Services/ApiCalls";
+import {
+    deleteExpedienteById,
+    insertNewLog,
+} from "../../../../Services/ApiCalls";
 import { showToast } from "../../../../Functions";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -25,6 +28,9 @@ const SelectedExpediente: React.FC<SelectedRowPrExpediente> = ({ data }) => {
         setOpenMoreInfo,
         sethasCloseEditModal,
         removehasCloseEditModal,
+        setNotificationCount,
+        notificationCount,
+        currentLoggedUserId,
     } = useContext(MainContext);
 
     // DATA PROPS
@@ -127,6 +133,13 @@ const SelectedExpediente: React.FC<SelectedRowPrExpediente> = ({ data }) => {
 
                                 if (status === 200) {
                                     setupdateSuccess(true);
+
+                                    insertNewLog(
+                                        currentLoggedUserId,
+                                        `Alterações feitas no expediente #${id} - ${nome}`
+                                    );
+
+                                    setNotificationCount(notificationCount + 1);
 
                                     showToast(
                                         "SUCCESS",

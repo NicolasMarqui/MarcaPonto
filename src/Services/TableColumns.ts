@@ -4,12 +4,13 @@ export const ColumsTableUser = [
         selector: "id",
         sortable: true,
         center: true,
+        width: "100px",
     },
     {
         name: "Nome",
         selector: "nome",
         sortable: true,
-        center: true,
+        // center: true,
     },
     {
         name: "Email",
@@ -39,6 +40,7 @@ export const ColumsTableExpediente = [
         selector: "id",
         sortable: true,
         center: true,
+        width: "100px",
     },
     {
         name: "Nome",
@@ -64,6 +66,7 @@ export const ColumsTableFuncoes = [
         selector: "id",
         sortable: true,
         center: true,
+        width: "100px",
     },
     {
         name: "Nome",
@@ -94,6 +97,7 @@ export const ColumsTableSetores = [
         selector: "id",
         sortable: true,
         center: true,
+        width: "100px",
     },
     {
         name: "Nome",
@@ -114,6 +118,7 @@ export const ColumsTableHorarios = [
         selector: "id",
         sortable: true,
         center: true,
+        width: "100px",
     },
     {
         name: "Dia da Semana",
@@ -155,6 +160,7 @@ export const ColumsTablePontos = [
         selector: "id",
         sortable: true,
         center: true,
+        width: "100px",
     },
     {
         name: "Data",
@@ -186,5 +192,17 @@ export const ColumsTablePontos = [
         name: "Observação",
         selector: "obs",
         center: true,
+    },
+];
+
+export const ColumsTableLogs = [
+    {
+        name: "Conteúdo",
+        selector: "content",
+        sortable: true,
+    },
+    {
+        name: "Data",
+        selector: "date",
     },
 ];

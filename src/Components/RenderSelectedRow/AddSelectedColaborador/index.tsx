@@ -7,6 +7,7 @@ import {
     getAllExpediente,
     getAllFuncoes,
     insertNewColaborador,
+    insertNewLog,
 } from "../../../Services/ApiCalls";
 import { showToast, validateEmail } from "../../../Functions";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -21,6 +22,7 @@ const AddSelectedColaborador: React.FC = () => {
         setaddModalOpen,
         sethasCloseEditModal,
         removehasCloseEditModal,
+        currentLoggedUserId,
     } = useContext(MainContext);
 
     // States Função
@@ -124,6 +126,11 @@ const AddSelectedColaborador: React.FC = () => {
                                 newColaboradorResponse.response.status === 200
                             ) {
                                 setAdicionadoSuccess(true);
+
+                                insertNewLog(
+                                    currentLoggedUserId,
+                                    `Colaborador ${nome} adicionado`
+                                );
 
                                 window.setTimeout(() => {
                                     showToast(

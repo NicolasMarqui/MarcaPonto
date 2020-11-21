@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import Axios from "axios";
 
 import api from "./api";
 import {
@@ -26,6 +27,9 @@ import {
     INSERT_SETOR,
     ALL_REGISTRO,
 } from "./Endpoints";
+import { stat } from "fs";
+import { getLogDate, showToast } from "../Functions";
+import MainContext from "../Contexts/MainContext";
 
 // COLABORADORES ==================================================================
 export const GetAllColaboradores = (
@@ -644,3 +648,118 @@ export async function getAllTiposDeRegistro(token: string) {
             return err;
         });
 }
+
+//NOTIFICAÇÕES E LOGS
+//Novo logs
+export const insertNewLog = (id: Number | null, content: String) => {
+    if (!id) return false;
+
+    Axios.post(`http://localhost:3333/api/logs/${id}`, { content })
+        .then((response: any) => {
+            return {
+                status: "SUCCESS",
+                message: "Log adicionado com sucesso",
+            };
+        })
+        .catch((err: any) => {
+            return err;
+        });
+};
+
+export const GetAllLogs = (id: Number | null) => {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        Axios.get(`http://localhost:3333/api/logs/${id}`)
+            .then((response: any) => {
+                const { status, data } = response;
+
+                const withDateFormat = [];
+
+                for (let i = 0; i < data.data.length; i++) {
+                    let newElement = {
+                        isRead: data.data[i].isRead,
+                        _id: data.data[i]._id,
+                        idUser: data.data[i].idUser,
+                        content: data.data[i].content,
+                        date: getLogDate(new Date(data.data[i].date)),
+                    };
+
+                    withDateFormat.push(newElement);
+                }
+
+                setApiData(withDateFormat);
+                setStatusCode(status);
+            })
+            .catch((err: any) => {
+                return err;
+            });
+    }, []);
+
+    return {
+        dataAllLogs: apiData as any,
+        statusCodeAllLogs: statusCode,
+    };
+};
+
+export const GetAllNotifications = (id: Number | null, hasRead?: boolean) => {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    const { setNotificationCount, notificationCount } = useContext(MainContext);
+
+    useEffect(() => {
+        Axios.get(`http://localhost:3333/api/notifications/${id}`)
+            .then((response: any) => {
+                const { status, data } = response;
+                setApiData(data.data);
+                setNotificationCount(data.data.length);
+                setStatusCode(status);
+            })
+            .catch((err: any) => {
+                return err;
+            });
+    }, [notificationCount]);
+
+    return {
+        dataAllNotifications: apiData as any,
+        statusCodeAllNotifications: statusCode,
+    };
+};
+
+export const makeOneNotificationRead = (id: Number | null) => {
+    if (!id) return false;
+
+    Axios.put(`http://localhost:3333/api/notification/${id}`)
+        .then((response: any) => {
+            const { status } = response;
+
+            if (status === 200) {
+                showToast("SUCCESS", "Notificação lida 😊", {});
+            } else {
+                showToast("ERROR", "😕", {});
+            }
+        })
+        .catch((err: any) => {
+            return err;
+        });
+};
+
+export const makeAllNotificationRead = (id: Number | null) => {
+    if (!id) return false;
+
+    Axios.put(`http://localhost:3333/api/notification/all/${id}`)
+        .then((response: any) => {
+            const { status } = response;
+
+            if (status === 200) {
+                showToast("SUCCESS", "Todas notificações lidas 😊", {});
+            } else {
+                showToast("ERROR", "😕", {});
+            }
+        })
+        .catch((err: any) => {
+            return err;
+        });
+};

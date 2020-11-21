@@ -10,6 +10,7 @@ import {
     getAllFuncoes,
     getExpedienteById,
     getFuncaoById,
+    insertNewLog,
     updateColaboradorById,
 } from "../../../Services/ApiCalls";
 import { showToast, validateEmail } from "../../../Functions";
@@ -31,6 +32,9 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
         setOpenMoreInfo,
         sethasCloseEditModal,
         removehasCloseEditModal,
+        currentLoggedUserId,
+        setNotificationCount,
+        notificationCount,
     } = useContext(MainContext);
 
     const { id, nome, email, funcaoId, expedienteId, ativo } = data;
@@ -99,6 +103,11 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                         if (responseRemove) {
                             if (responseRemove.status === 200) {
                                 setupdateSuccess(true);
+                                insertNewLog(
+                                    currentLoggedUserId,
+                                    `Usuário #${id}${nome} removido`
+                                );
+                                setNotificationCount(notificationCount + 1);
                                 setIsSubmiting(true);
 
                                 window.setTimeout(() => {
@@ -258,6 +267,13 @@ const SelectedColaborador: React.FC<SelectedRowPrColaborador> = ({ data }) => {
                         if (responseSubmit) {
                             if (responseSubmit.status === 200) {
                                 setupdateSuccess(true);
+
+                                insertNewLog(
+                                    currentLoggedUserId,
+                                    `Alterações feitas no usuário #${id} - ${nome}`
+                                );
+
+                                setNotificationCount(notificationCount + 1);
 
                                 showToast(
                                     "SUCCESS",

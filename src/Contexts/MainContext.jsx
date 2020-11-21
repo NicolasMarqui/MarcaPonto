@@ -25,7 +25,9 @@ const MainContext = createContext({
     userLocalization: '',
     setUserLocalization: (local) => {},
     browserLanguage: '',
-    setBrowserLanguage: (local) => {}
+    setBrowserLanguage: (local) => {},
+    notificationCount: 0,
+    setNotificationCount: (notific) => {},
 });
 
 export default MainContext;

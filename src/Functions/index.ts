@@ -60,6 +60,50 @@ export const getTodayDate = () => {
     }/${now.getFullYear()}`;
 };
 
+export const getHour = (date: any) => {
+    let hour = date.getHours();
+    let min = date.getMinutes();
+
+    return `${hour}:${min}`;
+};
+
+export const getLogDate = (data: any) => {
+    let months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    ];
+    let year = data.getFullYear();
+    let month = months[data.getMonth()];
+    let date = data.getDate();
+    let hour = data.getHours();
+    let min = data.getMinutes();
+    let sec = data.getSeconds();
+    let time =
+        date +
+        " de " +
+        month +
+        " " +
+        year +
+        " - " +
+        hour +
+        ":" +
+        min +
+        ":" +
+        sec;
+
+    return time;
+};
+
 export const getTodayDateConsulta = () => {
     let now = new Date();
     return `${now.getFullYear()}-${
