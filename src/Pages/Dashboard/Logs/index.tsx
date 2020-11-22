@@ -11,11 +11,17 @@ import DataTable from "react-data-table-component";
 const Logs: React.FC = () => {
     const { currentLoggedUserId } = useContext(MainContext);
 
+    const [searchValue, setSearchValue] = useState("");
     const { dataAllLogs, statusCodeAllLogs } = GetAllLogs(currentLoggedUserId);
 
     useEffect(() => {
         document.title = "Marca Ponto - Logs";
     }, []);
+
+    const handleChange = (e: any) => {
+        setSearchValue(e.target.value);
+        dataAllLogs.filter((l: any) => l.content.includes(e.target.value));
+    };
 
     return (
         <>
@@ -35,19 +41,30 @@ const Logs: React.FC = () => {
                     </div>
                 </div>
                 <div className="page__search--logs">
-                    <input type="text" placeholder="Pesquisar logs..." />
+                    <input
+                        type="text"
+                        placeholder="Pesquisar logs..."
+                        onChange={(e) => handleChange(e)}
+                    />
                     {/* <AiOutlineSearch size={10} color="#fff" /> */}
                 </div>
                 <div className="table__wrapper">
                     {statusCodeAllLogs === 200 ? (
                         <DataTable
                             noHeader={true}
-                            data={dataAllLogs.reverse()}
+                            data={
+                                searchValue
+                                    ? dataAllLogs.filter((l: any) =>
+                                          l.content.includes(searchValue)
+                                      )
+                                    : dataAllLogs
+                            }
                             columns={ColumsTableLogs}
                             noDataComponent={<EmptyData hasMargin={true} />}
                             striped={true}
                             pagination={true}
                             highlightOnHover={true}
+                            paginationPerPage={30}
                         />
                     ) : (
                         <p>Loading</p>

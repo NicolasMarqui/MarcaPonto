@@ -6,7 +6,11 @@
 
     .rel__todos{
         flex: 1;
-        margin: 0 50px 0 0;
+        margin: 0;
+
+        @include sm{
+            margin: 0 50px 0 0;
+        }
 
         .curr__rel{
             padding: 20px;
@@ -16,6 +20,7 @@
 
             &.has__bridge{
                 position: relative;
+                display: none;
 
                 &::after{
                     content: '';
@@ -27,17 +32,19 @@
                     background-color: #3839ff;
                 }
 
-                &::before{
-                    content: '';
-                    position: absolute;
-                    left: 80%;
-                    top: 0;
-                    bottom: 0;
-                    width: 38%;
-                    background-color: #fff;
-
-                    @include xxl{
-                        width: 30%;
+                @include sm{
+                    &::before{
+                        content: '';
+                        position: absolute;
+                        left: 80%;
+                        top: 0;
+                        bottom: 0;
+                        width: 38%;
+                        background-color: #fff;
+    
+                        @include xxl{
+                            width: 30%;
+                        }
                     }
                 }
             }
@@ -67,7 +74,7 @@
     .rel__preview{
         flex: 2;
         padding: 40px;
-        display: flex;
+        display: none;
         justify-content: center;
         align-items: center;
         background: #fff;
@@ -77,6 +84,10 @@
         iframe{
             width: 100%;
             height: 100%;
+        }
+
+        @include sm{
+            display: flex;
         }
     }
 }

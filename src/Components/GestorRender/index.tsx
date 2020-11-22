@@ -100,7 +100,7 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
                                 width={200}
                             />
                         )}
-                        <Link to="/logs" className="bt">
+                        <Link to="/dashboard/logs" className="bt">
                             Todos os logs
                         </Link>
                     </Card>

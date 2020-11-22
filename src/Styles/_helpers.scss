@@ -221,6 +221,13 @@ textarea.set-height{
 
     .tinf__name{
         flex: 6;
+        text-align: center;
+        margin: 10px 0;
+
+        @include sm{
+            margin: 0;
+            text-align: left;
+        }
     }
 
     .bt{
@@ -257,5 +264,11 @@ textarea.set-height{
 
     &:hover{
         transform: scale(1.2);
+    }
+
+    @include max-md{
+        justify-content: center;
+        order: 2;
+        margin-bottom: 10px;
     }
 }

@@ -7,6 +7,11 @@
     justify-content: center;
     padding: 10px 0;
     position: relative;
+    flex-direction: column;
+
+    @include sm{
+        flex-direction: row;
+    }
 
     &:hover{
         .link__icon{
@@ -18,15 +23,19 @@
         p {
             text-decoration: none;
             color: #252F3F;
-            display: none;
+            font-size: 11px;
         }
     }
 
     .link__arrow{
         flex: 1;
         justify-content: flex-end;
-        display: flex;
+        display: none;
         align-items: center;
+
+        @include sm{
+            display: flex;
+        }
     }
 
     &.link__reduced {
@@ -78,6 +87,7 @@
         .link__text {
             p {
                 display: block;
+                font-size: 16px;
             }
         }
 

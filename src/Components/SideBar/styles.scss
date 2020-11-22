@@ -1,11 +1,21 @@
+@import '../../Styles/responsive';
+
 .side__block{
-    margin: 25px 0;
+    margin: 5px 0;
 
     span{
         font-size: 14px;
         color: rgba(0, 0, 0, 0.49);
         margin-bottom: 10px;
-        display: block;
+        display: none;
+    }
+
+    @include sm{
+        margin: 25px 0;
+
+        span{
+            display: block;
+        }
     }
 
     ul{
