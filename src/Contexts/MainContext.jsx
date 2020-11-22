@@ -28,6 +28,8 @@ const MainContext = createContext({
     setBrowserLanguage: (local) => {},
     notificationCount: 0,
     setNotificationCount: (notific) => {},
+    selectedPDF: (local) => {},
+    setSelectedPDF: (local) => {}
 });
 
 export default MainContext;

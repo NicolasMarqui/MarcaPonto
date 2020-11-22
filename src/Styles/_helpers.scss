@@ -241,3 +241,21 @@ textarea.set-height{
 .table__wrapper{
     border-radius: 30px 30px 0 0;
 }
+
+.not__linha{
+    width: 100%;
+    background-color: #F2F2F2;
+    height: 1px;
+    margin: 10px 0;
+}
+
+.page__toReport{
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+
+    &:hover{
+        transform: scale(1.2);
+    }
+}

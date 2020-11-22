@@ -32,6 +32,7 @@ import Setor from "./Setor";
 import Horario from "./Horario";
 import Pontos from "./Pontos";
 import Logs from "./Logs";
+import Relatorios from "./Relatorios";
 
 //Logos
 const JUST_LOGO = require("../../Assets/images/just_logo.png");
@@ -224,14 +225,21 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                                 exact
                                             />
                                         )}
-                                        {isGestor ||
-                                            (isColaborador && (
-                                                <Route
-                                                    path={`${path}/espelho`}
-                                                    component={Espelho}
-                                                    exact
-                                                />
-                                            ))}
+
+                                        {(isGestor || isColaborador) && (
+                                            <Route
+                                                path={`${path}/espelho`}
+                                                render={(props) => (
+                                                    <Espelho
+                                                        dataPonto={
+                                                            loggedUserInfo
+                                                        }
+                                                        {...props}
+                                                    />
+                                                )}
+                                                exact
+                                            />
+                                        )}
 
                                         {(isAdmin || isGestor) && (
                                             <Route
@@ -269,6 +277,16 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                             <Route
                                                 path={`${path}/horarios`}
                                                 component={Horario}
+                                                exact
+                                            />
+                                        )}
+
+                                        {(isAdmin ||
+                                            isGestor ||
+                                            isColaborador) && (
+                                            <Route
+                                                path={`${path}/relatorios`}
+                                                component={Relatorios}
                                                 exact
                                             />
                                         )}

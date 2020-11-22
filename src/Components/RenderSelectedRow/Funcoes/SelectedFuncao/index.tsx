@@ -13,6 +13,7 @@ import {
     ALL_FUNCAO,
     ALL_SETOR,
 } from "../../../../Services/Endpoints";
+import { insertNewLog } from "../../../../Services/ApiCalls";
 
 //Animations
 const LOADING = require("../../../../Assets/animations/loading.json");
@@ -29,6 +30,9 @@ const SelectedFuncao: React.FC<SelectedRowPrFuncao> = ({ data }) => {
         setOpenMoreInfo,
         sethasCloseEditModal,
         removehasCloseEditModal,
+        currentLoggedUserId,
+        notificationCount,
+        setNotificationCount,
     } = useContext(MainContext);
 
     // DATA PROPS
@@ -137,6 +141,13 @@ const SelectedFuncao: React.FC<SelectedRowPrFuncao> = ({ data }) => {
                                 if (status === 200 || status === 201) {
                                     setupdateSuccess(true);
 
+                                    insertNewLog(
+                                        currentLoggedUserId,
+                                        `Função #${id} - ${nome} removida`
+                                    );
+
+                                    setNotificationCount(notificationCount + 1);
+
                                     window.setTimeout(() => {
                                         showToast(
                                             "SUCCESS",
@@ -203,6 +214,13 @@ const SelectedFuncao: React.FC<SelectedRowPrFuncao> = ({ data }) => {
 
                                 if (status === 200) {
                                     setupdateSuccess(true);
+
+                                    insertNewLog(
+                                        currentLoggedUserId,
+                                        `Alterações feitas na função #${id} - ${nome}`
+                                    );
+
+                                    setNotificationCount(notificationCount + 1);
 
                                     showToast(
                                         "SUCCESS",

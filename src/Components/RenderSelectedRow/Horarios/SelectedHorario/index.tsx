@@ -19,6 +19,7 @@ import {
     ALL_SETOR,
 } from "../../../../Services/Endpoints";
 import MaskedInput from "react-text-mask";
+import { insertNewLog } from "../../../../Services/ApiCalls";
 
 //Animations
 const LOADING = require("../../../../Assets/animations/loading.json");
@@ -35,6 +36,9 @@ const SelectedHorario: React.FC<SelectedRowPrHorario> = ({ data }) => {
         setOpenMoreInfo,
         sethasCloseEditModal,
         removehasCloseEditModal,
+        currentLoggedUserId,
+        notificationCount,
+        setNotificationCount,
     } = useContext(MainContext);
 
     // DATA PROPS
@@ -170,6 +174,13 @@ const SelectedHorario: React.FC<SelectedRowPrHorario> = ({ data }) => {
                                 if (status === 200 || status === 201) {
                                     setupdateSuccess(true);
 
+                                    insertNewLog(
+                                        currentLoggedUserId,
+                                        `Novo horário adicionado`
+                                    );
+
+                                    setNotificationCount(notificationCount + 1);
+
                                     window.setTimeout(() => {
                                         showToast(
                                             "SUCCESS",
@@ -236,6 +247,13 @@ const SelectedHorario: React.FC<SelectedRowPrHorario> = ({ data }) => {
 
                                 if (status === 200) {
                                     setupdateSuccess(true);
+
+                                    insertNewLog(
+                                        currentLoggedUserId,
+                                        `Alterações feitas no horário #${id}`
+                                    );
+
+                                    setNotificationCount(notificationCount + 1);
 
                                     showToast(
                                         "SUCCESS",

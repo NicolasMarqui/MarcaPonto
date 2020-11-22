@@ -9,6 +9,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import api from "../../../../Services/api";
 import { ALL_SETOR } from "../../../../Services/Endpoints";
+import { insertNewLog } from "../../../../Services/ApiCalls";
 
 //Animations
 const LOADING = require("../../../../Assets/animations/loading.json");
@@ -25,6 +26,9 @@ const SelectedSetor: React.FC<SelectedRowPrSetor> = ({ data }) => {
         setOpenMoreInfo,
         sethasCloseEditModal,
         removehasCloseEditModal,
+        currentLoggedUserId,
+        notificationCount,
+        setNotificationCount,
     } = useContext(MainContext);
 
     // DATA PROPS
@@ -63,6 +67,13 @@ const SelectedSetor: React.FC<SelectedRowPrSetor> = ({ data }) => {
                                 const { status } = resp;
                                 if (status === 200 || status === 201) {
                                     setupdateSuccess(true);
+
+                                    insertNewLog(
+                                        currentLoggedUserId,
+                                        `Setor #${id} - ${nome} removido`
+                                    );
+
+                                    setNotificationCount(notificationCount + 1);
 
                                     window.setTimeout(() => {
                                         showToast(
@@ -127,6 +138,13 @@ const SelectedSetor: React.FC<SelectedRowPrSetor> = ({ data }) => {
 
                                 if (status === 200) {
                                     setupdateSuccess(true);
+
+                                    insertNewLog(
+                                        currentLoggedUserId,
+                                        `Alterações feitas no setor #${id} - ${nome}`
+                                    );
+
+                                    setNotificationCount(notificationCount + 1);
 
                                     showToast(
                                         "SUCCESS",

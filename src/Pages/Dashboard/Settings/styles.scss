@@ -11,8 +11,9 @@
     align-items: center;
 
     video{
-        width: 200%;
-        height: 100%;
+        width: 100%;
+        height: 150%;
+        border-radius: 40px;
     }
 }
 
@@ -55,6 +56,10 @@
                 align-items: center;
                 padding: 0 10px;
                 cursor: pointer;
+
+                p{
+                    margin-left: 5px;
+                }
 
                 &:hover{
                     background-color: #f2f2f2;

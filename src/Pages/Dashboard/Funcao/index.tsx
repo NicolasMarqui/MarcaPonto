@@ -5,13 +5,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import DataTable from "react-data-table-component";
 import ModalCrud from "../../../Components/ModalCrud";
 import { ColumsTableFuncoes } from "../../../Services/TableColumns";
-import { getAllFuncoes } from "../../../Services/ApiCalls";
+import { GetAllFuncoes, getAllFuncoes } from "../../../Services/ApiCalls";
 import MainContext from "../../../Contexts/MainContext";
 import AddSelectedFuncao from "../../../Components/RenderSelectedRow/Funcoes/AddSelectedFuncao";
 import SelectedFuncao from "../../../Components/RenderSelectedRow/Funcoes/SelectedFuncao";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FaTimesCircle } from "react-icons/fa";
 import HeaderInside from "../../../Components/HeaderInside";
+import { BsDownload } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -25,34 +27,16 @@ const Funcao: React.FC = () => {
         setaddModalOpen,
     } = useContext(MainContext);
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [allFuncoes, setallFuncoes] = useState([]);
     const [selectedFuncao, setSelectedFuncao] = useState({});
+    const { dataAllFuncoes, statusCodeAllFuncoes } = GetAllFuncoes(
+        token,
+        hasCloseEditModal
+    );
 
     useEffect(() => {
         document.title = "Marca Ponto - Funções";
         setOpenMoreInfo(false);
-        getAllE();
     }, []);
-
-    useEffect(() => {
-        getAllE();
-    }, [hasCloseEditModal]);
-
-    const getAllE = async () => {
-        setIsLoading(true);
-
-        const response = await getAllFuncoes(token);
-
-        if (response) {
-            const { status, data } = response;
-
-            if (status === 200 && data.length > 0) {
-                setallFuncoes(data);
-                setIsLoading(false);
-            }
-        }
-    };
 
     const closeModal = () => {
         setaddModalOpen(false);
@@ -63,10 +47,6 @@ const Funcao: React.FC = () => {
         setOpenMoreInfo(false);
         return true;
     };
-
-    // const handleRowChange = (state: any) => {
-    //     console.log("Selected Rows: ", state.selectedRows);
-    // };
 
     const showMoreInfo = async (dataFromRow: any) => {
         setOpenMoreInfo(true);
@@ -86,10 +66,18 @@ const Funcao: React.FC = () => {
                         </h2>
                         <p>
                             Você possui
-                            <span> {allFuncoes.length}</span>{" "}
-                            {allFuncoes.length > 1 ? "Funções " : "Função "}
+                            <span> {dataAllFuncoes.length}</span>{" "}
+                            {dataAllFuncoes.length > 1 ? "Funções " : "Função "}
                             cadastrada(s)
                         </p>
+                    </div>
+                    <div className="page__toReport">
+                        <Link
+                            to="/dashboard/relatorios?id=3"
+                            style={{ display: "flex", alignItems: "center" }}
+                        >
+                            <BsDownload size={20} />
+                        </Link>
                     </div>
                     <a
                         href="#new"
@@ -99,11 +87,11 @@ const Funcao: React.FC = () => {
                         + Nova Função
                     </a>
                 </div>
-                {!isLoading ? (
+                {statusCodeAllFuncoes === 200 ? (
                     <div className="table__wrapper">
                         <DataTable
                             noHeader={true}
-                            data={allFuncoes.map((c: any) =>
+                            data={dataAllFuncoes.map((c: any) =>
                                 c.responsavel
                                     ? {
                                           ...c,

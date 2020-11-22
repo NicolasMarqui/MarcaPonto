@@ -173,6 +173,31 @@ export async function allDiasDaSemana(token: string) {
 }
 
 // EXPEDIENTE =============================================================
+export function GetAllExpediente(
+    token: string | null,
+    closedModal?: boolean | undefined
+) {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        api.get(ALL_EXPEDIENTE, { headers: { Authorization: token } })
+            .then((response) => {
+                const { status, data } = response;
+                setApiData(data);
+                setStatusCode(status);
+            })
+            .catch((err) => {
+                return err;
+            });
+    }, [closedModal]);
+
+    return {
+        dataAllExpedientes: apiData as any,
+        statusCodeAllExpedientes: statusCode,
+    };
+}
+
 export async function getAllExpediente(token: string | null) {
     if (!token) return false;
 
@@ -284,6 +309,31 @@ export async function getExpedientesByStatus(token: string, status: boolean) {
 }
 
 // FUNÇAO ==========================================================================
+export function GetAllFuncoes(
+    token: string | null,
+    closedModal?: boolean | undefined
+) {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        api.get(ALL_FUNCAO, { headers: { Authorization: token } })
+            .then((response) => {
+                const { status, data } = response;
+                setApiData(data);
+                setStatusCode(status);
+            })
+            .catch((err) => {
+                return err;
+            });
+    }, [closedModal]);
+
+    return {
+        dataAllFuncoes: apiData as any,
+        statusCodeAllFuncoes: statusCode,
+    };
+}
+
 export async function getAllFuncoes(token: string | null) {
     if (!token) return false;
 
@@ -411,6 +461,30 @@ export async function getFuncoesByStatus(token: string, status: boolean) {
 }
 
 //HORARIO ====================================================================
+export function GetAllHorarios(
+    token: string | null,
+    closedModal?: boolean | undefined
+) {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        api.get(ALL_HORARIOS, { headers: { Authorization: token } })
+            .then((response) => {
+                const { status, data } = response;
+                setApiData(data);
+                setStatusCode(status);
+            })
+            .catch((err) => {
+                return err;
+            });
+    }, [closedModal]);
+
+    return {
+        dataAllHorarios: apiData as any,
+        statusCodeAllHorarios: statusCode,
+    };
+}
 export async function getAllHorarios(token: string) {
     if (!token) return false;
 
@@ -549,6 +623,31 @@ export async function getAllPontosToApprove(token: string, id: number) {
 }
 
 // SETOR ===================================================================
+export function GetAllSetores(
+    token: string | null,
+    closedModal?: boolean | undefined
+) {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        api.get(ALL_SETOR, { headers: { Authorization: token } })
+            .then((response) => {
+                const { status, data } = response;
+                setApiData(data);
+                setStatusCode(status);
+            })
+            .catch((err) => {
+                return err;
+            });
+    }, [closedModal]);
+
+    return {
+        dataAllSetores: apiData as any,
+        statusCodeAllSetores: statusCode,
+    };
+}
+
 export async function getAllSetores(token: string) {
     if (!token) return false;
 

@@ -12,6 +12,7 @@ import {
     ALL_SETOR,
     INSERT_FUNCAO,
 } from "../../../../Services/Endpoints";
+import { insertNewLog } from "../../../../Services/ApiCalls";
 
 //Animations
 const LOADING = require("../../../../Assets/animations/loading.json");
@@ -23,6 +24,9 @@ const AddSelectedFuncao: React.FC = () => {
         setaddModalOpen,
         sethasCloseEditModal,
         removehasCloseEditModal,
+        currentLoggedUserId,
+        notificationCount,
+        setNotificationCount,
     } = useContext(MainContext);
 
     const [isSubmiting, setIsSubmiting] = useState(false);
@@ -142,6 +146,13 @@ const AddSelectedFuncao: React.FC = () => {
 
                                 if (status === 200 || status === 201) {
                                     setAdicionadoSuccess(true);
+
+                                    insertNewLog(
+                                        currentLoggedUserId,
+                                        `Função ${nome} adicionada`
+                                    );
+
+                                    setNotificationCount(notificationCount + 1);
 
                                     window.setTimeout(() => {
                                         showToast(

@@ -4,8 +4,6 @@ import ContentLoader from "react-content-loader";
 const TableSkeleton: React.FC = () => {
     return (
         <ContentLoader
-            width={1000}
-            height={550}
             viewBox="0 0 1000 550"
             backgroundColor="#eaeced"
             foregroundColor="#ffffff"

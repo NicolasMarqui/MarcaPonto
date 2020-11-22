@@ -14,6 +14,9 @@ import SelectedSetor from "../../../Components/RenderSelectedRow/Setores/Selecte
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FaTimesCircle } from "react-icons/fa";
 import HeaderInside from "../../../Components/HeaderInside";
+import { BsDownload } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { GetAllSetores } from "../../../Services/ApiCalls";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -27,35 +30,16 @@ const Setor: React.FC = () => {
         setaddModalOpen,
     } = useContext(MainContext);
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [allSetores, setAllSetores] = useState([]);
     const [selectedSetor, setSelectedSetor] = useState({});
+    const { dataAllSetores, statusCodeAllSetores } = GetAllSetores(
+        token,
+        hasCloseEditModal
+    );
 
     useEffect(() => {
         document.title = "Marca Ponto - Setores";
         setOpenMoreInfo(false);
-        getAllSetores();
     }, []);
-
-    useEffect(() => {
-        getAllSetores();
-    }, [hasCloseEditModal]);
-
-    const getAllSetores = async () => {
-        setIsLoading(true);
-        await api
-            .get(ALL_SETOR, { headers: { Authorization: token } })
-            .then((resp) => {
-                const { status, data } = resp;
-                if (status === 200) {
-                    setAllSetores(data);
-                    setIsLoading(false);
-                }
-            })
-            .catch((err) => {
-                showToast("ERROR", "Algo deu errado 🤨", {});
-            });
-    };
 
     const closeModal = () => {
         setaddModalOpen(false);
@@ -66,10 +50,6 @@ const Setor: React.FC = () => {
         setOpenMoreInfo(false);
         return true;
     };
-
-    // const handleRowChange = (state: any) => {
-    //     console.log("Selected Rows: ", state.selectedRows);
-    // };
 
     const showMoreInfo = async (dataFromRow: any) => {
         setOpenMoreInfo(true);
@@ -89,9 +69,17 @@ const Setor: React.FC = () => {
                         </h2>
                         <p>
                             Você possui
-                            <span> {allSetores.length}</span> setor(es)
+                            <span> {dataAllSetores.length}</span> setor(es)
                             cadastrado(s)
                         </p>
+                    </div>
+                    <div className="page__toReport">
+                        <Link
+                            to="/dashboard/relatorios?id=4"
+                            style={{ display: "flex", alignItems: "center" }}
+                        >
+                            <BsDownload size={20} />
+                        </Link>
                     </div>
                     <a
                         href="#new"
@@ -101,11 +89,11 @@ const Setor: React.FC = () => {
                         + Novo Setor
                     </a>
                 </div>
-                {!isLoading ? (
+                {statusCodeAllSetores === 200 ? (
                     <div className="table__wrapper">
                         <DataTable
                             noHeader={true}
-                            data={allSetores.map((c: any) =>
+                            data={dataAllSetores.map((c: any) =>
                                 c.ativo
                                     ? {
                                           ...c,

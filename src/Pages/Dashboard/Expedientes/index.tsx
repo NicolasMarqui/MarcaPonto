@@ -5,13 +5,16 @@ import "react-datepicker/dist/react-datepicker.css";
 import DataTable from "react-data-table-component";
 import ModalCrud from "../../../Components/ModalCrud";
 import { ColumsTableExpediente } from "../../../Services/TableColumns";
-import { getAllExpediente } from "../../../Services/ApiCalls";
+import { GetAllExpediente } from "../../../Services/ApiCalls";
 import MainContext from "../../../Contexts/MainContext";
 import AddSelectedExpediente from "../../../Components/RenderSelectedRow/Expediente/AddSelectedExpediente";
 import SelectedExpediente from "../../../Components/RenderSelectedRow/Expediente/SelectedExpediente";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FaTimesCircle } from "react-icons/fa";
 import HeaderInside from "../../../Components/HeaderInside";
+import { Link } from "react-router-dom";
+import { BsDownload } from "react-icons/bs";
+import EmptyData from "../../../Components/EmptyData";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -25,33 +28,16 @@ const Expedientes: React.FC = () => {
         setaddModalOpen,
     } = useContext(MainContext);
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [allExpedientes, setAllExpedientes] = useState([]);
     const [selectedExpediente, setSelectedExpediente] = useState({});
+    const { dataAllExpedientes, statusCodeAllExpedientes } = GetAllExpediente(
+        token,
+        hasCloseEditModal
+    );
 
     useEffect(() => {
         document.title = "Marca Ponto - Expedientes";
         setOpenMoreInfo(false);
-        getAllE();
     }, []);
-
-    useEffect(() => {
-        getAllE();
-    }, [hasCloseEditModal]);
-
-    const getAllE = async () => {
-        setIsLoading(true);
-        const response = await getAllExpediente(token);
-
-        if (response) {
-            const { status, data } = response;
-
-            if (status === 200 && data.length > 0) {
-                setAllExpedientes(data);
-                setIsLoading(false);
-            }
-        }
-    };
 
     const closeModal = () => {
         setaddModalOpen(false);
@@ -62,10 +48,6 @@ const Expedientes: React.FC = () => {
         setOpenMoreInfo(false);
         return true;
     };
-
-    // const handleRowChange = (state: any) => {
-    //     console.log("Selected Rows: ", state.selectedRows);
-    // };
 
     const showMoreInfo = async (dataFromRow: any) => {
         setOpenMoreInfo(true);
@@ -85,9 +67,17 @@ const Expedientes: React.FC = () => {
                         </h2>
                         <p>
                             Você possui
-                            <span> {allExpedientes.length}</span> expediente(s)
-                            cadastrado(s)
+                            <span> {dataAllExpedientes.length}</span>{" "}
+                            expediente(s) cadastrado(s)
                         </p>
+                    </div>
+                    <div className="page__toReport">
+                        <Link
+                            to="/dashboard/relatorios?id=1"
+                            style={{ display: "flex", alignItems: "center" }}
+                        >
+                            <BsDownload size={20} />
+                        </Link>
                     </div>
                     <a
                         href="#new"
@@ -97,11 +87,11 @@ const Expedientes: React.FC = () => {
                         + Novo Expediente
                     </a>
                 </div>
-                {!isLoading ? (
+                {statusCodeAllExpedientes === 200 ? (
                     <div className="table__wrapper">
                         <DataTable
                             noHeader={true}
-                            data={allExpedientes.map((c: any) =>
+                            data={dataAllExpedientes.map((c: any) =>
                                 c.ativo
                                     ? {
                                           ...c,
@@ -124,6 +114,7 @@ const Expedientes: React.FC = () => {
                                       }
                             )}
                             columns={ColumsTableExpediente}
+                            noDataComponent={<EmptyData hasMargin={true} />}
                             striped={true}
                             pagination={true}
                             onRowClicked={showMoreInfo}

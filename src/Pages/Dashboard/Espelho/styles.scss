@@ -1,0 +1,117 @@
+@import '../../../Styles/responsive';
+
+.pontos__wrapper{
+    .pontos__header{
+        ul.pontos__filter{
+            display: flex;
+            margin-top: 5px;
+            border: 1px solid #f2f2f2;
+            padding: 20px 0;
+
+            li{
+                flex: 3;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                margin: 0 10px;
+
+                &:first-child{
+                    flex: 7;
+                }
+
+                .form__group{
+                    margin: 0 10px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.page__title-info{
+    &.info__espelho{
+        flex-direction: column;
+        position: relative;
+    }
+}
+
+.page__download{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &.is__dropdown{
+        top: 19%;
+    }
+
+    a.bt{
+        &.not__available{
+            pointer-events: none;
+            cursor: not-allowed!important;
+        }
+    }
+}
+
+.tinf__month{
+    margin: 5px 0 15px;
+    position: relative;
+    width: auto;
+
+    svg{
+        margin-top: 5px;
+    }
+
+    p{
+        position: relative;
+
+        strong{
+            cursor: pointer;
+
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .month_dropdown{
+        z-index: 4;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 20px;
+        margin: 10px 0;
+        display: none;
+        transition: all .2s cubic-bezier(0.19, 1, 0.22, 1);
+
+        &.drop__shown{
+            display: block;
+        }
+
+        ul{
+            display: flex;
+            flex-wrap: wrap;
+
+            li{
+                margin: 10px 0;
+                flex: 1;
+                padding: 10px;
+                cursor: pointer;
+                border-radius: 20px;
+
+                &:hover{
+                    background-color: #f2f2f2;
+                }
+
+                p{
+                    font-weight: 700;
+                }
+
+                span{
+                    font-size: 12px;
+                    margin-top: 2px;
+                    display: block;
+                }
+            }
+        }
+    }
+}

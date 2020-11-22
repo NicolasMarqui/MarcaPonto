@@ -34,6 +34,8 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
         statusCodeAllNotifications,
     } = GetAllNotifications(currentLoggedUserId);
 
+    const [searchInput, setSearchInput] = useState("");
+
     const handleLogout = () => {
         showToast("SUCCESS", "Você foi deslogado com sucesso", {});
         removeToken("token");
@@ -50,9 +52,32 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
         <header className="header__nav-interna">
             <div className="nav__interna">
                 <div className="nav__search">
-                    <input type="text" placeholder="Pesquisa" />
+                    <input
+                        type="text"
+                        placeholder="Pesquisa"
+                        onChange={(e) => setSearchInput(e.target.value)}
+                    />
                     <div className="s__go">
                         <AiOutlineSearch color="#fff" size={18} />
+                    </div>
+                    <div className="search__area">
+                        <h5>
+                            Buscando resultados para:
+                            <strong>{searchInput ? searchInput : "-"}</strong>
+                        </h5>
+
+                        <div className="not__linha"></div>
+
+                        <div className="search__results">
+                            <ul>
+                                <li>
+                                    <div className="result">
+                                        <h6>Colaboradores</h6>
+                                        <p>Nada encontrado...</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
@@ -135,43 +160,45 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
                                             </p>
                                         </li>
                                     ) : (
-                                        dataAllNotifications.map((not: any) => (
-                                            <li key={not._id}>
-                                                <div
-                                                    className="not__area"
-                                                    onClick={() => {
-                                                        makeOneNotificationRead(
-                                                            not._id
-                                                        );
-                                                        setNotificationCount(
-                                                            notificationCount -
-                                                                1
-                                                        );
-                                                    }}
-                                                >
-                                                    <div className="area__avatar">
-                                                        <img
-                                                            src={`https://ui-avatars.com/api/?name=${data.username}&background=0D8ABC&color=fff`}
-                                                            alt=""
-                                                        />
+                                        dataAllNotifications
+                                            .reverse()
+                                            .map((not: any) => (
+                                                <li key={not._id}>
+                                                    <div
+                                                        className="not__area"
+                                                        onClick={() => {
+                                                            makeOneNotificationRead(
+                                                                not._id
+                                                            );
+                                                            setNotificationCount(
+                                                                notificationCount -
+                                                                    1
+                                                            );
+                                                        }}
+                                                    >
+                                                        <div className="area__avatar">
+                                                            <img
+                                                                src={`https://ui-avatars.com/api/?name=${data.username}&background=0D8ABC&color=fff`}
+                                                                alt=""
+                                                            />
+                                                        </div>
+                                                        <div className="area__content">
+                                                            <p>{not.content}</p>
+                                                        </div>
+                                                        <div className="area__date">
+                                                            <p>
+                                                                {getHour(
+                                                                    new Date(
+                                                                        not.date
+                                                                    )
+                                                                )}
+                                                            </p>
+                                                        </div>
                                                     </div>
-                                                    <div className="area__content">
-                                                        <p>{not.content}</p>
-                                                    </div>
-                                                    <div className="area__date">
-                                                        <p>
-                                                            {getHour(
-                                                                new Date(
-                                                                    not.date
-                                                                )
-                                                            )}
-                                                        </p>
-                                                    </div>
-                                                </div>
 
-                                                <div className="not__linha"></div>
-                                            </li>
-                                        ))
+                                                    <div className="not__linha"></div>
+                                                </li>
+                                            ))
                                     )}
                                 </ul>
                             ) : (

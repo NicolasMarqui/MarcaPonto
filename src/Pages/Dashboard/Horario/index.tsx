@@ -12,6 +12,9 @@ import { showToast } from "../../../Functions";
 import AddSelectedHorario from "../../../Components/RenderSelectedRow/Horarios/AddSelectedHorario";
 import SelectedHorario from "../../../Components/RenderSelectedRow/Horarios/SelectedHorario";
 import HeaderInside from "../../../Components/HeaderInside";
+import { BsDownload } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { GetAllHorarios } from "../../../Services/ApiCalls";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -25,35 +28,16 @@ const Horario: React.FC = () => {
         setaddModalOpen,
     } = useContext(MainContext);
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [allHorarios, setAllHorarios] = useState([]);
     const [selectedHorario, setSelectedHorario] = useState({});
+    const { dataAllHorarios, statusCodeAllHorarios } = GetAllHorarios(
+        token,
+        hasCloseEditModal
+    );
 
     useEffect(() => {
         document.title = "Marca Ponto - Horários";
         setOpenMoreInfo(false);
-        getAllHorários();
     }, []);
-
-    useEffect(() => {
-        getAllHorários();
-    }, [hasCloseEditModal]);
-
-    const getAllHorários = async () => {
-        setIsLoading(true);
-        await api
-            .get(ALL_HORARIOS, { headers: { Authorization: token } })
-            .then((resp) => {
-                const { status, data } = resp;
-                if (status === 200) {
-                    setAllHorarios(data);
-                    setIsLoading(false);
-                }
-            })
-            .catch((err) => {
-                showToast("ERROR", "Algo deu errado 🤨", {});
-            });
-    };
 
     const closeModal = () => {
         setaddModalOpen(false);
@@ -64,10 +48,6 @@ const Horario: React.FC = () => {
         setOpenMoreInfo(false);
         return true;
     };
-
-    // const handleRowChange = (state: any) => {
-    //     console.log("Selected Rows: ", state.selectedRows);
-    // };
 
     const showMoreInfo = async (dataFromRow: any) => {
         setOpenMoreInfo(true);
@@ -88,10 +68,18 @@ const Horario: React.FC = () => {
                         <p>
                             Você possui{" "}
                             <span>
-                                {allHorarios ? allHorarios.length : "-"}
+                                {dataAllHorarios ? dataAllHorarios.length : "-"}
                             </span>{" "}
                             horário(s) cadastrados
                         </p>
+                    </div>
+                    <div className="page__toReport">
+                        <Link
+                            to="/dashboard/relatorios?id=5"
+                            style={{ display: "flex", alignItems: "center" }}
+                        >
+                            <BsDownload size={20} />
+                        </Link>
                     </div>
                     <a
                         href="#new"
@@ -101,11 +89,11 @@ const Horario: React.FC = () => {
                         + Novo Horário
                     </a>
                 </div>
-                {!isLoading ? (
+                {statusCodeAllHorarios === 200 ? (
                     <div className="table__wrapper">
                         <DataTable
                             noHeader={true}
-                            data={allHorarios.map((c: any) =>
+                            data={dataAllHorarios.map((c: any) =>
                                 c.ativo
                                     ? { ...c, ativo: "true" }
                                     : { ...c, ativo: "false" }

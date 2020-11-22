@@ -13,6 +13,8 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { FaTimesCircle } from "react-icons/fa";
 import HeaderInside from "../../../Components/HeaderInside";
 import EmptyData from "../../../Components/EmptyData";
+import { Link } from "react-router-dom";
+import { BsDownload } from "react-icons/bs";
 
 const LOADING = require("../../../Assets/animations/loading.json");
 
@@ -26,8 +28,6 @@ const Usuarios: React.FC = () => {
         setaddModalOpen,
     } = useContext(MainContext);
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [allColaboradores, setAllColaboradores] = useState([]);
     const [selectedColaborador, setSelectedColaborador] = useState({});
     const {
         dataAllColaboradores,
@@ -48,10 +48,6 @@ const Usuarios: React.FC = () => {
         setOpenMoreInfo(false);
         return true;
     };
-
-    // const handleRowChange = (state: any) => {
-    //     console.log("Selected Rows: ", state.selectedRows);
-    // };
 
     const showMoreInfo = async (dataFromRow: any) => {
         setOpenMoreInfo(true);
@@ -75,6 +71,14 @@ const Usuarios: React.FC = () => {
                             usuário(s) cadastrados
                         </p>
                     </div>
+                    <div className="page__toReport">
+                        <Link
+                            to="/dashboard/relatorios?id=1"
+                            style={{ display: "flex", alignItems: "center" }}
+                        >
+                            <BsDownload size={20} />
+                        </Link>
+                    </div>
                     <a
                         href="#new"
                         className="bt"
@@ -83,7 +87,7 @@ const Usuarios: React.FC = () => {
                         + Novo Usuário
                     </a>
                 </div>
-                {!isLoading ? (
+                {statusCodeAllColaboradores === 200 ? (
                     <div className="table__wrapper">
                         <DataTable
                             noHeader={true}

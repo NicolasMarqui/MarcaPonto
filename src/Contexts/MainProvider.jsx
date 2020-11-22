@@ -23,6 +23,7 @@ const MainProvider = ({ children }) => {
     const [userLocalization, setUserLocalization] = useStorage("local");
     const [browserLanguage, setBrowserLanguage] = useStorage("language");
     const [notificationCount, setNotificationCount] = useStorage("notificationCount");
+    const [selectedPDF, setSelectedPDF] = useStorage("selectedPDF");
 
     return (
         <MainContext.Provider
@@ -53,7 +54,9 @@ const MainProvider = ({ children }) => {
                 browserLanguage,
                 setBrowserLanguage,
                 notificationCount,
-                setNotificationCount
+                setNotificationCount,
+                selectedPDF,
+                setSelectedPDF
             }}
         >
             {children}
