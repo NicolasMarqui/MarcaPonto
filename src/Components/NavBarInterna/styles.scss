@@ -22,6 +22,10 @@ header.header__nav-interna {
             width: 300px;
             position: relative;
 
+            @include max-xxs{
+                display: none;
+            }
+
             .s__go{
                 position: absolute;
                 right: 8px;
@@ -79,6 +83,21 @@ header.header__nav-interna {
             display: flex;
             flex-direction: row;
             align-items: center;
+
+            @include max-xxs{
+                justify-content: space-around;
+                width: 100%;
+            }
+
+            .opcoes__openxxsSide{
+                display: none;
+                cursor: pointer;
+
+                @include max-xxs{
+                    display: block;
+                    flex: 1;
+                }
+            }
 
             .opcoes__language{
                 cursor: pointer;

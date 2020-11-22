@@ -20,6 +20,8 @@
 
     ul{
         li{
+            position: relative;
+
             a{
                 text-decoration: none;
             }
@@ -32,15 +34,24 @@
             // }
 
             // .dropdown__menu{
-            //     background-color: #f2f2f2;
-            //     display: none;
-            //     opacity: 0;
-            //     transition: opacity .2s cubic-bezier(0.19, 1, 0.22, 1);
+            //     position: absolute;
+            //     left: 99%;
+            //     top: -34px;
+            //     background-color: #ececec;
+            //     transition: opacity 0.2s cubic-bezier(0.19, 1, 0.22, 1);
             //     padding-left: 20px;
+            //     z-index: 20;
+            //     width: 242px;
+            //     padding: 20px;
+            //     border-radius: 20px;
+            //     // display: none;
+            //     // opacity: 0;
                 
-            //     li{
-            //         a{
-            //             font-size: 14px;
+            //     ul{
+            //         li{
+            //             a{
+            //                 font-size: 14px;
+            //             }
             //         }
             //     }
             // }

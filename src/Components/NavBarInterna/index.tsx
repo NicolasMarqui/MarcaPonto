@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import "./styles.scss";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { BiChevronDown } from "react-icons/bi";
 import { AiFillBell } from "react-icons/ai";
 import { getCurrentFlag, getHour, showToast } from "../../Functions";
 import MainContext from "../../Contexts/MainContext";
 import { FormattedMessage } from "react-intl";
 import { AllLanguages } from "../../Services/AllLanguages";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
 import SideBarSkeleton from "../Skeletons/Side";
 import {
     GetAllNotifications,
@@ -27,6 +27,7 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
         currentLoggedUserId,
         notificationCount,
         setNotificationCount,
+        setShowNavBarXs,
     } = useContext(MainContext);
 
     const {
@@ -48,6 +49,16 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
         setBrowserLanguage(value);
     };
 
+    const history = useHistory();
+
+    const handleSubmit = () => {
+        if (searchInput) {
+            history.push(`/dashboard/search?q=${searchInput}`);
+        } else {
+            showToast("WARNING", "Preencha algo antes de continuar 🤔", {});
+        }
+    };
+
     return (
         <header className="header__nav-interna">
             <div className="nav__interna">
@@ -57,31 +68,18 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
                         placeholder="Pesquisa"
                         onChange={(e) => setSearchInput(e.target.value)}
                     />
-                    <div className="s__go">
+                    <div className="s__go" onClick={handleSubmit}>
                         <AiOutlineSearch color="#fff" size={18} />
-                    </div>
-                    <div className="search__area">
-                        <h5>
-                            Buscando resultados para:
-                            <strong>{searchInput ? searchInput : "-"}</strong>
-                        </h5>
-
-                        <div className="not__linha"></div>
-
-                        <div className="search__results">
-                            <ul>
-                                <li>
-                                    <div className="result">
-                                        <h6>Colaboradores</h6>
-                                        <p>Nada encontrado...</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
 
                 <div className="nav__opcoes">
+                    <div
+                        className="opcoes__openxxsSide"
+                        onClick={() => setShowNavBarXs(true)}
+                    >
+                        <AiOutlineMenu size={30} color="#fff" />
+                    </div>
                     <div className="opcoes__language">
                         <div className="lang__current">
                             <img

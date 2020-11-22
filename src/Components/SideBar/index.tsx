@@ -39,6 +39,17 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                                 icon={
                                     <GoPrimitiveDot color="#5850EC" size={18} />
                                 }
+                                text="Marcar ponto"
+                                from="dashboard"
+                                link="/marcar"
+                                hasKids={true}
+                            />
+                        </li>
+                        <li>
+                            <MenuLink
+                                icon={
+                                    <GoPrimitiveDot color="#5850EC" size={18} />
+                                }
                                 text="Pontos"
                                 from="dashboard"
                                 link="/pontos"

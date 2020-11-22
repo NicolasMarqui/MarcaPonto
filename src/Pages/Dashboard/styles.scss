@@ -21,6 +21,12 @@
             padding: 0;
             z-index: 3;
             transition: width .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+            &.side__full__xxs{
+                display: block;
+                width: 100px;
+                box-shadow: 5px 2px 10px #6b6b6b66;
+            }
             
             @media(max-height: 720px){
                 overflow-x: hidden;
@@ -34,6 +40,10 @@
 
             @include md{
                 width: 300px;
+            }
+
+            @include max-xxs{
+                display: none;
             }
 
             &.side__closed{
@@ -113,8 +123,17 @@
                 width: calc(100% - 50px);
             }
 
+            @include max-xxs{
+                width: 100%;
+                margin-left: 0;
+            }
+
             .main__childs{
                 padding: 30px 40px;
+
+                @include max-xxs{
+                    padding: 30px 10px;
+                }
             }
 
             .open__side__xxs {
@@ -141,11 +160,11 @@
                 }
             }
 
-            @include max-xxs {
-                padding: 30px 10px;
-                margin-left: 0 !important;
-                width: 100% !important;
-            }
+            // @include max-xxs {
+            //     padding: 30px 10px;
+            //     margin-left: 0 !important;
+            //     width: 100% !important;
+            // }
 
             @include sm {
                 margin-left: 250px;

@@ -22,7 +22,7 @@ const EmptyData: React.FC<EmptyDataProps> = ({ hasMargin = false }) => {
                 width={200}
             />
 
-            <h3>Nada por enquanto :(</h3>
+            <h3 style={{ textAlign: "center" }}>Nada por enquanto :(</h3>
         </div>
     );
 };

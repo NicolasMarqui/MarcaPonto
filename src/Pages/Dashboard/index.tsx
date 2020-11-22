@@ -33,6 +33,7 @@ import Horario from "./Horario";
 import Pontos from "./Pontos";
 import Logs from "./Logs";
 import Relatorios from "./Relatorios";
+import Search from "./Search";
 
 //Logos
 const JUST_LOGO = require("../../Assets/images/just_logo.png");
@@ -166,19 +167,12 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                         >
                             <NavBarInterna data={loggedUserInfo} />
 
-                            <div
-                                className="open__side__xxs"
-                                onClick={() => setShowNavBarXs(true)}
-                            >
-                                <BiMenuAltLeft size={30} />
-                            </div>
-
                             {showNavBarXs && (
                                 <div
                                     className="close__side__xxs"
                                     onClick={() => setShowNavBarXs(false)}
                                 >
-                                    <IoMdCloseCircle size={30} />
+                                    <IoMdCloseCircle size={50} color="#fff" />
                                 </div>
                             )}
 
@@ -297,6 +291,16 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                             <Route
                                                 path={`${path}/logs`}
                                                 component={Logs}
+                                                exact
+                                            />
+                                        )}
+
+                                        {(isAdmin ||
+                                            isGestor ||
+                                            isColaborador) && (
+                                            <Route
+                                                path={`${path}/search`}
+                                                component={Search}
                                                 exact
                                             />
                                         )}

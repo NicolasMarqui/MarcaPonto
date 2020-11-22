@@ -16,6 +16,10 @@
 
         .bem__vindo-info{
             margin-bottom: 20px;
+
+            @include max-sm{
+                text-align: center;
+            }
         }
 
         // p{
@@ -25,19 +29,33 @@
     }
 
     .adm__grid--container{
-        margin-top: 14px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        gap: 10px 10px;
-        grid-template-areas:
-            "ponto pontos_hoje pontos_hoje"
-            "logs logs grafico_users";
 
-        .ponto { grid-area: ponto; }
-        .pontos_hoje { grid-area: pontos_hoje; }
-        .logs { grid-area: logs; }
-        .grafico_users { grid-area: grafico_users; }
+        display: block;
+
+        & > div{
+            margin: 10px 0;
+        }
+
+        @include md{
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px 10px;
+            grid-template-areas:
+                "ponto pontos_hoje pontos_hoje"
+                "logs logs grafico_users";
+    
+            .ponto { grid-area: ponto; }
+            .pontos_hoje { grid-area: pontos_hoje; }
+            .logs { grid-area: logs; }
+            .grafico_users { grid-area: grafico_users; }
+
+            & > div{
+                margin: 0;
+            }
+        }
+
     }
 
 }
