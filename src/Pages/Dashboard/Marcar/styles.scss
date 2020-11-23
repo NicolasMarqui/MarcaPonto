@@ -1,0 +1,29 @@
+@import '../../../Styles/responsive';
+
+.marcar__wrapper{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    @include md{
+        flex-direction: row;
+    }
+
+    .m__clock{
+        flex: 1;
+        
+        @include md{
+            margin-right: 20px;            
+        }
+    }
+
+    .m__map{
+        flex: 1;
+        
+        .leaflet-container{
+            border-radius: 30px;
+            width: 100%;
+            z-index: 4;
+        }
+    }
+}

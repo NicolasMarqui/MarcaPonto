@@ -14,6 +14,7 @@ import {
     makeAllNotificationRead,
     makeOneNotificationRead,
 } from "../../Services/ApiCalls";
+import EmptyData from "../EmptyData";
 
 interface NavBarInternaProps {
     data: any;
@@ -201,7 +202,7 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
                                 </ul>
                             ) : (
                                 <>
-                                    <SideBarSkeleton />
+                                    <EmptyData hasMargin={true} />
                                 </>
                             )}
                         </div>

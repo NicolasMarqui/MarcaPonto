@@ -214,6 +214,7 @@ header.header__nav-interna {
                     height: 300px;
                     display: flex;
                     flex-direction: column;
+                    overflow-x: hidden;
                     // justify-content: center;
                     // align-items: center;
                     cursor: auto;

@@ -10,6 +10,7 @@ import {
 import { ImBook } from "react-icons/im";
 import { MdWork } from "react-icons/md";
 import { SiAnalogue } from "react-icons/si";
+import { AiOutlineClockCircle } from "react-icons/ai";
 import {
     checkIfAdmin,
     checkIfColaborador,
@@ -37,7 +38,10 @@ const SideBar: React.FC<SideBarProps> = ({ type }) => {
                         <li>
                             <MenuLink
                                 icon={
-                                    <GoPrimitiveDot color="#5850EC" size={18} />
+                                    <AiOutlineClockCircle
+                                        color="#222"
+                                        size={18}
+                                    />
                                 }
                                 text="Marcar ponto"
                                 from="dashboard"

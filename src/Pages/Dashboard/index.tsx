@@ -21,11 +21,11 @@ import Espelho from "./Espelho";
 import Settings from "./Settings";
 import Usuarios from "./Usuarios";
 import PontoModal from "../../Components/PontoModal";
-import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMdCloseCircle } from "react-icons/io";
 import LoadingMarcaPonto from "../../Components/LoadingMarcaPonto";
 import DashSkeleton from "../../Components/Skeletons/Dash";
 import SideBarSkeleton from "../../Components/Skeletons/Side";
+
 import Expedientes from "./Expedientes";
 import Funcao from "./Funcao";
 import Setor from "./Setor";
@@ -34,6 +34,7 @@ import Pontos from "./Pontos";
 import Logs from "./Logs";
 import Relatorios from "./Relatorios";
 import Search from "./Search";
+import Marcar from "./Marcar";
 
 //Logos
 const JUST_LOGO = require("../../Assets/images/just_logo.png");
@@ -66,7 +67,7 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
     const { width } = useWindowDimensions();
     let { path } = useRouteMatch();
 
-    let watch = false;
+    let watch = true;
     const { latitude, longitude } = usePosition(watch);
 
     useEffect(() => {
@@ -216,6 +217,16 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                                         {...props}
                                                     />
                                                 )}
+                                                exact
+                                            />
+                                        )}
+
+                                        {(isGestor ||
+                                            isColaborador ||
+                                            isAdmin) && (
+                                            <Route
+                                                path={`${path}/marcar`}
+                                                component={Marcar}
                                                 exact
                                             />
                                         )}
