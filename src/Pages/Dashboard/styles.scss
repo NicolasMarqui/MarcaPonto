@@ -130,6 +130,7 @@
 
             .main__childs{
                 padding: 30px 40px;
+                position: relative;
 
                 @include max-xxs{
                     padding: 30px 10px;

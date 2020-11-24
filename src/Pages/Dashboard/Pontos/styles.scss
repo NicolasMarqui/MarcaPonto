@@ -1,0 +1,73 @@
+@import '../../../Styles/responsive';
+
+ul.pontos__filter{
+    display: flex;
+    margin-top: 5px;
+    border: 1px solid #f2f2f2;
+    padding: 20px 0;
+
+    li{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 0 10px;
+
+
+        .form__group{
+            margin: 0 10px;
+            width: 100%;
+        }
+    }
+}
+
+.pontos__header{
+    margin-bottom: 20px;
+}
+
+.filter__pontos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include sm{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .active__filters{
+        ul{
+            display: flex;
+            align-items: center;
+
+            li{
+                margin: 0 7px;
+
+                .current__filter{
+                    background-color: #dfdfdf;
+                    border-radius: 20px;
+                    padding: 10px;
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+
+                    p{
+                        font-size: 12px;
+                    }
+
+                    svg{
+                        margin-left: 5px;
+
+                        &:hover{
+                            transform: scale(1.2);
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .all__filters{
+
+    }
+}

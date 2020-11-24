@@ -43,19 +43,44 @@
             grid-template-rows: 1fr 1fr;
             gap: 10px 10px;
             grid-template-areas:
-                "ponto pontos_hoje pontos_hoje"
+                "ponto pontos_hoje pontos_aprovar"
                 "logs logs grafico_users";
     
             .ponto { grid-area: ponto; }
             .pontos_hoje { grid-area: pontos_hoje; }
+            .pontos_aprovar { grid-area: pontos_aprovar; }
             .logs { grid-area: logs; }
             .grafico_users { grid-area: grafico_users; }
 
             & > div{
                 margin: 0;
+                max-height: 360px;
+                overflow-y: auto;
             }
         }
 
     }
+}
 
+.home__header{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    @include sm{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .header__more{
+        a{
+            color: #a6a6a6;
+
+            &:hover{
+                transform: scale(1.2);
+            }
+        }
+    }
 }

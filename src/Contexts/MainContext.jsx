@@ -4,6 +4,9 @@ const MainContext = createContext({
     token: null,
     setToken: (token) => {},
     removeToken: (token) => {},
+    refreshToken: null,
+    setRefreshToken: (refreshToken) => {},
+    removeRefreshToken: (refreshToken) => {},
     currentLoggedUserId: null,
     setCurrentLoggedUserId: (id) => {},
     removeCurrentLoggedUserId: (id) => {},
@@ -29,7 +32,9 @@ const MainContext = createContext({
     notificationCount: 0,
     setNotificationCount: (notific) => {},
     selectedPDF: (local) => {},
-    setSelectedPDF: (local) => {}
+    setSelectedPDF: (local) => {},
+    showTips: (local) => {},
+    setShowTips: (local) => {},
 });
 
 export default MainContext;

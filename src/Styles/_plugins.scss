@@ -1,4 +1,5 @@
-@import './responsive';
+@import './_responsive';
+@import './variables';
 
 .react-timekeeper{
     @include max-xxs{
@@ -53,4 +54,11 @@
 .leaflet-container{
     height: 400px;
     width: 400px;
+}
+
+.react-tabs{
+    .react-tabs__tab--selected{
+        background-color: $red;
+        color: #fff;
+    }
 }

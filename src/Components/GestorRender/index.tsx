@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./styles.scss";
 import Card from "../Card";
 import MarcarPonto from "../MarcarPonto";
@@ -13,7 +13,11 @@ import {
     getTodayDateConsulta,
     getTodayInfo,
 } from "../../Functions";
-import { GetAllLogs, GetAllPontos } from "../../Services/ApiCalls";
+import {
+    GetAllLogs,
+    GetAllPontos,
+    GetAllPontosAprovar,
+} from "../../Services/ApiCalls";
 import EmptyData from "../EmptyData";
 import Lottie from "react-lottie";
 import { Link } from "react-router-dom";
@@ -28,6 +32,10 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
     const { currentLoggedUserId, token } = useContext(MainContext);
     const { dataAllPontos, statusCodeAllPontos } = GetAllPontos(token);
     const { dataAllLogs, statusCodeAllLogs } = GetAllLogs(info.colaboradorId);
+    const {
+        dataAllPontosAprovar,
+        statusCodeAllPontosAprovar,
+    } = GetAllPontosAprovar(token, currentLoggedUserId);
 
     return (
         <div className="admnntad__rr">
@@ -53,9 +61,14 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
                 </div>
                 <div className="pontos_hoje">
                     <Card isFlex={false}>
+                        <div className="header__title">
+                            <h3 className="tt-sub title-blue title-bold">
+                                Pontos batidos hoje
+                            </h3>
+                        </div>
                         {statusCodeAllPontos === 200 ? (
                             <DataTable
-                                title="Pontos batidos hoje"
+                                noHeader={true}
                                 data={dataAllPontos.filter(
                                     (p: any) =>
                                         p.data === getTodayDateConsulta()
@@ -80,9 +93,20 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
                 </div>
                 <div className="logs">
                     <Card isFlex={false}>
+                        <div className="home__header">
+                            <div className="header__title">
+                                <h3 className="tt-sub title-blue title-bold">
+                                    Logs
+                                </h3>
+                                <p>Seus logs de atividades</p>
+                            </div>
+                            <div className="header__more">
+                                <Link to="/dashboard/logs">Todos os logs</Link>
+                            </div>
+                        </div>
                         {statusCodeAllLogs === 200 ? (
                             <DataTable
-                                title="Logs"
+                                noHeader={true}
                                 data={dataAllLogs.slice(0, 5)}
                                 columns={ColumsTableLogs}
                                 striped={true}
@@ -100,9 +124,40 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
                                 width={200}
                             />
                         )}
-                        <Link to="/dashboard/logs" className="bt">
-                            Todos os logs
-                        </Link>
+                    </Card>
+                </div>
+                <div className="pontos_aprovar">
+                    <Card>
+                        <div className="home__header">
+                            <div className="header__title">
+                                <h3 className="tt-sub title-blue title-bold">
+                                    Pontos para aprovar
+                                </h3>
+                            </div>
+                            <div className="header__more">
+                                <Link to="/dashboard/logs">Todos</Link>
+                            </div>
+                        </div>
+                        {statusCodeAllPontosAprovar === 200 ? (
+                            <DataTable
+                                noHeader={true}
+                                data={dataAllPontosAprovar}
+                                columns={ColumsTablePontos}
+                                striped={true}
+                                pagination={false}
+                                highlightOnHover={true}
+                                noDataComponent={<EmptyData />}
+                            />
+                        ) : (
+                            <Lottie
+                                options={{
+                                    loop: true,
+                                    animationData: LOADING,
+                                }}
+                                height={200}
+                                width={200}
+                            />
+                        )}
                     </Card>
                 </div>
                 <div className="grafico_users">

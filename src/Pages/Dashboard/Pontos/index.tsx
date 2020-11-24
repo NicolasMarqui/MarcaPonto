@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
+import "./styles.scss";
 import DataTable from "react-data-table-component";
 import HeaderInside from "../../../Components/HeaderInside";
 import MainContext from "../../../Contexts/MainContext";
-import { showToast } from "../../../Functions";
+import { checkIfGestor, showToast } from "../../../Functions";
 import api from "../../../Services/api";
 import { ALL_PONTO_COLABORADOR } from "../../../Services/Endpoints";
 import { ColumsTablePontos } from "../../../Services/TableColumns";
-import "./styles.scss";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import { GetAllPontosAprovar } from "../../../Services/ApiCalls";
+import Lottie from "react-lottie";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import EmptyData from "../../../Components/EmptyData";
+import Tip from "../../../Components/Tip";
 
 interface PontosProps {
     dataPonto: any;
@@ -15,20 +22,35 @@ interface PontosProps {
 const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
     const { token } = useContext(MainContext);
 
+    const LOADING = require("../../../Assets/animations/loading.json");
+
     // ID do colaborador
-    const { colaboradorId } = dataPonto;
+    const { colaboradorId, perfis } = dataPonto;
+
+    // State geral
+    const [isGestor, setIsGestor] = useState(false);
+    const {
+        statusCodeAllPontosAprovar,
+        dataAllPontosAprovar,
+    } = GetAllPontosAprovar(token, colaboradorId);
 
     // State filtros
-    const [data, setData] = useState("");
-    const [horario, setHorario] = useState("");
-    const [tipoPonto, setTipoPonto] = useState("");
+    const [data, setData] = useState<any[]>([]);
+    const [horario, setHorario] = useState<any[]>([]);
+    const [tipoPonto, setTipoPonto] = useState<any[]>([]);
+
+    const [selectedDate, setSelectedDate] = useState("");
+    const [selectedHorario, setSelectedHorario] = useState("");
+    const [selectedTipo, setSelectedTipo] = useState("");
 
     //State tabela de pontos
     const [isFetchingData, setIsFetchingData] = useState(false);
     const [allPontos, setAllPontos] = useState<any[]>([]);
+    const [originalData, setOriginalData] = useState<any[]>([]);
 
     useEffect(() => {
         getColaboradorPonto();
+        setIsGestor(checkIfGestor(perfis));
     }, []);
 
     const getColaboradorPonto = async () => {
@@ -41,6 +63,29 @@ const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
                 const { status, data } = resp;
                 if (status === 200) {
                     setAllPontos(data);
+                    setOriginalData(data);
+
+                    const notDupDate: any = [];
+                    const notDupHorario: any = [];
+                    const notDupTipo: any = [];
+
+                    data.map((pnt: any) => {
+                        if (!notDupDate.includes(pnt.data)) {
+                            notDupDate.push(pnt.data);
+                        }
+
+                        if (!notDupHorario.includes(pnt.horario)) {
+                            notDupHorario.push(pnt.horario);
+                        }
+
+                        if (!notDupTipo.includes(pnt.tipoDoRegistro)) {
+                            notDupTipo.push(pnt.tipoDoRegistro);
+                        }
+
+                        setData(notDupDate);
+                        setHorario(notDupHorario);
+                        setTipoPonto(notDupTipo);
+                    });
                 }
 
                 setIsFetchingData(false);
@@ -50,62 +95,338 @@ const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
             });
     };
 
+    const handleClosingFilter = (type: string) => {
+        switch (type) {
+            case "DATA":
+                setSelectedDate("");
+
+                if (selectedHorario) {
+                    setAllPontos(
+                        originalData.filter(
+                            (p: any) => p.horario === selectedHorario
+                        )
+                    );
+                } else if (selectedTipo) {
+                    setAllPontos(
+                        originalData.filter(
+                            (p: any) => p.tipoDoRegistro === selectedTipo
+                        )
+                    );
+                } else {
+                    setAllPontos(originalData);
+                }
+
+                break;
+            case "HORARIO":
+                setSelectedHorario("");
+
+                if (selectedDate) {
+                    setAllPontos(
+                        originalData.filter((p: any) => p.data === selectedDate)
+                    );
+                } else if (selectedTipo) {
+                    setAllPontos(
+                        originalData.filter(
+                            (p: any) => p.tipoDoRegistro === selectedTipo
+                        )
+                    );
+                } else {
+                    setAllPontos(originalData);
+                }
+
+                break;
+            case "TIPO":
+                setSelectedTipo("");
+
+                if (selectedHorario) {
+                    setAllPontos(
+                        originalData.filter(
+                            (p: any) => p.horario === selectedHorario
+                        )
+                    );
+                } else if (selectedDate) {
+                    setAllPontos(
+                        originalData.filter((p: any) => p.data === selectedDate)
+                    );
+                } else {
+                    setAllPontos(originalData);
+                }
+
+                break;
+        }
+    };
+
     return (
-        <div className="pontos__wrapper">
-            <div className="pontos__header">
-                <HeaderInside isHome={false} nome={"Seus pontos"} />
+        <>
+            <Tip content={"Isso é uma dica"} />
+            <div className="pontos__wrapper">
+                <div className="pontos__header">
+                    <HeaderInside isHome={false} nome={"Seus pontos"} />
 
-                <ul className="pontos__filter">
-                    <li>
-                        <p>Filtrar por: </p>
-                    </li>
-                    <li>
-                        <div className="form__group">
-                            <select
-                                defaultValue="Dia da semana"
-                                onChange={(e) => setData(e.target.value)}
-                            >
-                                <option disabled>Data</option>
-                                <option value="Segunda">2020-06-11</option>
-                            </select>
+                    <div className="page__title-info">
+                        <div className="tinf__name">
+                            <h2 className="tt-title title-blue title-bold">
+                                Pontos
+                            </h2>
                         </div>
-                    </li>
-                    <li>
-                        <div className="form__group">
-                            <select defaultValue="Horário">
-                                <option disabled>Horário</option>
-                                <option value="08:00">08:00</option>
-                            </select>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="form__group">
-                            <select defaultValue="Tipo de ponto">
-                                <option disabled>Tipo de ponto</option>
-                                <option value="Entrada">Entrada</option>
-                            </select>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </div>
 
-            <div className="pontos__table">
-                {!isFetchingData ? (
-                    <DataTable
-                        data={allPontos}
-                        noHeader={true}
-                        columns={ColumsTablePontos}
-                        striped={true}
-                        pagination={true}
-                        // onRowClicked={showMoreInfo}
-                        pointerOnHover={true}
-                        highlightOnHover={true}
-                    />
-                ) : (
-                    "loading"
-                )}
+                <Tabs>
+                    <TabList>
+                        <Tab>Todos os pontos</Tab>
+                        {isGestor && (
+                            <Tab>
+                                {`( ${dataAllPontosAprovar.length} )`} Pontos
+                                para aprovar
+                            </Tab>
+                        )}
+                    </TabList>
+
+                    <TabPanel>
+                        <div className="filter__pontos">
+                            <div className="active__filters">
+                                <ul>
+                                    <li>
+                                        <p>Filtros: </p>
+                                    </li>
+                                    {selectedDate && (
+                                        <li>
+                                            <div className="current__filter">
+                                                <p>{selectedDate}</p>
+                                                <AiOutlineCloseCircle
+                                                    size={14}
+                                                    onClick={() =>
+                                                        handleClosingFilter(
+                                                            "DATA"
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        </li>
+                                    )}
+                                    {selectedHorario && (
+                                        <li>
+                                            <div className="current__filter">
+                                                <p>{selectedHorario}</p>
+                                                <AiOutlineCloseCircle
+                                                    size={14}
+                                                    onClick={() =>
+                                                        handleClosingFilter(
+                                                            "HORARIO"
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        </li>
+                                    )}
+                                    {selectedTipo && (
+                                        <li>
+                                            <div className="current__filter">
+                                                <p>{selectedTipo}</p>
+                                                <AiOutlineCloseCircle
+                                                    size={14}
+                                                    onClick={() =>
+                                                        handleClosingFilter(
+                                                            "TIPO"
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
+                            <div className="all__filters">
+                                <ul className="pontos__filter">
+                                    <li>
+                                        <div className="form__group">
+                                            <select
+                                                defaultValue="Data"
+                                                onChange={(e: any) => {
+                                                    setSelectedDate(
+                                                        e.target.value
+                                                    );
+
+                                                    setAllPontos(
+                                                        allPontos.filter(
+                                                            (p: any) =>
+                                                                p.data ===
+                                                                e.target.value
+                                                        )
+                                                    );
+                                                }}
+                                            >
+                                                <option
+                                                    disabled
+                                                    selected={
+                                                        selectedDate === ""
+                                                    }
+                                                >
+                                                    Data
+                                                </option>
+                                                {data ? (
+                                                    data.map((dt: any) => (
+                                                        <option value={dt}>
+                                                            {dt}
+                                                        </option>
+                                                    ))
+                                                ) : (
+                                                    <option disabled>
+                                                        Carregando
+                                                    </option>
+                                                )}
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="form__group">
+                                            <select
+                                                defaultValue="Horário"
+                                                onChange={(e: any) => {
+                                                    setSelectedHorario(
+                                                        e.target.value
+                                                    );
+
+                                                    setAllPontos(
+                                                        allPontos.filter(
+                                                            (p: any) =>
+                                                                p.horario ===
+                                                                e.target.value
+                                                        )
+                                                    );
+                                                }}
+                                            >
+                                                <option
+                                                    disabled
+                                                    selected={
+                                                        selectedHorario === ""
+                                                    }
+                                                >
+                                                    Horário
+                                                </option>
+                                                {horario ? (
+                                                    horario.map((dt: any) => (
+                                                        <option value={dt}>
+                                                            {dt}
+                                                        </option>
+                                                    ))
+                                                ) : (
+                                                    <option disabled>
+                                                        Carregando
+                                                    </option>
+                                                )}
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="form__group">
+                                            <select
+                                                defaultValue="Tipo de ponto"
+                                                onChange={(e: any) => {
+                                                    setSelectedTipo(
+                                                        e.target.value
+                                                    );
+
+                                                    setAllPontos(
+                                                        allPontos.filter(
+                                                            (p: any) =>
+                                                                p.tipoDoRegistro ===
+                                                                e.target.value
+                                                        )
+                                                    );
+                                                }}
+                                            >
+                                                <option
+                                                    disabled
+                                                    selected={
+                                                        selectedTipo === ""
+                                                    }
+                                                >
+                                                    Tipo de ponto
+                                                </option>
+                                                {tipoPonto ? (
+                                                    tipoPonto.map((dt: any) => (
+                                                        <option value={dt}>
+                                                            {dt}
+                                                        </option>
+                                                    ))
+                                                ) : (
+                                                    <option disabled>
+                                                        Carregando
+                                                    </option>
+                                                )}
+                                            </select>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="pontos__table">
+                            {!isFetchingData ? (
+                                <DataTable
+                                    data={allPontos}
+                                    noHeader={true}
+                                    columns={ColumsTablePontos}
+                                    striped={true}
+                                    pagination={true}
+                                    highlightOnHover={true}
+                                    noDataComponent={
+                                        <EmptyData hasMargin={true} />
+                                    }
+                                />
+                            ) : (
+                                <div className="animation__wrapper">
+                                    <Lottie
+                                        options={{
+                                            loop: true,
+                                            animationData: LOADING,
+                                        }}
+                                        height={150}
+                                        width={150}
+                                    />
+                                    <h2>
+                                        Estamos carregando seus dados
+                                        <span role="img" aria-label="Whoops">
+                                            🧐
+                                        </span>{" "}
+                                    </h2>
+                                </div>
+                            )}
+                        </div>
+                    </TabPanel>
+
+                    {isGestor && (
+                        <TabPanel>
+                            {statusCodeAllPontosAprovar === 200 ? (
+                                <DataTable
+                                    data={dataAllPontosAprovar}
+                                    noHeader={true}
+                                    columns={ColumsTablePontos}
+                                    striped={true}
+                                    pagination={true}
+                                    highlightOnHover={true}
+                                    noDataComponent={
+                                        <EmptyData hasMargin={true} />
+                                    }
+                                />
+                            ) : (
+                                <div className="animation__wrapper">
+                                    <Lottie
+                                        options={{
+                                            loop: true,
+                                            animationData: LOADING,
+                                        }}
+                                        height={150}
+                                        width={150}
+                                    />
+                                </div>
+                            )}
+                        </TabPanel>
+                    )}
+                </Tabs>
             </div>
-        </div>
+        </>
     );
 };
 export default Pontos;

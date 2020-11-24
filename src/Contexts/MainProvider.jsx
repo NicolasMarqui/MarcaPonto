@@ -4,6 +4,7 @@ import useStorage from "../Utils/useStorage";
 
 const MainProvider = ({ children }) => {
     const [token, setToken, removeToken] = useStorage("token");
+    const [refreshToken, setRefreshToken, removeRefreshToken] = useStorage("refresh-token");
     const [
         currentLoggedUserId,
         setCurrentLoggedUserId,
@@ -24,6 +25,7 @@ const MainProvider = ({ children }) => {
     const [browserLanguage, setBrowserLanguage] = useStorage("language");
     const [notificationCount, setNotificationCount] = useStorage("notificationCount");
     const [selectedPDF, setSelectedPDF] = useStorage("selectedPDF");
+    const [showTips, setShowTips] = useStorage(true);
 
     return (
         <MainContext.Provider
@@ -31,6 +33,9 @@ const MainProvider = ({ children }) => {
                 token,
                 setToken,
                 removeToken,
+                refreshToken,
+                setRefreshToken,
+                removeRefreshToken,
                 currentLoggedUserId,
                 setCurrentLoggedUserId,
                 removeCurrentLoggedUserId,
@@ -56,7 +61,9 @@ const MainProvider = ({ children }) => {
                 notificationCount,
                 setNotificationCount,
                 selectedPDF,
-                setSelectedPDF
+                setSelectedPDF,
+                showTips,
+                setShowTips
             }}
         >
             {children}

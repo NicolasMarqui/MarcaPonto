@@ -579,6 +579,33 @@ export const GetAllPontos = (token: string | null) => {
     };
 };
 
+export const GetAllPontosAprovar = (
+    token: string | null,
+    id: Number | null
+) => {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        api.get(`${ALL_PONTO_APROVAR_GESTOR}/${id}`, {
+            headers: { Authorization: token },
+        })
+            .then((response) => {
+                const { status, data } = response;
+                setApiData(data);
+                setStatusCode(status);
+            })
+            .catch((err) => {
+                return err;
+            });
+    }, []);
+
+    return {
+        dataAllPontosAprovar: apiData as any,
+        statusCodeAllPontosAprovar: statusCode,
+    };
+};
+
 export async function insertNewPonto(token: string, data: any) {
     if (!token) return false;
 

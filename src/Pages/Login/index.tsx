@@ -20,7 +20,7 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ location }) => {
     const [isLoading, setIsLoading] = useState(false);
-    const { setToken, token } = useContext(MainContext);
+    const { setToken, token, setRefreshToken } = useContext(MainContext);
 
     const history = useHistory();
 
