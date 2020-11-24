@@ -44,6 +44,20 @@
             margin-top: 20px;
             width: 300px;
         }
+
+        .no__password{
+            p{
+                text-align: center;
+                margin: -3px 0 15px;
+                font-size: 13px;
+                cursor: pointer;
+                color:#a2a2a2;
+
+                &:hover{
+                    transform: scale(1.02);
+                }
+            }
+        }
     }
 }
 
@@ -52,5 +66,14 @@
 
     p {
         text-align: center;
+    }
+}
+
+.modalSenha__wrapper{
+    .modalSenha__content{
+        p{
+            margin: 10px 0;
+            color: #5e5e5e;
+        }
     }
 }
