@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import "./styles.scss";
-import { GoLightBulb } from "react-icons/go";
+import { FaLightbulb } from "react-icons/fa";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { showToast } from "../../Functions";
 import MainContext from "../../Contexts/MainContext";
@@ -22,7 +22,11 @@ const Tip: React.FC<TipProps> = ({ content }) => {
         showTips && (
             <div className={`tip__container ${isClosed ? "not__showing" : ""}`}>
                 <div className="tip__icon">
-                    <GoLightBulb size={28} className="bulb__svg" />
+                    <FaLightbulb
+                        size={28}
+                        className="bulb__svg"
+                        color="orange"
+                    />
                 </div>
                 <div className="tip__content">
                     {content}

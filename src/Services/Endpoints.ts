@@ -25,11 +25,16 @@ export const INSERT_HORARIOS = "/api/v1/horario";
 //Ponto
 export const ALL_PONTO = "/api/v1/ponto";
 export const INSERT_PONTO = "/api/v1/ponto";
+export const ATUALIZAR_PONTO = "/api/v1/ponto";
 export const ALL_PONTO_COLABORADOR = "/api/v1/ponto/colaborador";
 export const ALL_PONTO_APROVAR_GESTOR = "/api/v1/ponto/to-approve-by-gestor";
+export const APROVAR_PONTO = "/api/v1/ponto/approve";
+export const REPROVAR_PONTO = "/api/v1/ponto/disapprove";
 //Setor
 export const ALL_SETOR = "/api/v1/setor";
 export const INSERT_SETOR = "/api/v1/setor";
 export const ALL_SETOR_BY_STATUS = "/api/v1/setor/status";
 //Tipo de Registro
 export const ALL_REGISTRO = "/api/v1/tipodoregistro";
+//Status do ponto
+export const STATUS_PONTO = "/api/v1/statusDoPonto";

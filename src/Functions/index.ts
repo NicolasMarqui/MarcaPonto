@@ -141,6 +141,15 @@ export const getTodayDateConsulta = () => {
     }-${now.getDate() < 10 ? "0" + now.getDate() : now.getDate()}`;
 };
 
+export const saveFromDate = (date: any) => {
+    let now = new Date(date);
+    return `${now.getDate() < 10 ? "0" + now.getDate() : now.getDate()}/${
+        now.getMonth() + 1 < 10
+            ? "0" + (now.getMonth() + 1)
+            : now.getMonth() + 1
+    }/${now.getFullYear()}`;
+};
+
 export const handleUndefined = (item: any) => {
     return item === undefined || item === null || !item ? "Tester" : item;
 };

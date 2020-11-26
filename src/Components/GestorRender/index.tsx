@@ -35,7 +35,7 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
     const {
         dataAllPontosAprovar,
         statusCodeAllPontosAprovar,
-    } = GetAllPontosAprovar(token, currentLoggedUserId);
+    } = GetAllPontosAprovar(token, currentLoggedUserId, 0);
 
     return (
         <div className="admnntad__rr">
@@ -135,7 +135,7 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
                                 </h3>
                             </div>
                             <div className="header__more">
-                                <Link to="/dashboard/logs">Todos</Link>
+                                <Link to="/dashboard/pontos?id=1">Todos</Link>
                             </div>
                         </div>
                         {statusCodeAllPontosAprovar === 200 ? (

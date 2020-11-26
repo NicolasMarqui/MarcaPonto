@@ -3,11 +3,23 @@ import "./styles.scss";
 import MainContext from "../../Contexts/MainContext";
 
 import { Link } from "react-router-dom";
+import { getCurrentFlag, showToast } from "../../Functions";
+import { BiChevronDown } from "react-icons/bi";
+import { AllLanguages } from "../../Services/AllLanguages";
 
-const LOGO = require("../../Assets/images/logo_horizontal.svg");
+const LOGO = require("../../Assets/images/just_logo.png");
 
 const NavBar: React.FC = () => {
-    const { token } = useContext(MainContext);
+    const { token, browserLanguage, setBrowserLanguage } = useContext(
+        MainContext
+    );
+
+    const changeBrowserLanguage = (value: string, title: string) => {
+        let toastSuccessMessage = `Idioma alterado para ${title}`;
+
+        showToast("SUCCESS", toastSuccessMessage, {});
+        setBrowserLanguage(value);
+    };
 
     return (
         <header>
@@ -15,7 +27,9 @@ const NavBar: React.FC = () => {
                 <div className="header">
                     <div className="header__logo">
                         <h1>
-                            <img src={LOGO} alt="Marca Ponto" />
+                            <Link to="/">
+                                <img src={LOGO} alt="Marca Ponto" />
+                            </Link>
                         </h1>
                     </div>
 
@@ -41,6 +55,45 @@ const NavBar: React.FC = () => {
                                     ) : (
                                         ""
                                     )}
+                                </li>
+                                <li>
+                                    <div className="opcoes__language">
+                                        <div className="lang__current">
+                                            <img
+                                                src={`https://www.countryflags.io/${getCurrentFlag(
+                                                    browserLanguage
+                                                )}/flat/64.png`}
+                                                alt="Portuguese"
+                                            />
+                                            <BiChevronDown
+                                                size={20}
+                                                color="#222"
+                                            />
+                                        </div>
+                                        <div className="lang__more-options">
+                                            {AllLanguages.filter(
+                                                (all) =>
+                                                    all.locale !==
+                                                    browserLanguage
+                                            ).map((lang) => (
+                                                <div
+                                                    className="mo__wrapper"
+                                                    onClick={() =>
+                                                        changeBrowserLanguage(
+                                                            lang.locale,
+                                                            lang.title
+                                                        )
+                                                    }
+                                                >
+                                                    <img
+                                                        src={`https://www.countryflags.io/${lang.flag}/flat/64.png`}
+                                                        alt={lang.title}
+                                                    />
+                                                    <p>{lang.title}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </li>
                                 {token ? (
                                     <li className="menu__destaque">

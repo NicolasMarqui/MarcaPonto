@@ -14,25 +14,47 @@ import Lottie from "react-lottie";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import EmptyData from "../../../Components/EmptyData";
 import Tip from "../../../Components/Tip";
+import Q from "query-string";
+import ModalCrud from "../../../Components/ModalCrud";
+import SelectedPontos from "../../../Components/RenderSelectedRow/Pontos/SelectedPonto";
+import AprovarPonto from "../../../Components/RenderSelectedRow/Pontos/AprovarPonto";
 
 interface PontosProps {
     dataPonto: any;
 }
 
 const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
-    const { token } = useContext(MainContext);
+    const { token, setOpenMoreInfo, openMoreInfo } = useContext(MainContext);
 
     const LOADING = require("../../../Assets/animations/loading.json");
 
     // ID do colaborador
     const { colaboradorId, perfis } = dataPonto;
 
+    const pontoStatus = [
+        {
+            id: 0,
+            nome: "Aguardando Aprovação",
+        },
+        {
+            id: 1,
+            nome: "Aprovado",
+        },
+        {
+            id: 2,
+            nome: "Retornado",
+        },
+    ];
+
     // State geral
     const [isGestor, setIsGestor] = useState(false);
+    const [currentTab, setCurrentTab] = useState(0);
+    const [selectedPonto, setSelectedPonto] = useState({});
+    const [aprovarPontoOpen, setAprovarPontoOpen] = useState(false);
     const {
         statusCodeAllPontosAprovar,
         dataAllPontosAprovar,
-    } = GetAllPontosAprovar(token, colaboradorId);
+    } = GetAllPontosAprovar(token, colaboradorId, pontoStatus[0].id);
 
     // State filtros
     const [data, setData] = useState<any[]>([]);
@@ -51,14 +73,26 @@ const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
     useEffect(() => {
         getColaboradorPonto();
         setIsGestor(checkIfGestor(perfis));
+        setOpenMoreInfo(false);
+
+        const idTab = Q.parse(window.location.search);
+
+        if (idTab) {
+            setCurrentTab(Number(idTab.id));
+        } else {
+            setCurrentTab(0);
+        }
     }, []);
 
     const getColaboradorPonto = async () => {
         setIsFetchingData(true);
         await api
-            .get(`${ALL_PONTO_COLABORADOR}/${colaboradorId}`, {
-                headers: { Authorization: token },
-            })
+            .get(
+                `${ALL_PONTO_COLABORADOR}/${colaboradorId}?statusDoPonto=${pontoStatus[1].id}`,
+                {
+                    headers: { Authorization: token },
+                }
+            )
             .then((resp) => {
                 const { status, data } = resp;
                 if (status === 200) {
@@ -156,6 +190,26 @@ const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
         }
     };
 
+    const showMoreInfo = async (dataFromRow: any) => {
+        setOpenMoreInfo(true);
+        setSelectedPonto(dataFromRow);
+    };
+
+    const showPontoAprovar = async (dataFromRow: any) => {
+        setAprovarPontoOpen(true);
+        setSelectedPonto(dataFromRow);
+    };
+
+    const closeModalMoreInfo = () => {
+        setOpenMoreInfo(false);
+        return true;
+    };
+
+    const closeModalAprovar = () => {
+        setAprovarPontoOpen(false);
+        return true;
+    };
+
     return (
         <>
             <Tip content={"Isso é uma dica"} />
@@ -172,7 +226,7 @@ const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
                     </div>
                 </div>
 
-                <Tabs>
+                <Tabs defaultIndex={currentTab}>
                     <TabList>
                         <Tab>Todos os pontos</Tab>
                         {isGestor && (
@@ -370,6 +424,8 @@ const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
                                     columns={ColumsTablePontos}
                                     striped={true}
                                     pagination={true}
+                                    onRowClicked={showMoreInfo}
+                                    pointerOnHover={true}
                                     highlightOnHover={true}
                                     noDataComponent={
                                         <EmptyData hasMargin={true} />
@@ -405,6 +461,8 @@ const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
                                     columns={ColumsTablePontos}
                                     striped={true}
                                     pagination={true}
+                                    onRowClicked={showPontoAprovar}
+                                    pointerOnHover={true}
                                     highlightOnHover={true}
                                     noDataComponent={
                                         <EmptyData hasMargin={true} />
@@ -426,6 +484,26 @@ const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
                     )}
                 </Tabs>
             </div>
+
+            {openMoreInfo && (
+                <ModalCrud onClose={closeModalMoreInfo}>
+                    {selectedPonto ? (
+                        <SelectedPontos dataPonto={selectedPonto} />
+                    ) : (
+                        ""
+                    )}
+                </ModalCrud>
+            )}
+
+            {aprovarPontoOpen && (
+                <ModalCrud onClose={closeModalAprovar}>
+                    {selectedPonto ? (
+                        <AprovarPonto dataPonto={selectedPonto} />
+                    ) : (
+                        ""
+                    )}
+                </ModalCrud>
+            )}
         </>
     );
 };

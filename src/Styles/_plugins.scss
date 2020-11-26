@@ -62,3 +62,16 @@
         color: #fff;
     }
 }
+
+.react-date-picker__inputGroup{
+    input{
+        width: auto!important;
+        padding: 0!important;
+        background-color: transparent!important;
+    }
+
+}
+
+.react-date-picker__calendar{
+    z-index: 4!important;
+}

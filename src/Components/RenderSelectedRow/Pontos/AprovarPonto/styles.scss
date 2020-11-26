@@ -1,0 +1,46 @@
+@import '../../../../Styles/responsive';
+
+.wrapper__aprovar{
+    padding: 40px;
+
+    ul{
+        li{
+            margin: 5px 0;
+
+            .pnt__info{
+                p{
+                    span{
+                        font-weight: 700;
+                    }
+                }
+
+                .m__map{
+                    height: 200px;
+                    width: 100%;
+
+                    .leaflet-container{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.bnt__aprovar{
+    display: flex;
+    flex-direction: column;
+
+    & > button.bt{
+        margin: 5px auto;
+
+        &:first-child{
+            background-color: green;
+
+            &:hover{
+                background-color: lighten(green, 10%);
+            }
+        }
+    }
+}

@@ -26,6 +26,7 @@ import {
     ALL_SETOR_BY_STATUS,
     INSERT_SETOR,
     ALL_REGISTRO,
+    STATUS_PONTO,
 } from "./Endpoints";
 import { stat } from "fs";
 import { getLogDate, showToast } from "../Functions";
@@ -579,15 +580,39 @@ export const GetAllPontos = (token: string | null) => {
     };
 };
 
+export const GetAllPontosID = (token: string | null, id: number | null) => {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        api.get(`${ALL_PONTO}/${id}`, { headers: { Authorization: token } })
+            .then((response) => {
+                const { status, data } = response;
+                setApiData(data);
+                console.log(data);
+                setStatusCode(status);
+            })
+            .catch((err) => {
+                return err;
+            });
+    }, []);
+
+    return {
+        dataAllPontos: apiData as any,
+        statusCodeAllPontos: statusCode,
+    };
+};
+
 export const GetAllPontosAprovar = (
     token: string | null,
-    id: Number | null
+    id: Number | null,
+    statusID: Number | null
 ) => {
     const [statusCode, setStatusCode] = useState(0);
     const [apiData, setApiData] = useState<any[]>([]);
 
     useEffect(() => {
-        api.get(`${ALL_PONTO_APROVAR_GESTOR}/${id}`, {
+        api.get(`${ALL_PONTO_COLABORADOR}/${id}?statusDoPonto=${statusID}`, {
             headers: { Authorization: token },
         })
             .then((response) => {
@@ -762,6 +787,30 @@ export async function getSetoresByStatus(token: string, status: boolean) {
 }
 
 // TIPO DE REGISTRO
+export const GetAllTiposRegistro = (token: string | null) => {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        api.get(`${ALL_REGISTRO}`, {
+            headers: { Authorization: token },
+        })
+            .then((response) => {
+                const { status, data } = response;
+                setApiData(data);
+                setStatusCode(status);
+            })
+            .catch((err) => {
+                return err;
+            });
+    }, []);
+
+    return {
+        dataAllTiposRegistro: apiData as any,
+        statusCodeAllTiposRegistro: statusCode,
+    };
+};
+
 export async function getAllTiposDeRegistro(token: string) {
     if (!token) return false;
 
@@ -773,6 +822,29 @@ export async function getAllTiposDeRegistro(token: string) {
         .catch((err) => {
             return err;
         });
+}
+
+// STATUS DO PONTO
+export function GetAllStatus(token: string | null) {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        api.get(STATUS_PONTO, { headers: { Authorization: token } })
+            .then((response) => {
+                const { status, data } = response;
+                setApiData(data);
+                setStatusCode(status);
+            })
+            .catch((err) => {
+                return err;
+            });
+    }, []);
+
+    return {
+        dataAllStatus: apiData as any,
+        statusCodeAllStatus: statusCode,
+    };
 }
 
 //NOTIFICAÇÕES E LOGS
