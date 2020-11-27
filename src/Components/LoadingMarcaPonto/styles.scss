@@ -28,15 +28,16 @@
         z-index: 1;
 
         img {
-            opacity: .2;
+            opacity: .1;
         }
     }
 
     .loading__content {
         z-index: 2;
+        padding: 0 40px;
 
         h2 {
-            font-size: 2rem;
+            font-size: 1.2rem;
             font-weight: 700;
             text-align: center;
 

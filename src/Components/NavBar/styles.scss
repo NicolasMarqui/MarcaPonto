@@ -6,6 +6,7 @@ header {
     top: 20px;
     left: 0;
     right: 0;
+    z-index: 19;
     transition: all .5s linear;
 
     &.fixed{

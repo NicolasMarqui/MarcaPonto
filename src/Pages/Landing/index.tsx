@@ -14,6 +14,8 @@ const Landing: React.FC = () => {
     const HERO_IMAGE = require("../../Assets/images/Banner.png");
     const PORTABILIT_IMAGE = require("../../Assets/images/portabilit.png");
     const IMAGE_1_SECTION = require("../../Assets/images/dashboard.jpg");
+    const IMAGE_2_SECTION = require("../../Assets/images/relatorio.jpg");
+    const IMAGE_3_SECTION = require("../../Assets/images/horarios.jpg");
     const APP_IMAGE = require("../../Assets/images/app.jpg");
     const GOOGLE_APP_IMAGE = require("../../Assets/images/google-play.png");
     const APPLE_APP_IMAGE = require("../../Assets/images/app-store.png");
@@ -72,39 +74,39 @@ const Landing: React.FC = () => {
                         </p>
 
                         <div className="rapido__screens">
-                            <ScrollAnimation
-                                animateIn="fadeIn"
-                                animateOut="fadeOut"
-                            >
-                                <div className="screen screen_1">
+                            <div className="screen screen_1">
+                                <ScrollAnimation
+                                    animateIn="fadeIn"
+                                    animateOut="fadeOut"
+                                >
+                                    <img
+                                        src={IMAGE_3_SECTION}
+                                        alt="MarcaPonto"
+                                    />
+                                </ScrollAnimation>
+                            </div>
+                            <div className="screen screen_2 highlight">
+                                <ScrollAnimation
+                                    animateIn="fadeIn"
+                                    animateOut="fadeOut"
+                                >
                                     <img
                                         src={IMAGE_1_SECTION}
                                         alt="MarcaPonto"
                                     />
-                                </div>
-                            </ScrollAnimation>
-                            <ScrollAnimation
-                                animateIn="fadeIn"
-                                animateOut="fadeOut"
-                            >
-                                <div className="screen screen_2 highlight">
+                                </ScrollAnimation>
+                            </div>
+                            <div className="screen screen_3">
+                                <ScrollAnimation
+                                    animateIn="fadeIn"
+                                    animateOut="fadeOut"
+                                >
                                     <img
-                                        src={IMAGE_1_SECTION}
+                                        src={IMAGE_2_SECTION}
                                         alt="MarcaPonto"
                                     />
-                                </div>
-                            </ScrollAnimation>
-                            <ScrollAnimation
-                                animateIn="fadeIn"
-                                animateOut="fadeOut"
-                            >
-                                <div className="screen screen_3">
-                                    <img
-                                        src={IMAGE_1_SECTION}
-                                        alt="MarcaPonto"
-                                    />
-                                </div>
-                            </ScrollAnimation>
+                                </ScrollAnimation>
+                            </div>
                         </div>
                     </div>
                 </div>
