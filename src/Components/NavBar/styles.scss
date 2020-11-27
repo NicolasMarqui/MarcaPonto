@@ -6,6 +6,17 @@ header {
     top: 20px;
     left: 0;
     right: 0;
+    transition: all .5s linear;
+
+    &.fixed{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: #fff;
+        box-shadow:-5px -5px 9px #7b7b7b;
+        z-index: 19;
+    }
 
     .header {
         display: flex;
@@ -176,6 +187,79 @@ header {
 
             p{
                 font-size: 12px;
+            }
+        }
+    }
+}
+
+.mobile__container-open{
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.4);
+
+    .mobile__nav-close{
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    .container__content{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        background-color: #fff;
+        width: 70%;
+        padding: 60px 10px;
+        transition: all .5s cubic-bezier(0.39, 0.575, 0.565, 1);
+
+        hr{
+            margin: 20px auto;
+            border: 1px solid #f2f2f2;
+            width: 70%;
+        }
+
+        img.mobile__logo{
+            width: 100px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        h2{
+            text-align: center;
+        }
+
+        ul{
+            display: flex;
+            flex-direction: column;
+            margin-top: 40px;
+            
+            li{
+                margin: 10px 0;
+                text-align: center;
+
+                a{
+                    font-size: 24px;
+                    text-decoration: none;
+                    color: #222;
+                }
+
+                .lang__all{
+                    display: flex;
+                    margin-top: 50px;
+
+                    .mo__wrapper{
+                        flex: 1;
+                    }
+
+                    img{
+                        width: 50px;
+                    }
+                }
             }
         }
     }

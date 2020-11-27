@@ -20,7 +20,13 @@
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1300px) {
+    .container {
+        width: 1302px;
+    }
+}
+
+@media (min-width: 1400px) {
     .container {
         width: 1370px;
     }
@@ -46,7 +52,7 @@
 }
 
 .tt-title {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 400;
     line-height: 20px;
 
@@ -61,6 +67,10 @@
 
     &.title-bold{
         font-weight: 700;
+    }
+
+    &.title-center{
+        text-align: center;
     }
 }
 
@@ -290,5 +300,39 @@ textarea.set-height{
         justify-content: center;
         order: 2;
         margin-bottom: 10px;
+    }
+}
+
+.section{
+    padding: 60px 0;
+}
+
+.hidden-sm{
+    @media(max-width: 992px){
+        display: none!important;
+    }
+}
+
+.hidden-md{
+    @media(max-width: 1200px){
+        display: none!important;
+    }
+}
+
+.hidden-lg{
+    @media(max-width: 3000px){
+        display: none!important;
+    }
+}
+
+.visible-xs{
+    @media(max-width: 768px){
+        display: flex!important;
+    }
+}
+
+.visible-sm{
+    @media(max-width: 992px){
+        display: flex!important;
     }
 }

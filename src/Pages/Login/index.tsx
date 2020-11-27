@@ -14,8 +14,6 @@ import ModalCrud from "../../Components/ModalCrud";
 const LOGO_VERTICAL = require("../../Assets/images/logo_vertical.png");
 const LOADING_CLOCK = require("../../Assets/animations/loading-clock.json");
 
-//TODO: handle 401 error
-
 interface LoginProps {
     location: any;
 }

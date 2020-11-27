@@ -7,9 +7,11 @@ import MainContext from "../../../Contexts/MainContext";
 import EmptyData from "../../../Components/EmptyData";
 import { ColumsTableLogs } from "../../../Services/TableColumns";
 import DataTable from "react-data-table-component";
+import Lottie from "react-lottie";
 
 const Logs: React.FC = () => {
     const { currentLoggedUserId } = useContext(MainContext);
+    const LOADING = require("../../../Assets/animations/loading.json");
 
     const [searchValue, setSearchValue] = useState("");
     const { dataAllLogs, statusCodeAllLogs } = GetAllLogs(currentLoggedUserId);
@@ -67,7 +69,14 @@ const Logs: React.FC = () => {
                             paginationPerPage={30}
                         />
                     ) : (
-                        <p>Loading</p>
+                        <Lottie
+                            options={{
+                                loop: true,
+                                animationData: LOADING,
+                            }}
+                            height={200}
+                            width={200}
+                        />
                     )}
                 </div>
             </div>

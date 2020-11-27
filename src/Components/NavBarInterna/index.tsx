@@ -8,17 +8,18 @@ import MainContext from "../../Contexts/MainContext";
 import { FormattedMessage } from "react-intl";
 import { AllLanguages } from "../../Services/AllLanguages";
 import { AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
-import SideBarSkeleton from "../Skeletons/Side";
 import {
     GetAllNotifications,
     makeAllNotificationRead,
     makeOneNotificationRead,
 } from "../../Services/ApiCalls";
-import EmptyData from "../EmptyData";
+import Lottie from "react-lottie";
 
 interface NavBarInternaProps {
     data: any;
 }
+
+const LOADING = require("../../Assets/animations/loading.json");
 
 const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
     const {
@@ -202,7 +203,14 @@ const NavBarInterna: React.FC<NavBarInternaProps> = ({ data }) => {
                                 </ul>
                             ) : (
                                 <>
-                                    <EmptyData hasMargin={true} />
+                                    <Lottie
+                                        options={{
+                                            loop: true,
+                                            animationData: LOADING,
+                                        }}
+                                        height={150}
+                                        width={150}
+                                    />
                                 </>
                             )}
                         </div>
