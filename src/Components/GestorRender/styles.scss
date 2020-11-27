@@ -66,21 +66,28 @@
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
 
-    @include sm{
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
     .header__more{
+        margin-top: 10px;
+
         a{
             color: #a6a6a6;
 
             &:hover{
                 transform: scale(1.2);
             }
+        }
+    }
+
+    @include sm{
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .header__more{
+            margin-top: 0;
         }
     }
 }

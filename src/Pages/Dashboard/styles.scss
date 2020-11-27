@@ -26,6 +26,14 @@
                 display: block;
                 width: 100px;
                 box-shadow: 5px 2px 10px #6b6b6b66;
+                z-index: 40;
+            }
+
+            .close__xxs-side{
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
             }
             
             @media(max-height: 720px){
@@ -64,11 +72,13 @@
                 .menu__toggle{
                     top: auto;
                     bottom: 10px;
+                    outline: none;
                 }
             }
 
             .menu__toggle{
                 z-index: 3;
+                outline: none;
                 position: absolute;
                 top: 116px;
                 right: -19px;
@@ -118,7 +128,7 @@
             position: relative;
             // padding: 30px 40px;
 
-            &.side__closed {
+            &.side__closed{
                 margin-left: 70px;
                 width: calc(100% - 50px);
             }

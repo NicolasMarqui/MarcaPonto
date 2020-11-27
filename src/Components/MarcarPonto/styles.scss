@@ -1,3 +1,5 @@
+@import '../../Styles/responsive';
+
 .marcar-ponto__wrapper {
     display: flex;
     flex-direction: column;
@@ -7,8 +9,14 @@
     align-items: center;
 
     h3 {
-        font-size: 4rem;
+        font-size: 3rem;
         margin-bottom: 16px;
+    }
+
+    @include md{
+        h3{
+            font-size: 4rem;
+        }
     }
 
     .bt{

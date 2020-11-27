@@ -7,6 +7,7 @@ import MainContext from "../../Contexts/MainContext";
 import SideBar from "../../Components/SideBar";
 import api from "../../Services/api";
 import { USER_INFO } from "../../Services/Endpoints";
+import { AiFillCloseCircle } from "react-icons/ai";
 import {
     checkIfAdmin,
     checkIfColaborador,
@@ -140,6 +141,14 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
                                     />
                                 )}
                             </div>
+                            {showNavBarXs && (
+                                <div
+                                    className="close__xxs-side"
+                                    onClick={() => setShowNavBarXs(false)}
+                                >
+                                    <AiFillCloseCircle size={30} color="red" />
+                                </div>
+                            )}
                             <div className="sidebar__logo">
                                 <Link to="/dashboard">
                                     <img src={JUST_LOGO} alt="Marca Ponto" />
@@ -163,7 +172,9 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
 
                         <div
                             className={`content__main ${
-                                !sideNavOpen ? "side__closed" : ""
+                                !sideNavOpen && width > 500
+                                    ? "side__closed"
+                                    : ""
                             }`}
                         >
                             <NavBarInterna data={loggedUserInfo} />
