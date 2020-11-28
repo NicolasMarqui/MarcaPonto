@@ -35,6 +35,8 @@ const MainContext = createContext({
     setSelectedPDF: (local) => {},
     showTips: (local) => {},
     setShowTips: (local) => {},
+    hasAskedForGeo: false,
+    setHasAskedForGeo: (local) => {},
 });
 
 export default MainContext;

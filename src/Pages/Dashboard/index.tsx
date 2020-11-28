@@ -14,7 +14,7 @@ import {
     checkIfGestor,
 } from "../../Functions";
 import { BsChevronDoubleRight, BsChevronDoubleLeft } from "react-icons/bs";
-import { usePosition } from "use-position";
+import { usePosition } from "../../Hooks/usePosition";
 import detectBrowserLanguage from "detect-browser-language";
 
 import Home from "./Home";
@@ -69,13 +69,13 @@ const Dashboard: React.FC<DashboardProps> = ({ match }) => {
     let { path } = useRouteMatch();
 
     let watch = true;
-    const { latitude, longitude } = usePosition(watch);
+    const { error, position } = usePosition(watch);
 
     useEffect(() => {
-        if (latitude && longitude) {
-            setUserLocalization(`[${latitude}, ${longitude}]`);
+        if (position && position !== {}) {
+            setUserLocalization(Object.values(position));
         }
-    }, [latitude, longitude]);
+    }, [position]);
 
     useEffect(() => {
         document.title = "Marca Ponto - Dashboard";

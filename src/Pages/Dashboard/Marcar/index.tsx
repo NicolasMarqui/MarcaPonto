@@ -9,9 +9,12 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 interface MarcarProps {}
 
 const Marcar: React.FC<MarcarProps> = () => {
-    const { token, userLocalization, currentLoggedUserId } = useContext(
-        MainContext
-    );
+    const {
+        userLocalization,
+        currentLoggedUserId,
+        setHasAskedForGeo,
+        hasAskedForGeo,
+    } = useContext(MainContext);
 
     const [lat, setLat] = useState(0);
     const [long, setLong] = useState(0);
@@ -19,16 +22,9 @@ const Marcar: React.FC<MarcarProps> = () => {
     useEffect(() => {
         document.title = "Marca Ponto - Marcar Ponto";
 
-        if (userLocalization) {
-            const location = userLocalization
-                .slice(1, -1)
-                .split(",")
-                .map((coord: any) => Number(coord));
-
-            if (location) {
-                setLat(location[0]);
-                setLong(location[1]);
-            }
+        if (userLocalization && userLocalization.length > 0) {
+            setLat(Number(userLocalization[0]));
+            setLong(Number(userLocalization[1]));
         }
     }, []);
 
@@ -43,6 +39,18 @@ const Marcar: React.FC<MarcarProps> = () => {
                             <h2 className="tt-title title-blue title-bold">
                                 Marcar Ponto
                             </h2>
+                            {(!userLocalization ||
+                                userLocalization.length === 0) &&
+                                lat === 0 &&
+                                long === 0 && (
+                                    <p
+                                        onClick={() =>
+                                            setHasAskedForGeo(!hasAskedForGeo)
+                                        }
+                                    >
+                                        Saber minha localizacao
+                                    </p>
+                                )}
                         </div>
                     </div>
                 </div>
@@ -54,10 +62,13 @@ const Marcar: React.FC<MarcarProps> = () => {
                         <MarcarPonto colaboradorId={currentLoggedUserId} />
                     </Card>
                 </div>
-                {userLocalization && lat !== 0 && long !== 0 && (
+                {userLocalization && userLocalization.length > 0 && (
                     <div className="m__map">
                         <MapContainer
-                            center={[lat, long]}
+                            center={[
+                                Number(userLocalization[0]),
+                                Number(userLocalization[1]),
+                            ]}
                             zoom={17}
                             scrollWheelZoom={true}
                         >

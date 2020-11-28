@@ -25,7 +25,8 @@ const MainProvider = ({ children }) => {
     const [browserLanguage, setBrowserLanguage] = useStorage("language");
     const [notificationCount, setNotificationCount] = useStorage("notificationCount");
     const [selectedPDF, setSelectedPDF] = useStorage("selectedPDF");
-    const [showTips, setShowTips] = useStorage(true);
+    const [showTips, setShowTips] = useStorage("showTips");
+    const [hasAskedForGeo, setHasAskedForGeo] = useStorage("hasAskedForGeo");
 
     return (
         <MainContext.Provider
@@ -63,7 +64,9 @@ const MainProvider = ({ children }) => {
                 selectedPDF,
                 setSelectedPDF,
                 showTips,
-                setShowTips
+                setShowTips,
+                hasAskedForGeo,
+                setHasAskedForGeo
             }}
         >
             {children}
