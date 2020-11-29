@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./styles.scss";
 import Card from "../Card";
 import MarcarPonto from "../MarcarPonto";
@@ -8,19 +8,20 @@ import {
     ColumsTableLogs,
     ColumsTablePontos,
 } from "../../Services/TableColumns";
+import { getTodayDateConsulta, getTodayInfo } from "../../Functions";
 import {
-    getLogDate,
-    getTodayDateConsulta,
-    getTodayInfo,
-} from "../../Functions";
-import {
+    GetAllColaboradores,
+    GetAllExpediente,
+    GetAllFuncoes,
     GetAllLogs,
     GetAllPontos,
     GetAllPontosAprovar,
+    GetAllSetores,
 } from "../../Services/ApiCalls";
 import EmptyData from "../EmptyData";
 import Lottie from "react-lottie";
 import { Link } from "react-router-dom";
+import { PieChart, Pie, Sector, Cell } from "recharts";
 
 const LOADING = require("../../Assets/animations/loading.json");
 
@@ -36,6 +37,53 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
         dataAllPontosAprovar,
         statusCodeAllPontosAprovar,
     } = GetAllPontosAprovar(token, currentLoggedUserId, 0);
+
+    // Data for chart
+    const {
+        statusCodeAllColaboradores,
+        dataAllColaboradores,
+    } = GetAllColaboradores(token);
+    const { statusCodeAllExpedientes, dataAllExpedientes } = GetAllExpediente(
+        token
+    );
+    const { statusCodeAllFuncoes, dataAllFuncoes } = GetAllFuncoes(token);
+    const { statusCodeAllSetores, dataAllSetores } = GetAllSetores(token);
+
+    const chartData = [
+        { name: "Usuários", value: dataAllColaboradores.length },
+        { name: "Expedientes", value: dataAllExpedientes.length },
+        { name: "Funções", value: dataAllFuncoes.length },
+        { name: "Setores", value: dataAllSetores.length },
+    ];
+
+    const chartColors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
+    const RADIAN = Math.PI / 180;
+    const renderCustomizedLabel = ({
+        cx,
+        cy,
+        midAngle,
+        innerRadius,
+        outerRadius,
+        percent,
+        index,
+    }: any) => {
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+        return (
+            <text
+                x={x}
+                y={y}
+                fill="white"
+                textAnchor={x > cx ? "start" : "end"}
+                dominantBaseline="central"
+            >
+                {`${(percent * 100).toFixed(0)}%`}
+            </text>
+        );
+    };
 
     return (
         <div className="admnntad__rr">
@@ -169,6 +217,48 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
                                 </h3>
                                 <p>Gráfico de usuários</p>
                             </div>
+                        </div>
+                        <div className="graph__wrapper">
+                            {statusCodeAllColaboradores === 200 &&
+                            statusCodeAllExpedientes === 200 &&
+                            statusCodeAllFuncoes === 200 &&
+                            statusCodeAllSetores === 200 ? (
+                                <PieChart width={300} height={300}>
+                                    <Pie
+                                        data={chartData}
+                                        cx={200}
+                                        cy={200}
+                                        labelLine={false}
+                                        label={renderCustomizedLabel}
+                                        outerRadius={80}
+                                        fill="#8884d8"
+                                        dataKey="value"
+                                    >
+                                        {chartData.map(
+                                            (entry: any, index: any) => (
+                                                <Cell
+                                                    key={`cell-${index}`}
+                                                    fill={
+                                                        chartColors[
+                                                            index %
+                                                                chartColors.length
+                                                        ]
+                                                    }
+                                                />
+                                            )
+                                        )}
+                                    </Pie>
+                                </PieChart>
+                            ) : (
+                                <Lottie
+                                    options={{
+                                        loop: true,
+                                        animationData: LOADING,
+                                    }}
+                                    height={200}
+                                    width={200}
+                                />
+                            )}
                         </div>
                     </Card>
                 </div>
