@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./styles.scss";
 import NavBar from "../../Components/NavBar";
 import { BsArrowRight } from "react-icons/bs";
@@ -10,6 +10,7 @@ import ScrollAnimation from "react-animate-on-scroll";
 
 const Landing: React.FC = () => {
     const { setBrowserLanguage } = useContext(MainContext);
+    const [email, setEmail] = useState("");
 
     const HERO_IMAGE = require("../../Assets/images/Banner.png");
     const PORTABILIT_IMAGE = require("../../Assets/images/portabilit.png");
@@ -25,6 +26,10 @@ const Landing: React.FC = () => {
 
         showToast("SUCCESS", toastSuccessMessage, {});
         setBrowserLanguage(value);
+    };
+
+    const handleClickEmBreve = () => {
+        showToast("WARNING", "Em breve disponivel para download 😊", {});
     };
 
     return (
@@ -45,8 +50,30 @@ const Landing: React.FC = () => {
                             </p>
 
                             <div className="info__contact">
-                                <input type="email" placeholder="Seu E-mail" />
-                                <a href="_" className="bt">
+                                <input
+                                    type="email"
+                                    placeholder="Seu E-mail"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <a
+                                    href="#contato"
+                                    className="bt"
+                                    onClick={() => {
+                                        if (!email) {
+                                            showToast(
+                                                "ERROR",
+                                                "Digite seu e-mail...",
+                                                {}
+                                            );
+                                        } else {
+                                            showToast(
+                                                "SUCCESS",
+                                                "Entraremos em contato 😀",
+                                                {}
+                                            );
+                                        }
+                                    }}
+                                >
                                     Saiba mais
                                 </a>
                             </div>
@@ -177,7 +204,7 @@ const Landing: React.FC = () => {
                 </div>
             </div>
 
-            <div className="landing__price">
+            {/* <div className="landing__price">
                 <div className="section">
                     <div className="container">
                         <h2 className="tt-title title-bold title-blue title-center">
@@ -185,7 +212,7 @@ const Landing: React.FC = () => {
                         </h2>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className="landing__app">
                 <div className="section">
@@ -228,12 +255,14 @@ const Landing: React.FC = () => {
                                         <img
                                             src={GOOGLE_APP_IMAGE}
                                             alt="Google Play"
+                                            onClick={handleClickEmBreve}
                                         />
                                     </ScrollAnimation>
                                     <ScrollAnimation animateIn="fadeIn">
                                         <img
                                             src={APPLE_APP_IMAGE}
                                             alt="App Store"
+                                            onClick={handleClickEmBreve}
                                         />
                                     </ScrollAnimation>
                                 </div>
@@ -262,10 +291,12 @@ const Landing: React.FC = () => {
                                     <img
                                         src={APPLE_APP_IMAGE}
                                         alt="App Store"
+                                        onClick={handleClickEmBreve}
                                     />
                                     <img
                                         src={GOOGLE_APP_IMAGE}
                                         alt="Google Play"
+                                        onClick={handleClickEmBreve}
                                     />
                                 </div>
                             </div>
