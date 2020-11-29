@@ -87,7 +87,7 @@ const Delimitar: React.FC = () => {
     //             isHomeOffice: true,
     //         };
 
-    //         // Axios.put(`http://localhost:3333/api/ponto/${col.id}`)
+    //         // Axios.put(`https://marcaponto-api.herokuapp.com/api/ponto/${col.id}`)
     //         // .then((response: any) => {
     //         //     const { status } = response;
 
@@ -102,7 +102,7 @@ const Delimitar: React.FC = () => {
     // };
 
     const getAllDelimitador = () => {
-        Axios.get(`http://localhost:3333/api/ponto`)
+        Axios.get(`https://marcaponto-api.herokuapp.com/api/ponto`)
             .then((response: any) => {
                 const { data } = response;
                 setAllPontos(data.data);
@@ -116,7 +116,7 @@ const Delimitar: React.FC = () => {
     const handleUserClick = (col: any) => {
         setCurrentUserEdit(col);
 
-        Axios.get(`http://localhost:3333/api/ponto/${col.id}`)
+        Axios.get(`https://marcaponto-api.herokuapp.com/api/ponto/${col.id}`)
             .then((response: any) => {
                 const { status, data } = response;
 

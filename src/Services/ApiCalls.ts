@@ -853,7 +853,9 @@ export function GetAllStatus(token: string | null) {
 export const insertNewLog = (id: Number | null, content: String) => {
     if (!id) return false;
 
-    Axios.post(`http://localhost:3333/api/logs/${id}`, { content })
+    Axios.post(`https://marcaponto-api.herokuapp.com/api/logs/${id}`, {
+        content,
+    })
         .then((response: any) => {
             return {
                 status: "SUCCESS",
@@ -870,7 +872,7 @@ export const GetAllLogs = (id: Number | null) => {
     const [apiData, setApiData] = useState<any[]>([]);
 
     useEffect(() => {
-        Axios.get(`http://localhost:3333/api/logs/${id}`)
+        Axios.get(`https://marcaponto-api.herokuapp.com/api/logs/${id}`)
             .then((response: any) => {
                 const { status, data } = response;
 
@@ -909,7 +911,9 @@ export const GetAllNotifications = (id: Number | null, hasRead?: boolean) => {
     const { setNotificationCount, notificationCount } = useContext(MainContext);
 
     useEffect(() => {
-        Axios.get(`http://localhost:3333/api/notifications/${id}`)
+        Axios.get(
+            `https://marcaponto-api.herokuapp.com/api/notifications/${id}`
+        )
             .then((response: any) => {
                 const { status, data } = response;
                 setApiData(data.data);
@@ -930,7 +934,7 @@ export const GetAllNotifications = (id: Number | null, hasRead?: boolean) => {
 export const makeOneNotificationRead = (id: Number | null) => {
     if (!id) return false;
 
-    Axios.put(`http://localhost:3333/api/notification/${id}`)
+    Axios.put(`https://marcaponto-api.herokuapp.com/api/notification/${id}`)
         .then((response: any) => {
             const { status } = response;
 
@@ -948,7 +952,7 @@ export const makeOneNotificationRead = (id: Number | null) => {
 export const makeAllNotificationRead = (id: Number | null) => {
     if (!id) return false;
 
-    Axios.put(`http://localhost:3333/api/notification/all/${id}`)
+    Axios.put(`https://marcaponto-api.herokuapp.com/api/notification/all/${id}`)
         .then((response: any) => {
             const { status } = response;
 
@@ -969,7 +973,7 @@ export const insertNewDelimitadorPonto = (id: Number | null, data: any) => {
 
     const { latLng, radius, isHomeOffice } = data;
 
-    Axios.post(`http://localhost:3333/api/ponto/${id}`, {
+    Axios.post(`https://marcaponto-api.herokuapp.com/api/ponto/${id}`, {
         latLng,
         radius,
         isHomeOffice,
@@ -991,7 +995,7 @@ export const GetAllDelimitadorPontoByUser = (id: Number | null) => {
     const [apiData, setApiData] = useState<any[]>([]);
 
     useEffect(() => {
-        Axios.get(`http://localhost:3333/api/ponto/${id}`)
+        Axios.get(`https://marcaponto-api.herokuapp.com/api/ponto/${id}`)
             .then((response: any) => {
                 const { status, data } = response;
 
@@ -1029,7 +1033,7 @@ export const GetAllDelimitadorPonto = () => {
     const [apiData, setApiData] = useState<any[]>([]);
 
     useEffect(() => {
-        Axios.get(`http://localhost:3333/api/ponto`)
+        Axios.get(`https://marcaponto-api.herokuapp.com/api/ponto`)
             .then((response: any) => {
                 const { status, data } = response;
 
