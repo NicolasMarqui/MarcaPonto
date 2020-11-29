@@ -40,7 +40,7 @@ const MarcarPonto: React.FC<MarcarPontoProps> = ({ colaboradorId }) => {
             colaboradorId: colaboradorId,
             data: getTodayDate(),
             horario: datePonto.toString(),
-            localizacao: userLocalization,
+            localizacao: userLocalization.toString(),
         };
 
         // setPontoStatus("ERROR");

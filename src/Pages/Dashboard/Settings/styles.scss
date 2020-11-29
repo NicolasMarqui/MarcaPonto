@@ -43,6 +43,12 @@
                 width: 80%;
             }
         }
+
+        button{
+            &.hasError{
+                pointer-events: none;
+            }
+        }
     }
 
     .opt__2{

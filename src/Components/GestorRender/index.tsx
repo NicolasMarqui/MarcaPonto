@@ -162,7 +162,14 @@ const GestorRender: React.FC<GestorRenderProps> = ({ info }) => {
                 </div>
                 <div className="grafico_users">
                     <Card>
-                        <h3>Gráfico aqui</h3>
+                        <div className="home__header">
+                            <div className="header__title">
+                                <h3 className="tt-sub title-blue title-bold">
+                                    Gráfico
+                                </h3>
+                                <p>Gráfico de usuários</p>
+                            </div>
+                        </div>
                     </Card>
                 </div>
             </div>

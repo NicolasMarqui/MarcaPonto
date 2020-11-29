@@ -38,3 +38,5 @@ export const ALL_SETOR_BY_STATUS = "/api/v1/setor/status";
 export const ALL_REGISTRO = "/api/v1/tipodoregistro";
 //Status do ponto
 export const STATUS_PONTO = "/api/v1/statusDoPonto";
+//Password
+export const CHANGE_PASSWORD = "/api/v1/auth/password";

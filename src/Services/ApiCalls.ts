@@ -606,7 +606,8 @@ export const GetAllPontosID = (token: string | null, id: number | null) => {
 export const GetAllPontosAprovar = (
     token: string | null,
     id: Number | null,
-    statusID: Number | null
+    statusID: Number | null,
+    closedModal?: boolean | undefined
 ) => {
     const [statusCode, setStatusCode] = useState(0);
     const [apiData, setApiData] = useState<any[]>([]);
@@ -623,7 +624,7 @@ export const GetAllPontosAprovar = (
             .catch((err) => {
                 return err;
             });
-    }, []);
+    }, [closedModal]);
 
     return {
         dataAllPontosAprovar: apiData as any,
@@ -960,4 +961,103 @@ export const makeAllNotificationRead = (id: Number | null) => {
         .catch((err: any) => {
             return err;
         });
+};
+
+// DELIMITADOR PONTO
+export const insertNewDelimitadorPonto = (id: Number | null, data: any) => {
+    if (!id) return false;
+
+    const { latLng, radius, isHomeOffice } = data;
+
+    Axios.post(`http://localhost:3333/api/ponto/${id}`, {
+        latLng,
+        radius,
+        isHomeOffice,
+    })
+        .then((response: any) => {
+            console.log(response);
+            return {
+                status: "SUCCESS",
+                message: "Log adicionado com sucesso",
+            };
+        })
+        .catch((err: any) => {
+            return err;
+        });
+};
+
+export const GetAllDelimitadorPontoByUser = (id: Number | null) => {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        Axios.get(`http://localhost:3333/api/ponto/${id}`)
+            .then((response: any) => {
+                const { status, data } = response;
+
+                const withDateFormat = [];
+
+                for (let i = 0; i < data.data.length; i++) {
+                    let newElement = {
+                        _id: data.data[i]._id,
+                        idUser: data.data[i].idUser,
+                        latLng: data.data[i].latLng,
+                        radius: data.data[i].radius,
+                        isHomeOffice: data.data[i].isHomeOffice,
+                        date: getLogDate(new Date(data.data[i].date)),
+                    };
+
+                    withDateFormat.push(newElement);
+                }
+
+                setApiData(withDateFormat);
+                setStatusCode(status);
+            })
+            .catch((err: any) => {
+                return err;
+            });
+    }, []);
+
+    return {
+        dataAllDelimitadorPontosUser: apiData as any,
+        statusCodeAllDelimitadorPontosUser: statusCode,
+    };
+};
+
+export const GetAllDelimitadorPonto = () => {
+    const [statusCode, setStatusCode] = useState(0);
+    const [apiData, setApiData] = useState<any[]>([]);
+
+    useEffect(() => {
+        Axios.get(`http://localhost:3333/api/ponto`)
+            .then((response: any) => {
+                const { status, data } = response;
+
+                const withDateFormat = [];
+
+                for (let i = 0; i < data.data.length; i++) {
+                    let newElement = {
+                        _id: data.data[i]._id,
+                        idUser: data.data[i].idUser,
+                        latLng: data.data[i].latLng,
+                        radius: data.data[i].radius,
+                        isHomeOffice: data.data[i].isHomeOffice,
+                        date: getLogDate(new Date(data.data[i].date)),
+                    };
+
+                    withDateFormat.push(newElement);
+                }
+
+                setApiData(withDateFormat);
+                setStatusCode(status);
+            })
+            .catch((err: any) => {
+                return err;
+            });
+    }, []);
+
+    return {
+        dataAllDelimitadorPontos: apiData as any,
+        statusCodeAllDelimitadorPontos: statusCode,
+    };
 };

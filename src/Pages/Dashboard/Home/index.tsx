@@ -24,7 +24,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             ) : isGestor ? (
                 <GestorRender info={data} />
             ) : (
-                <UserRender />
+                <UserRender info={data} />
             )}
         </div>
     );

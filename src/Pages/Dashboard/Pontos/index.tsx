@@ -54,7 +54,12 @@ const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
     const {
         statusCodeAllPontosAprovar,
         dataAllPontosAprovar,
-    } = GetAllPontosAprovar(token, colaboradorId, pontoStatus[0].id);
+    } = GetAllPontosAprovar(
+        token,
+        colaboradorId,
+        pontoStatus[0].id,
+        openMoreInfo
+    );
 
     // State filtros
     const [data, setData] = useState<any[]>([]);
@@ -71,18 +76,13 @@ const Pontos: React.FC<PontosProps> = ({ dataPonto }) => {
     const [originalData, setOriginalData] = useState<any[]>([]);
 
     useEffect(() => {
-        getColaboradorPonto();
         setIsGestor(checkIfGestor(perfis));
         setOpenMoreInfo(false);
-
-        const idTab = Q.parse(window.location.search);
-
-        if (idTab) {
-            setCurrentTab(Number(idTab.id));
-        } else {
-            setCurrentTab(0);
-        }
     }, []);
+
+    useEffect(() => {
+        getColaboradorPonto();
+    }, [openMoreInfo]);
 
     const getColaboradorPonto = async () => {
         setIsFetchingData(true);

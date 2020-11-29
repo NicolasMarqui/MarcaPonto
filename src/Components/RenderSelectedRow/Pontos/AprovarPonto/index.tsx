@@ -10,7 +10,8 @@ import {
 import MainContext from "../../../../Contexts/MainContext";
 import { insertNewLog } from "../../../../Services/ApiCalls";
 import { saveFromDate, showToast } from "../../../../Functions";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+// @ts-ignore
+import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 
 interface AprovarPontoProps {
     dataPonto: any;
@@ -45,14 +46,7 @@ const AprovarPonto: React.FC<AprovarPontoProps> = ({ dataPonto }) => {
         }
     }, []);
 
-    const {
-        data,
-        horario,
-        id,
-        tipoDoRegistro,
-        localizacao,
-        observacao,
-    } = dataPonto;
+    const { data, horario, id, tipoDoRegistro, localizacao, obs } = dataPonto;
 
     // State geral
     const [isSubmiting, setIsSubmiting] = useState(false);
@@ -62,10 +56,19 @@ const AprovarPonto: React.FC<AprovarPontoProps> = ({ dataPonto }) => {
     const [long, setLong] = useState(0);
 
     const aprovarPonto = async () => {
+        setIsSubmiting(true);
+
         await api
-            .patch(`${APROVAR_PONTO}/${id}`, {
-                headers: { Authorization: token },
-            })
+            .patch(
+                `${APROVAR_PONTO}/${id}`,
+                {},
+                {
+                    headers: {
+                        Authorization: token,
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                }
+            )
             .then((resp) => {
                 const { status } = resp;
 
@@ -92,7 +95,7 @@ const AprovarPonto: React.FC<AprovarPontoProps> = ({ dataPonto }) => {
                 setIsSubmiting(true);
                 setUpdateError(true);
 
-                const { errors } = err.response.data;
+                const { errors } = err.respons;
 
                 errors.map((err: any) =>
                     showToast("ERROR", `${err.message}`, {})
@@ -106,9 +109,13 @@ const AprovarPonto: React.FC<AprovarPontoProps> = ({ dataPonto }) => {
 
     const reprovarPonto = async () => {
         await api
-            .patch(`${REPROVAR_PONTO}/${id}`, {
-                headers: { Authorization: token },
-            })
+            .patch(
+                `${REPROVAR_PONTO}/${id}`,
+                {},
+                {
+                    headers: { Authorization: token },
+                }
+            )
             .then((resp) => {
                 const { status } = resp;
 
@@ -186,21 +193,21 @@ const AprovarPonto: React.FC<AprovarPontoProps> = ({ dataPonto }) => {
                                         <p>Localização:</p>
                                         <br />
                                         <div className="m__map">
-                                            <MapContainer
+                                            <Map
                                                 center={[lat, long]}
                                                 zoom={16}
                                                 scrollWheelZoom={true}
                                             >
                                                 <TileLayer
-                                                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                                    attribution="google"
+                                                    url="http://mt0.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
                                                 />
                                                 <Marker position={[lat, long]}>
                                                     <Popup>
                                                         Sua localização
                                                     </Popup>
                                                 </Marker>
-                                            </MapContainer>
+                                            </Map>
                                         </div>
                                     </div>
                                 </li>
@@ -217,9 +224,7 @@ const AprovarPonto: React.FC<AprovarPontoProps> = ({ dataPonto }) => {
                                 <div className="pnt__info">
                                     <p>
                                         Observação:{" "}
-                                        <span>
-                                            {observacao ? observacao : "-"}
-                                        </span>
+                                        <span>{obs ? obs : "-"}</span>
                                     </p>
                                 </div>
                             </li>

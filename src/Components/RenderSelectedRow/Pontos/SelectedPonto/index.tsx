@@ -27,23 +27,23 @@ const SelectedPontos: React.FC<SelectedPontosProps> = ({ dataPonto }) => {
         removehasCloseEditModal,
         setOpenMoreInfo,
     } = useContext(MainContext);
-    const { data, horario, id, tipoDoRegistro, localizacao } = dataPonto;
+    const { data, horario, id, tipoDoRegistro, localizacao, obs } = dataPonto;
 
     const allTiposArray = [
         {
-            id: 1,
+            id: 0,
             nome: "Início da Jornada",
         },
         {
-            id: 2,
+            id: 1,
             nome: "Início do Intervalo",
         },
         {
-            id: 3,
+            id: 2,
             nome: "Fim do Intervalo",
         },
         {
-            id: 4,
+            id: 3,
             nome: "Fim da Jornada",
         },
     ];
@@ -53,6 +53,7 @@ const SelectedPontos: React.FC<SelectedPontosProps> = ({ dataPonto }) => {
         data,
         tipoDoRegistroId: 0,
         localizacao,
+        observacao: obs,
     };
 
     // State geral
@@ -81,7 +82,7 @@ const SelectedPontos: React.FC<SelectedPontosProps> = ({ dataPonto }) => {
                 <Formik
                     initialValues={formValues}
                     onSubmit={async (values) => {
-                        const { id } = values;
+                        const { id, observacao } = values;
 
                         setIsSubmiting(true);
 
@@ -90,6 +91,7 @@ const SelectedPontos: React.FC<SelectedPontosProps> = ({ dataPonto }) => {
                             horario: time,
                             tipoDoRegistroId: selectedTipo,
                             localizacao: localizacao,
+                            obs: observacao,
                         };
 
                         await api
@@ -231,6 +233,17 @@ const SelectedPontos: React.FC<SelectedPontosProps> = ({ dataPonto }) => {
                                         ))}
                                 </select>
                             </div>
+
+                            <div className="form__group not__centered">
+                                <label htmlFor="">Observação</label>
+                                <textarea
+                                    value={values.observacao}
+                                    required
+                                    className={`no-resize set-height`}
+                                    onChange={handleChange("observacao")}
+                                />
+                            </div>
+
                             <div className="form__group not__centered form__side-side">
                                 <button
                                     type="submit"

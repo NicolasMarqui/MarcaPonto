@@ -7,6 +7,10 @@ import { AllLanguages } from "../../../Services/AllLanguages";
 import MainContext from "../../../Contexts/MainContext";
 import Lottie from "react-lottie";
 import { showToast } from "../../../Functions";
+import { GetAllColaboradores, insertNewLog } from "../../../Services/ApiCalls";
+import api from "../../../Services/api";
+import { CHANGE_PASSWORD } from "../../../Services/Endpoints";
+import { SUCESS } from "../../../Services/Constants";
 
 interface SettingsProps {
     data: any;
@@ -18,9 +22,17 @@ const Settings: React.FC<SettingsProps> = ({ data }) => {
     }, []);
 
     const [curiosoClicou, setCuriosoClicou] = useState(false);
+    const [isLoadingNewSenha, setIsLoadingNewSenha] = useState(false);
+    const [newSenhaSuccess, setNewSenhaSuccess] = useState(false);
+    const [newSenhaError, setNewSenhaError] = useState(false);
+    const [newSenha, setNewSenha] = useState("");
 
     const CHECK_ANIMATION = require("../../../Assets/animations/check.json");
     const TEAM_ANIMATION = require("../../../Assets/animations/team.json");
+    const LOADING = require("../../../Assets/animations/loading.json");
+    const SUCCESS = require("../../../Assets/animations/success.json");
+    const ERROR = require("../../../Assets/animations/error.json");
+    const CONGRATS = require("../../../Assets/animations/congrats.json");
     const OMG_WOW_VIDEO = require("../../../Assets/curiosidade/omg_wow_video.ogg");
     const OMG_WOW_AUDIO = require("../../../Assets/curiosidade/omg_wow.mp3");
 
@@ -51,7 +63,14 @@ const Settings: React.FC<SettingsProps> = ({ data }) => {
         },
     ];
 
-    const { browserLanguage, setBrowserLanguage } = useContext(MainContext);
+    const {
+        browserLanguage,
+        setBrowserLanguage,
+        token,
+        currentLoggedUserId,
+        notificationCount,
+        setNotificationCount,
+    } = useContext(MainContext);
 
     const changeBrowserLanguage = (value: string, title: string) => {
         let toastSuccessMessage = `Idioma alterado para ${title}`;
@@ -92,105 +111,181 @@ const Settings: React.FC<SettingsProps> = ({ data }) => {
                     <div className="opt__1">
                         <Card>
                             <h3 className="tt-sub title-blue title-bold">
-                                Trocar Senha
+                                Atualizar Senha
                             </h3>
-                            <p>Digite a senha antiga</p>
+                            <p>Digite a nova senha</p>
                             <div className="form__inputs">
-                                <Formik
-                                    initialValues={{
-                                        emailOrUsername: "",
-                                        password: "",
-                                    }}
-                                    onSubmit={async (values) => {}}
-                                    validate={(values) => {
-                                        const errors: any = {};
-                                        const {
-                                            emailOrUsername,
-                                            password,
-                                        } = values;
+                                {isLoadingNewSenha ? (
+                                    <Lottie
+                                        options={{
+                                            loop: !newSenhaSuccess
+                                                ? true
+                                                : false,
+                                            animationData:
+                                                !newSenhaError &&
+                                                !newSenhaSuccess
+                                                    ? LOADING
+                                                    : newSenhaSuccess
+                                                    ? SUCCESS
+                                                    : newSenhaError
+                                                    ? ERROR
+                                                    : LOADING,
+                                        }}
+                                        height={150}
+                                        width={150}
+                                    />
+                                ) : (
+                                    <Formik
+                                        initialValues={{
+                                            newPassword: newSenha,
+                                        }}
+                                        onSubmit={async (values) => {
+                                            const { newPassword } = values;
+                                            setIsLoadingNewSenha(true);
 
-                                        if (!emailOrUsername) {
-                                            errors.emailOrUsername =
-                                                "Esse campo não pode ser vazio :(";
-                                        }
-
-                                        if (!password) {
-                                            errors.password =
-                                                "Esse campo não pode ser vazio :(";
-                                        }
-                                        return errors;
-                                    }}
-                                >
-                                    {({
-                                        values,
-                                        handleChange,
-                                        handleSubmit,
-                                        errors,
-                                    }) => (
-                                        <form onSubmit={handleSubmit}>
-                                            <div className="form__group">
-                                                <label htmlFor="">
-                                                    Usuário
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    value={
-                                                        values.emailOrUsername
+                                            await api
+                                                .patch(
+                                                    CHANGE_PASSWORD,
+                                                    newPassword.toString(),
+                                                    {
+                                                        headers: {
+                                                            Authorization: token,
+                                                            "Access-Control-Allow-Origin":
+                                                                "*",
+                                                            "Content-Type":
+                                                                "text/plain",
+                                                        },
                                                     }
-                                                    className={`${
-                                                        errors.emailOrUsername
-                                                            ? "hasError"
-                                                            : ""
-                                                    }`}
-                                                    onChange={handleChange(
-                                                        "emailOrUsername"
+                                                )
+                                                .then((response) => {
+                                                    const { status } = response;
+
+                                                    if (status === 200) {
+                                                        showToast(
+                                                            "SUCCESS",
+                                                            "Senha alterada com sucesso 😄",
+                                                            {}
+                                                        );
+                                                        insertNewLog(
+                                                            currentLoggedUserId,
+                                                            "Senha alterada"
+                                                        );
+                                                        setNotificationCount(
+                                                            notificationCount +
+                                                                1
+                                                        );
+
+                                                        setNewSenha("");
+                                                        setNewSenhaError(false);
+                                                        setNewSenhaSuccess(
+                                                            true
+                                                        );
+
+                                                        window.setTimeout(
+                                                            () =>
+                                                                setIsLoadingNewSenha(
+                                                                    false
+                                                                ),
+                                                            2000
+                                                        );
+                                                    }
+                                                })
+                                                .catch((err) => {
+                                                    showToast(
+                                                        "ERROR",
+                                                        err.response.data
+                                                            .message,
+                                                        {}
+                                                    );
+
+                                                    setNewSenhaSuccess(false);
+                                                    setNewSenhaError(true);
+
+                                                    window.setTimeout(
+                                                        () =>
+                                                            setIsLoadingNewSenha(
+                                                                false
+                                                            ),
+                                                        2000
+                                                    );
+                                                });
+                                        }}
+                                        validate={(values) => {
+                                            const errors: any = {};
+                                            const { newPassword } = values;
+                                            let format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+                                            if (!newPassword) {
+                                                errors.newPassword =
+                                                    "Esse campo não pode ser vazio :(";
+                                            }
+
+                                            if (newPassword.length < 10) {
+                                                errors.newPassword =
+                                                    "Pelo menos 10 dígitos";
+                                            }
+
+                                            if (!format.test(newPassword)) {
+                                                errors.newPassword =
+                                                    "No mínimo 1 caractere especial";
+                                            }
+
+                                            return errors;
+                                        }}
+                                    >
+                                        {({
+                                            values,
+                                            handleChange,
+                                            handleSubmit,
+                                            errors,
+                                        }) => (
+                                            <form onSubmit={handleSubmit}>
+                                                <div className="form__group">
+                                                    <label htmlFor="">
+                                                        Senha
+                                                    </label>
+                                                    <input
+                                                        type="password"
+                                                        value={
+                                                            values.newPassword
+                                                        }
+                                                        className={`${
+                                                            errors.newPassword
+                                                                ? "hasError"
+                                                                : ""
+                                                        }`}
+                                                        onChange={handleChange(
+                                                            "newPassword"
+                                                        )}
+                                                    />
+                                                    {errors.newPassword ? (
+                                                        <div className="form__error">
+                                                            <p>
+                                                                {
+                                                                    errors.newPassword
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    ) : (
+                                                        ""
                                                     )}
-                                                />
-                                                {errors.emailOrUsername ? (
-                                                    <div className="form__error">
-                                                        <p>
-                                                            {
-                                                                errors.emailOrUsername
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </div>
-                                            <div className="form__group">
-                                                <label htmlFor="">Senha</label>
-                                                <input
-                                                    type="password"
-                                                    value={values.password}
-                                                    className={`${
-                                                        errors.password
-                                                            ? "hasError"
-                                                            : ""
-                                                    }`}
-                                                    onChange={handleChange(
-                                                        "password"
-                                                    )}
-                                                />
-                                                {errors.password ? (
-                                                    <div className="form__error">
-                                                        <p>{errors.password}</p>
-                                                    </div>
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </div>
-                                            <div className="form__group">
-                                                <button
-                                                    type="submit"
-                                                    className="bt form__login"
-                                                >
-                                                    Login
-                                                </button>
-                                            </div>
-                                        </form>
-                                    )}
-                                </Formik>
+                                                </div>
+                                                <div className="form__group">
+                                                    <button
+                                                        type="submit"
+                                                        className={`bt form__login ${
+                                                            errors.newPassword
+                                                                ? "hasError"
+                                                                : ""
+                                                        }`}
+                                                    >
+                                                        Atualizar
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        )}
+                                    </Formik>
+                                )}
                             </div>
                         </Card>
                     </div>

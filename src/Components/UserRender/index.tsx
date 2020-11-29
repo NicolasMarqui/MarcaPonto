@@ -4,49 +4,68 @@ import Card from "../Card";
 import { Link } from "react-router-dom";
 import MarcarPonto from "../MarcarPonto";
 import { FaCog } from "react-icons/fa";
-import { ImBook } from "react-icons/im";
+import { BsClockHistory } from "react-icons/bs";
 import MainContext from "../../Contexts/MainContext";
+import { getTodayInfo } from "../../Functions";
 
-interface UserRenderProps {}
+interface UserRenderProps {
+    info: any;
+}
 
-const UserRender: React.FC<UserRenderProps> = () => {
+const UserRender: React.FC<UserRenderProps> = ({ info }) => {
     const { currentLoggedUserId } = useContext(MainContext);
 
     return (
-        <div className="usrntad__rr">
-            <div className="rr__top-row">
-                <div className="tr__ponto">
-                    <Card size={2} height="full">
+        <div className="admnntad__rr">
+            <div className="adm__bemvindo">
+                <div className="bem__vindo-info">
+                    <h2 className="tt-title title-blue title-bold">
+                        Bem Vindo
+                    </h2>
+                    <h3 className="tt-sub title-blue title-blue title-bold">
+                        {info.username}
+                    </h3>
+                </div>
+
+                <div className="bem__vindo-date">
+                    <p>{getTodayInfo()}</p>
+                </div>
+            </div>
+            <div className="user__grid--container">
+                <div className="ponto">
+                    <Card height="height-100p">
                         <MarcarPonto colaboradorId={currentLoggedUserId} />
                     </Card>
                 </div>
-                <div className="tp__afins">
-                    <div className="afins__espelho">
+                <div className="espelho">
+                    <Card isFlex={false}>
                         <Link to="/dashboard/espelho">
-                            <Card height="100p">
-                                <div className="esp__icon">
-                                    <ImBook color="#222" />
-                                </div>
-
-                                <div className="esp__text">
-                                    <h3>Espelho do ponto</h3>
-                                </div>
-                            </Card>
+                            <div className="header__title">
+                                <h3 className="tt-sub title-blue title-bold title-center">
+                                    Espelho
+                                </h3>
+                            </div>
+                            <div className="grid__icon">
+                                <BsClockHistory size={90} color="#222" />
+                            </div>
                         </Link>
-                    </div>
-                    <div className="afins__config">
+                    </Card>
+                </div>
+                <div className="config">
+                    <Card isFlex={false}>
                         <Link to="/dashboard/settings">
-                            <Card height="100p">
-                                <div className="esp__icon">
-                                    <FaCog color="#222" />
+                            <div className="home__header">
+                                <div className="header__title">
+                                    <h3 className="tt-sub title-blue title-bold title-center">
+                                        Configurações
+                                    </h3>
                                 </div>
-
-                                <div className="esp__text">
-                                    <h3>Configurações</h3>
-                                </div>
-                            </Card>
+                            </div>
+                            <div className="grid__icon">
+                                <FaCog size={90} color="#222" />
+                            </div>
                         </Link>
-                    </div>
+                    </Card>
                 </div>
             </div>
         </div>
