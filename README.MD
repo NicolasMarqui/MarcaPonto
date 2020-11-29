@@ -23,7 +23,7 @@ O custo de regularizar sistemas de ponto pode se tornar complexo ou até mesmo i
 
 ![Dashboard](https://i.imgur.com/MhxrgUj.png)
 
-Os usuários possuem 2 níveis, **Colaboradores** e **Gestores**. Os colaboradores podem bater ponto e consultar seu espelho de ponto, o gestor pode fazer o cadastro de usuários, expedientes, setores, funções, setores, e horários, além de poder aprovar pontos e fazer delimitações de onde o usuário pode bater o ponto.
+Os usuários possuem 2 níveis, **Colaboradores** e **Gestores**. Os colaboradores podem bater ponto e consultar seu espelho de ponto, o gestor pode fazer o cadastro de usuários, expedientes, funções, setores, e horários, além de poder aprovar pontos e fazer delimitações de onde o usuário pode bater o ponto.
 
 ## Usuários
 
