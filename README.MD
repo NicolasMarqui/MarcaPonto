@@ -67,13 +67,3 @@ No menu de configurações o usuário pode atualizar sua senha e trocar a lingua
 
 ![Configurações](https://i.imgur.com/Iqd6xnt.png)
 
-# Criado por:
-
--   César Facioli
--   Erikson Lopes
--   Heitor Amaral
--   Juarez Junior
--   Lucas Amstalden
--   Nicolas Marqui
-
-_Criado para o Projeto Integrador do 6° semestre de Analise e Desenvolvimento de Sistemas da Fatec Indaiatuba_
